@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>CoCo - 회원가입</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+	<!-- 제이쿼리 적용 -->
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+	<!-- 다음 우편주소 api 적용 -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">회원가입</h1>
+                            </div>
+                            <!-- 가입 폼 시작 -->
+                            <form class="user">
+                            	<!-- 이메일 입력 -->
+                                <div class="form-group row ml-2">
+                                    <input type="email" class="form-control form-control-user col-sm-10 ml-2" id="exampleInputEmail"
+                                        placeholder="이메일을 입력해주세요." style="width: 600px">
+                                    <button class="btn btn-secondary btn-sm col-sm-1 ml-3" type="button">인증</button>
+                                </div>
+                                <div class="row ml-4 mb-3">
+                                	<span>* 사용가능한 이메일입니다.</span>
+                                </div>
+                                <!-- 비밀번호 입력 -->
+                                <div class="form-group row ml-1">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" class="form-control form-control-user"
+                                            id="exampleInputPassword" placeholder="비밀번호" style="width: 360px">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control form-control-user"
+                                            id="exampleRepeatPassword" placeholder="비밀번호 확인" style="width: 360px">
+                                    </div>
+                                </div>
+                                <!-- 닉네임 입력 -->
+                                <div class="form-group row">
+                                    <input type="text" class="form-control form-control-user ml-4" id="exampleInputEmail"
+                                        placeholder="닉네임을 입력해주세요." style="width: 780px">
+                                </div>
+                                <!-- 생년월일 입력 -->
+                                <div class="form-group row">
+                                	<div class="col">
+	                                	<div class="row-6">
+	                                		<div class="mb-2" style="text-align: center;">생년월일</div>
+	                                	</div>
+	                                	<div class="row-6 mb-4" style="text-align: center;">
+	                               			<select class="custom-select col-4 ml-3" style="width: 200px" id="selectYear">
+											</select> <span class="mr-3">년</span>
+	                               			<select class="custom-select col-4" style="width: 150px" id="selectMonth">
+											</select> <span class="mr-3">월</span>
+	                               			<select class="custom-select col-4" style="width: 150px" id="selectDate">
+											</select> <span class="mr-3">일</span>
+	                                	</div>
+	                                </div>
+                                </div>
+                                <!-- 주소 입력 -->
+                                <div class="form-group row mb-3">
+                                	<div class="col">
+                                		<div class="row-6">
+                                			<div class="mb-2" style="text-align: center;"> 주소 </div>
+                                		</div>
+                                		<div class="row-6">
+                                			<div class="col">
+                                				<div class="row-6">
+                                					<input type="text" class="form-control form-control-user mb-2" id="address_kakao"
+                                        			placeholder="주소" style="width: 780px">
+                                				</div>
+                                				<div class="row-6">
+                                					<input type="text" class="form-control form-control-user" id="address_kakao_detail"
+                                        			placeholder="상세주소" style="width: 780px">
+                                				</div>
+                                			</div>
+                                		</div>
+                                	</div>
+                                </div>
+                                <a href="login.html" class="btn btn-primary btn-user btn-block">
+                                    가입하기
+                                </a>
+                                <hr>
+                                <a href="index.html" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> Register with Google
+                                </a>
+                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                                </a>
+                            </form>
+                            <!-- 가입 폼 끝 -->
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="forgot-password.html">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="login.html">Already have an account? Login!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../js/sb-admin-2.min.js"></script>
+    
+    <script>
+    	// 제이쿼리 시작
+	    $(document).ready(function(){
+			console.log('제이쿼리 적용 됐습니다.');
+			
+			// 생년월일 select 세팅 시작
+			let nowDate = new Date();
+			let year = nowDate.getFullYear();
+			
+			let html = "";
+			
+			console.log(year);
+			
+			for(let i=year; i > year - 40; i--){
+				html += "<option value="+i+">"+i+"</option>"
+			}
+			
+			$("#selectYear").append(html);
+			html = "";
+			
+			for(let i = 1; i < 13; i++){
+				html += "<option value="+i+">"+i+"</option>"				
+			}
+			
+			$("#selectMonth").append(html);
+			html = "";
+			
+			for(let i = 1; i < 32; i++){
+				html += "<option value="+i+">"+i+"</option>"				
+			}
+			
+			$("#selectDate").append(html);
+			html = "";
+			// 생년월일 select 세팅 끝
+			
+			// 다음 주소 api 시작
+			$("#address_kakao").click(function(){
+				new daum.Postcode({
+			        oncomplete: function(data) {
+			            $("#address_kakao").val(data.address);
+			            $("#address_kakao_detail").focus();
+			        }
+			    }).open();
+			});
+			// 다음 주소 api 끝
+		});
+    	// 제이쿼리 끝
+    </script>
+
+</body>
+
+</html>

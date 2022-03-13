@@ -1,0 +1,20 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head>
+        <meta charset="UTF-8">
+        <div th:replace="component/config :: main-config" />
+    </head>
+    
+    <body id="page-top">
+    <div id="wrapper">
+    	
+		<div layout:fragment="content">
+		<div layout:fragment="component/sidebar :: main-sidebar" />
+		</div>
+		</div>
+    </body>
+
+    <th:block layout:fragment="js"/>
+
+</html>
