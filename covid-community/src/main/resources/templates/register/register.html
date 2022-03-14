@@ -44,28 +44,35 @@
                             <form class="user">
                             	<!-- 이메일 입력 -->
                                 <div class="form-group row ml-2">
-                                    <input type="email" class="form-control form-control-user col-sm-10 ml-2" id="exampleInputEmail"
+                                    <input type="email" class="form-control form-control-user col-sm-10 ml-2" id="user_email"
                                         placeholder="이메일을 입력해주세요." style="width: 600px">
-                                    <button class="btn btn-secondary btn-sm col-sm-1 ml-3" type="button">인증</button>
+                                    <button class="btn btn-secondary btn-sm col-sm-1 ml-3" type="button" id="certiBtn" disabled>인증</button>
                                 </div>
+                                <!-- 인증번호 입력칸 -->
+                                <div class="form-group row ml-2" id="certiSec" style="display:none;">
+                                    <input type="email" class="form-control form-control-user col-sm-10 ml-2" id="certi_num"
+                                        placeholder="인증번호" style="width: 600px">
+                                    <button class="btn btn-secondary btn-sm col-sm-1 ml-3" type="button" id="certiConBtn">확인</button>
+                                </div>
+                                <!-- 이메일 중복체크 구역 -->
                                 <div class="row ml-4 mb-3">
-                                	<span>* 사용가능한 이메일입니다.</span>
+                                	<div id="emailCheck"></div>
                                 </div>
                                 <!-- 비밀번호 입력 -->
                                 <div class="form-group row ml-1">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="비밀번호" style="width: 360px">
+                                            id="exampleInputPassword" placeholder="비밀번호" style="width: 95%">
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="비밀번호 확인" style="width: 360px">
+                                            id="exampleRepeatPassword" placeholder="비밀번호 확인" style="width: 95%">
                                     </div>
                                 </div>
                                 <!-- 닉네임 입력 -->
                                 <div class="form-group row">
                                     <input type="text" class="form-control form-control-user ml-4" id="exampleInputEmail"
-                                        placeholder="닉네임을 입력해주세요." style="width: 780px">
+                                        placeholder="닉네임을 입력해주세요." style="width: 94%">
                                 </div>
                                 <!-- 생년월일 입력 -->
                                 <div class="form-group row">
@@ -93,11 +100,11 @@
                                 			<div class="col">
                                 				<div class="row-6">
                                 					<input type="text" class="form-control form-control-user mb-2" id="address_kakao"
-                                        			placeholder="주소" style="width: 780px">
+                                        			placeholder="주소" style="width: 100%">
                                 				</div>
                                 				<div class="row-6">
                                 					<input type="text" class="form-control form-control-user" id="address_kakao_detail"
-                                        			placeholder="상세주소" style="width: 780px">
+                                        			placeholder="상세주소" style="width: 100%">
                                 				</div>
                                 			</div>
                                 		</div>
@@ -143,38 +150,77 @@
     <script>
     	// 제이쿼리 시작
 	    $(document).ready(function(){
-			console.log('제이쿼리 적용 됐습니다.');
 			
 			// 생년월일 select 세팅 시작
 			let nowDate = new Date();
 			let year = nowDate.getFullYear();
-			
 			let html = "";
+			let isCertification = false;
 			
-			console.log(year);
 			
 			for(let i=year; i > year - 40; i--){
 				html += "<option value="+i+">"+i+"</option>"
 			}
-			
 			$("#selectYear").append(html);
 			html = "";
-			
 			for(let i = 1; i < 13; i++){
 				html += "<option value="+i+">"+i+"</option>"				
 			}
-			
 			$("#selectMonth").append(html);
 			html = "";
-			
 			for(let i = 1; i < 32; i++){
 				html += "<option value="+i+">"+i+"</option>"				
 			}
-			
 			$("#selectDate").append(html);
 			html = "";
 			// 생년월일 select 세팅 끝
-			
+
+			// 이메일 중복체크 시작
+			$("#user_email").keyup(function(){
+				
+				let userEmail = $("#user_email").val();
+				let emailVal = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+				
+				// 이메일 유효성이 맞을 때 
+				if(emailVal.test(userEmail)){
+					// 이메일 값이 있을 때 중복체크 검사
+					if(userEmail != null && userEmail !=""){
+						$.ajax({
+				            async: true,
+				            type : 'POST',
+				            data : userEmail,
+				            url : "api/emailCheck",
+				            dataType : "json",
+				            contentType: "application/json; charset=UTF-8",
+				            success : function(data) {
+				            	
+				            	// 중복된 아이디인 경우
+				                if (data.result == 1) {
+				                    $('#emailCheck').css('color','red')
+	               					$('#emailCheck').html("* 중복된 이메일입니다.")
+	               					
+	               					$('#certiBtn').attr("disabled", true);
+				                // 중복되지 않은 아이디인 경우
+				                } else {
+				                	$('#emailCheck').css('color','green')
+				                    $('#emailCheck').html("* 사용가능한 이메일입니다.")
+				                    
+				                    $('#certiBtn').removeAttr("disabled");
+				                    
+				                }
+				            },
+				            error : function(error) {
+				            	alert("이메일을 입력해주세요.");
+				            }
+				        });
+					}
+				
+				// 이메일 유효성이 맞지 않을 때
+				} else {
+					$('#emailCheck').html("")
+					$('#certiBtn').attr("disabled", true);
+				}
+			});
 			// 다음 주소 api 시작
 			$("#address_kakao").click(function(){
 				new daum.Postcode({
@@ -185,6 +231,59 @@
 			    }).open();
 			});
 			// 다음 주소 api 끝
+			
+			// 인증버튼 클릭 시작
+			$('#certiBtn').click(function(){
+				console.log('인증버튼 클릭');
+				
+				let userEmail = $("#user_email").val();
+				console.log("userEmail :: ", userEmail);
+				
+				$.ajax({
+					type : 'POST',
+					url : 'api/certiEmail',
+					data : userEmail,
+					dataType :'json',
+					contentType: "application/json; charset=UTF-8",
+					success : function(data) {
+						console.log("data.key :: ", data.key);
+						
+						$('#certiConBtn').click(function(){
+							console.log('확인 키 클릭');
+							
+							// 인증 키 값이 일치할 경우
+							if(data.key == $('#certi_num').val()){
+								alert('인증 되었습니다.');
+								
+								$('#certiSec').hide();
+								
+								$('#certiBtn').html('인증완료');
+								$("#certiBtn").css( "font-size", "10px" );
+								$("#certiBtn").attr('class','btn btn-primary btn-sm col-sm-1 ml-3');
+								$('#certiBtn').attr("disabled", true);
+								
+								$('#user_email').attr("disabled", true);
+							
+							// 인증 키 값이 다를 경우
+							} else {
+								alert('인증번호가 일치하지 않습니다.');
+							}
+							
+						});
+						
+		            },
+		            error : function(error) {
+		            	console.log("error :: ", error);
+		            }
+				});
+				
+				alert("인증번호가 전송되었습니다.") 
+				$('#certiSec').show();
+				isCertification = true; //추후 인증 여부를 알기위한 값
+				
+				
+				});
+			// 인증버튼 클릭 끝
 		});
     	// 제이쿼리 끝
     </script>
