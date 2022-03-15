@@ -27,6 +27,7 @@ public class RegisterApiController {
 	@Autowired
 	public JavaMailSender javaMailSender;
 	
+	// 이메일 중복체크
 	@PostMapping(value = "/emailCheck")
     public ResponseEntity<Object> emailCheck(@RequestBody String userEmail) throws Exception{
 		
@@ -52,6 +53,33 @@ public class RegisterApiController {
 		return new ResponseEntity<>(saveResult, HttpStatus.OK);
     }
 	
+	// 닉네임 중복체크
+	@PostMapping(value = "/nameCheck")
+    public ResponseEntity<Object> nameCheck(@RequestBody String userName) throws Exception{
+		
+		int result = -1;
+		
+		if(userName != null && userName !="") {
+			result = registerService.nameCheck(userName);
+		}
+		
+		HashMap<String, Integer> saveResult = new HashMap<>();
+		
+		// 중복된 닉네임
+		if(result == 1) {
+			saveResult.put("result", result);
+			return new ResponseEntity<>(saveResult, HttpStatus.OK);
+		// 중복되지 않은 닉네임
+		} else if(result == 0) {
+			saveResult.put("result", result);
+			return new ResponseEntity<>(saveResult, HttpStatus.OK);
+		}
+		
+		saveResult.put("result", result);
+		return new ResponseEntity<>(saveResult, HttpStatus.OK);
+    }
+	
+	// 이메일 인증
 	@PostMapping(value = "/certiEmail")
     public Map<String, String> certiEmail(@RequestBody String userEmail) {
 		
@@ -80,6 +108,18 @@ public class RegisterApiController {
 		result.put("key", key);
 		
         return result;
+    }
+	
+	// 유저 회원가입
+	@PostMapping(value = "/userRegister")
+    public ResponseEntity<Object> userRegister(@RequestBody RegisterDTO registerDTO) {
+		
+		int result = registerService.userRegister(registerDTO);
+		
+		Map<String, Object> registerResult = new HashMap<>();
+		
+		registerResult.put("result", result);
+        return new ResponseEntity<>(registerResult, HttpStatus.OK);
     }
 	
 }

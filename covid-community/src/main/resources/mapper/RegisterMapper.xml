@@ -11,5 +11,19 @@
 		WHERE
 			u_email = #{userEmail}
 	</select>
+	
+	<select id="nameCheck" parameterType="String" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			user_info
+		WHERE
+			u_name = #{userName}
+	</select>
+	
+	<insert id="userRegister" parameterType="com.coco.project.register.RegisterDTO">
+		INSERT INTO user_info(u_email, u_pw, u_name, u_birth, u_addr, u_role, u_regDate, u_enabled)
+		VALUES(#{userEmail}, #{userPw}, #{userName}, #{userBirth}, #{userAddr}, #{userRole}, now(), 1)
+	</insert>
 
 </mapper>

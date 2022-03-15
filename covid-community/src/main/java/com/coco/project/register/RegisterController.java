@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/register")
 public class RegisterController {
 
-	@GetMapping(value = "/")
+	@RequestMapping(value = "/")
     String register(){
         return "/register/register";
     }
+
 }
