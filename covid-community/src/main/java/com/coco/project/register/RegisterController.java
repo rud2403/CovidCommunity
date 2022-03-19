@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/register")
 public class RegisterController {
 
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/form")
     String register(){
         return "/register/register";
     }

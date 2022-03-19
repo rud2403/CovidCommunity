@@ -24,11 +24,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .cors().disable()
         .csrf().disable()
         .authorizeRequests()
-        	.antMatchers("/", "/review/list", "/register/**").permitAll()
+        	.antMatchers("/", "/review/list", "/register/**", "/login/**").permitAll()
             .anyRequest().authenticated()
         .and()
             .formLogin()
-            .loginPage("/login").permitAll()
+            .loginPage("/login/form").permitAll()
         .and()
             .logout();
     }
