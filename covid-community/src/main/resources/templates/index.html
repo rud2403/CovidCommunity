@@ -193,43 +193,36 @@
 						</li>
 
 						<!-- Nav Item - Alerts -->
-						<a class="mt-4 mr-3" id="logInTxt" style="cursor: pointer;" th:href="@{/login/form}">로그인</a>
-						<a class="mt-4" id="signUpTxt" style="cursor: pointer;" th:href="@{/register/form}">회원가입</a>
-
-						<div class="topbar-divider d-none d-sm-block"></div>
-
-
-						
-						<!-- 회원 닉네임 보이는 구역 시작 -->
-						<li class="nav-item dropdown no-arrow">
-							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="mr-2 d-none d-lg-inline text-gray-600 small">홍길동</span>
-								<img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-							</a>
-							<!-- Dropdown - User Information -->
-							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#">
-									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-									Profile
+						<div th:if="${loginDTO}">
+							<!-- 회원 닉네임 보이는 구역 시작 -->
+							<li class="nav-item dropdown no-arrow">
+								<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<div th:if="${loginDTO}">
+										<span th:text="${loginDTO.userNickName}+님" style="color: black;" class="mr-2"></span>
+									</div>
+									<img class="img-profile rounded-circle" src="img/undraw_profile.svg">
 								</a>
-								<a class="dropdown-item" href="#">
-									<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-									Settings
-								</a>
-								<a class="dropdown-item" href="#">
-									<i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-									Activity Log
-								</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-									<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-									Logout
-								</a>
-							</div>
-						</li>
-						<!-- 회원 닉네임 보이는 구역 끝 -->
+								<!-- Dropdown - User Information -->
+								<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+									aria-labelledby="userDropdown">
+									<a class="dropdown-item" href="#">
+										<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+										마이페이지
+									</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" data-toggle="modal" style="cursor: pointer;" data-target="#logoutModal">
+										<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+										로그아웃
+									</a>
+								</div>
+							</li>
+							<!-- 회원 닉네임 보이는 구역 끝 -->
+						</div>
+						<div th:unless="${loginDTO}">
+							<a class="mt-4 mr-3" id="logInTxt" style="cursor: pointer;" th:href="@{/login}">로그인</a>
+							<a class="mt-4" id="signUpTxt" style="cursor: pointer;" th:href="@{/register}">회원가입</a>
+						</div>
 					</ul>
 
 				</nav>
@@ -594,15 +587,15 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<h5 class="modal-title" id="exampleModalLabel">로그아웃</h5>
 					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+				<div class="modal-body">정말 로그아웃 하시겠습니까?</div>
 				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="login.html">Logout</a>
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+					<a class="btn btn-primary" th:href="@{/logout}">확인</a>
 				</div>
 			</div>
 		</div>

@@ -71,11 +71,11 @@
                                 </div>
                                 <!-- 닉네임 입력 -->
                                 <div class="form-group row">
-                                    <input type="text" class="form-control form-control-user ml-4" id="user_name"
+                                    <input type="text" class="form-control form-control-user ml-4" id="user_nickName"
                                         placeholder="닉네임을 입력해주세요." maxlength='8' style="width: 94%">
                                 </div>
                                 <div class="row ml-4 mb-3">
-                                	<div id="nameCheck"></div>
+                                	<div id="nickNameCheck"></div>
                                 </div>
                                 <!-- 생년월일 입력 -->
                                 <div class="form-group row">
@@ -168,6 +168,8 @@
 			// 이메일 중복체크 시작
 			$("#user_email").keyup(function(){
 				
+				console.log('이메일 값 입력');
+				
 				let userEmail = $("#user_email").val();
 				
 				// 이메일 유효성검사
@@ -176,12 +178,12 @@
 				// 이메일 유효성이 맞을 때 
 				if(emailVal.test(userEmail)){
 					// 이메일 값이 있을 때 중복체크 검사
-					if(userEmail != null && userEmail !=""){
+					if(userEmail != null || userEmail !=""){
 						$.ajax({
 				            async: true,
 				            type : 'POST',
 				            data : userEmail,
-				            url : "api/emailCheck",
+				            url : "register/api/emailCheck",
 				            dataType : "json",
 				            contentType: "application/json; charset=UTF-8",
 				            success : function(data) {
@@ -215,8 +217,8 @@
 			// 이메일 중복체크 끝
 			
 			// 닉네임 중복체크 시작
-			$("#user_name").keyup(function(){
-				let userName = $("#user_name").val();
+			$("#user_nickName").keyup(function(){
+				let userName = $("#user_nickName").val();
 				
 				// 닉네임 유효성 검사
 				let specialCheck = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
@@ -224,29 +226,29 @@
 				if(userName != null && userName !=""){
 					// 빈칸 유효성
 					if(userName.search(/\s/) != -1) {
-						$('#nameCheck').css('color','red')
-       					$('#nameCheck').html("* 닉네임에 빈칸을 포함할 수 없습니다.")
+						$('#nickNameCheck').css('color','red')
+       					$('#nickNameCheck').html("* 닉네임에 빈칸을 포함할 수 없습니다.")
 					} else if(specialCheck.test(userName)) {
-						$('#nameCheck').css('color','red')
-       					$('#nameCheck').html("* 닉네임에 특수문자를 포함할 수 없습니다.")
+						$('#nickNameCheck').css('color','red')
+       					$('#nickNameCheck').html("* 닉네임에 특수문자를 포함할 수 없습니다.")
 					} else {
 						$.ajax({
 				            async: true,
 				            type : 'POST',
 				            data : userName,
-				            url : "api/nameCheck",
+				            url : "register/api/nameCheck",
 				            dataType : "json",
 				            contentType: "application/json; charset=UTF-8",
 				            success : function(data) {
 				            	
 				            	// 중복된 닉네임인 경우
 				                if (data.result == 1) {
-				                    $('#nameCheck').css('color','red')
-	               					$('#nameCheck').html("* 중복된 닉네임입니다.")
+				                    $('#nickNameCheck').css('color','red')
+	               					$('#nickNameCheck').html("* 중복된 닉네임입니다.")
 				                // 중복되지 않은 닉네임인 경우
 				                } else {
-				                	$('#nameCheck').css('color','green')
-				                    $('#nameCheck').html("* 사용가능한 닉네임입니다.")
+				                	$('#nickNameCheck').css('color','green')
+				                    $('#nickNameCheck').html("* 사용가능한 닉네임입니다.")
 				                }
 				            },
 				            error : function(error) {
@@ -255,7 +257,7 @@
 				        });
 					}
 				} else {
-					$('#nameCheck').html("")
+					$('#nickNameCheck').html("")
 				}
 				
 			});
@@ -281,7 +283,7 @@
 				
 				$.ajax({
 					type : 'POST',
-					url : 'api/certiEmail',
+					url : 'register/api/certiEmail',
 					data : userEmail,
 					dataType :'json',
 					contentType: "application/json; charset=UTF-8",
@@ -329,7 +331,7 @@
 				let userEmail = $("#user_email").val();
 				let userPw = $("#user_pw").val();
 				let userPwCon = $("#user_pwCon").val();
-				let userName = $("#user_name").val();
+				let userNickName = $("#user_nickName").val();
 				let userBirth = $("#selectYear").val() + "/" + $("#selectMonth").val() + "/" + $("#selectDate").val();
 				let addrKaKao = $("#address_kakao").val();
 				let addrKaKaoDetail = $("#address_kakao_detail").val();
@@ -360,7 +362,7 @@
 					$("#user_pwCon").focus();
 					return false;
 				}
-				if(userName == null || userName == ""){
+				if(userNickName == null || userNickName == ""){
 					alert('닉네임을 입력해주세요.');
 					$("#user_name").focus();
 					return false;
@@ -379,7 +381,7 @@
 				let userInfo = {
 					userEmail,
 	           		userPw,
-	           		userName,
+	           		userNickName,
 	           		userBirth,
 	           		userAddr
 			    };
@@ -391,7 +393,7 @@
 		            async: true,
 		            type : 'POST',
 		            data : JSON.stringify(userInfo),
-		            url : "api/userRegister",
+		            url : "register/api/userRegister",
 		            dataType : "json",
 		            contentType: "application/json; charset=UTF-8",
 		            success : function(data) {

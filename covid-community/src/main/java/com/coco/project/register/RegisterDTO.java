@@ -7,7 +7,7 @@ public class RegisterDTO {
 
 	private String userEmail;
 	private String userPw;
-	private String userName;
+	private String userNickName;
 	private String userBirth;
 	private String userAddr;
 	private String userRole;

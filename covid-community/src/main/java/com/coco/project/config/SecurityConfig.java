@@ -24,11 +24,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .cors().disable()
         .csrf().disable()
         .authorizeRequests()
-        	.antMatchers("/", "/review/list", "/register/**", "/login/**").permitAll()
+        	.antMatchers("/", "/review/list", "/register/**", "/login/**", "/loginProc").permitAll()
+        	// .antMatchers("").hasRole("USER")
             .anyRequest().authenticated()
         .and()
             .formLogin()
-            .loginPage("/login/form").permitAll()
+            .loginPage("/login").permitAll()
+            .loginProcessingUrl("/loginProc")
+            .defaultSuccessUrl("/")
+            .failureUrl("/loginDenied")
         .and()
             .logout();
     }

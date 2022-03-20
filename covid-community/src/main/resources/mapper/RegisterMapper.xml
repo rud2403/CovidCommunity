@@ -18,12 +18,12 @@
 		FROM
 			user_info
 		WHERE
-			u_name = #{userName}
+			u_nickname = #{userNickName}
 	</select>
 	
 	<insert id="userRegister" parameterType="com.coco.project.register.RegisterDTO">
-		INSERT INTO user_info(u_email, u_pw, u_name, u_birth, u_addr, u_role, u_regDate, u_enabled)
-		VALUES(#{userEmail}, #{userPw}, #{userName}, #{userBirth}, #{userAddr}, #{userRole}, now(), 1)
+		INSERT INTO user_info(u_email, u_pw, u_nickname, u_birth, u_addr, u_role, u_regDate, u_enabled)
+		VALUES(#{userEmail}, #{userPw}, #{userNickName}, #{userBirth}, #{userAddr}, #{userRole}, now(), 1)
 	</insert>
 
 </mapper>
