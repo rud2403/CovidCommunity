@@ -1,5 +1,6 @@
 package com.coco.project.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,11 +9,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
+	@Autowired
+	private AuthenticationFailureHandler loginFailureHandler;
+	
 	@Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/scss/**", "/vendor/**");
@@ -24,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .cors().disable()
         .csrf().disable()
         .authorizeRequests()
-        	.antMatchers("/", "/review/list", "/register/**", "/login/**", "/loginProc").permitAll()
+        	.antMatchers("/", "/review/list", "/register/**", "/login/**", "/loginProc", "/forgotPw", "/resetPw").permitAll()
         	// .antMatchers("").hasRole("USER")
             .anyRequest().authenticated()
         .and()
@@ -32,7 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .loginPage("/login").permitAll()
             .loginProcessingUrl("/loginProc")
             .defaultSuccessUrl("/")
-            .failureUrl("/loginDenied")
+            .failureHandler(loginFailureHandler)
+            // .failureUrl("/loginDenied")
         .and()
             .logout();
     }

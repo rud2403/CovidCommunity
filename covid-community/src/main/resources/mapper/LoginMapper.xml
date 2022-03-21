@@ -18,6 +18,15 @@
         WHERE
         	u_email = #{userEmail}
     </select>
-
+    
+    <!-- 비밀번호 변경 -->
+	<update id="resetPw" parameterType="map">
+		UPDATE
+			user_info
+		SET
+			u_pw = #{userPw}
+		WHERE
+			u_email = #{userEmail};
+	</update>
 
 </mapper>

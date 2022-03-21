@@ -50,7 +50,7 @@
                                 </div>
                                 <!-- 인증번호 입력칸 -->
                                 <div class="form-group row ml-2" id="certiSec" style="display:none;">
-                                    <input type="email" class="form-control form-control-user col-sm-10 ml-2" id="certi_num"
+                                    <input type="text" class="form-control form-control-user col-sm-10 ml-2" id="certi_num"
                                         placeholder="인증번호" style="width: 600px">
                                     <button class="btn btn-secondary btn-sm col-sm-1 ml-3" type="button" id="certiConBtn">확인</button>
                                 </div>
@@ -276,10 +276,8 @@
 			
 			// 인증버튼 클릭 시작
 			$('#certiBtn').click(function(){
-				console.log('인증버튼 클릭');
 				
 				let userEmail = $("#user_email").val();
-				console.log("userEmail :: ", userEmail);
 				
 				$.ajax({
 					type : 'POST',
