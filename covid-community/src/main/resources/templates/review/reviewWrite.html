@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>CoCo - reviewWrite</title>
+
+<!-- Custom fonts for this template -->
+<link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+<!-- Custom styles for this page -->
+<link href="../vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+	
+<!-- 제이쿼리 적용 -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+<style>
+.box-radio-input input[type="radio"]{
+  display:none;
+}
+
+.box-radio-input input[type="radio"] + span{
+  display:inline-block;
+  background:none;
+  border:1px solid #dfdfdf;  
+  padding:0px 10px;
+  text-align:center;
+  height:35px;
+  line-height:33px;
+  font-weight:500;
+  cursor:pointer;
+}
+
+.box-radio-input input[type="radio"]:checked + span{
+  border:1px solid #23a3a7;
+  background:#23a3a7;
+  color:#fff;
+}
+</style>
+
+</head>
+
+<body id="page-top">
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<nav
+					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+					<!-- Sidebar Toggle (Topbar) -->
+					<button id="sidebarToggleTop"
+						class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
+
+					<!-- Topbar Navbar -->
+					<ul class="navbar-nav ml-auto">
+
+						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
+						<li class="nav-item dropdown no-arrow d-sm-none"><a
+							class="nav-link dropdown-toggle" href="#" id="searchDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
+						</a> <!-- Dropdown - Messages -->
+							<div
+								class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+								aria-labelledby="searchDropdown">
+								<form class="form-inline mr-auto w-100 navbar-search">
+									<div class="input-group">
+										<input type="text"
+											class="form-control bg-light border-0 small"
+											placeholder="Search for..." aria-label="Search"
+											aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button class="btn btn-primary" type="button">
+												<i class="fas fa-search fa-sm"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div></li>
+
+						<!-- Nav Item - Alerts -->
+						<div th:if="${loginDTO}">
+							<!-- 회원 닉네임 보이는 구역 시작 -->
+							<li class="nav-item dropdown no-arrow"><a
+								class="nav-link dropdown-toggle" href="#" id="userDropdown"
+								role="button" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+									<div th:if="${loginDTO}">
+										<span th:text="${loginDTO.userNickName}+님"
+											style="color: black;" class="mr-2"></span>
+									</div> <img class="img-profile rounded-circle"
+									src="img/undraw_profile.svg">
+							</a> <!-- Dropdown - User Information -->
+								<div
+									class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+									aria-labelledby="userDropdown">
+									<a class="dropdown-item" href="#"> <i
+										class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 마이페이지
+									</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" data-toggle="modal"
+										style="cursor: pointer;" data-target="#logoutModal"> <i
+										class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+										로그아웃
+									</a>
+								</div></li>
+							<!-- 회원 닉네임 보이는 구역 끝 -->
+						</div>
+						<div th:unless="${loginDTO}">
+							<a class="mt-4 mr-3" id="logInTxt" style="cursor: pointer;"
+								th:href="@{/login}">로그인</a> <a class="mt-4" id="signUpTxt"
+								style="cursor: pointer;" th:href="@{/register}">회원가입</a>
+						</div>
+					</ul>
+
+				</nav>
+				<!-- End of Topbar -->
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid"
+					style="padding-left: 12.5rem; padding-right: 12.5rem;">
+
+					<!-- Page Heading -->
+					<h1 class="h3 mb-2 text-gray-800">후기 게시판 - 글쓰기</h1>
+					<div class="card shadow mb-4">
+						<div class="card-body">
+							<fieldset class="form-group row">
+								<legend class="col-form-label col-sm-2 float-sm-left pt-0">백신</legend>
+								<div class="col-sm-10">
+									<label class="box-radio-input">
+										<input type="radio" name="rbVaccineKind" value="1" checked="checked">
+										<span>화이자</span>
+									</label>
+									<label class="box-radio-input">
+										<input type="radio" name="rbVaccineKind" value="2">
+										<span>모더나</span>
+									</label>
+									<label class="box-radio-input">
+										<input type="radio" name="rbVaccineKind" value="3">
+										<span>얀센</span>
+									</label>
+									<label class="box-radio-input">
+										<input type="radio" name="rbVaccineKind" value="4">
+										<span>아스트라제네카</span>
+									</label>
+								</div>
+							</fieldset>
+
+							<div class="form-group row">
+								<label for="inputEmail3" class="col-sm-2 col-form-label">제목</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="rbTitle" id="rbTitle">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="inputPassword3" class="col-sm-2 col-form-label">내용</label>
+								<div class="col-sm-10">
+									<textarea cols="30" rows="20" class="form-control" name="rbContent" id="rbContent"></textarea>
+								</div>
+							</div>
+							<div>
+								<input type="hidden" th:value="${loginDTO.userId}" id="rbWriter">
+							</div>
+							<div class="mb-4" style="text-align: center;">
+								<a type="button" class="btn btn-primary" th:href="@{/review/list}">목록으로</a>
+								<button type="submit" class="btn btn-primary" id="reviiewSub">작성</button>
+							</div>
+						</div>
+					</div>
+					
+
+				</div>
+				<!-- /.container-fluid -->
+
+			</div>
+			<!-- End of Main Content -->
+
+			<!-- Footer -->
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; Your Website 2020</span>
+					</div>
+				</div>
+			</footer>
+			<!-- End of Footer -->
+
+		</div>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready
+					to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="login.html">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			$('#reviiewSub').click(function(){
+				console.log('작성 버튼 클릭');
+				
+				let rbTitle = $('#rbTitle').val();
+				let rbContent = $('#rbContent').val();
+				let rbVaccineKind = $('input[name=rbVaccineKind]').val();
+				let rbWriter = $('#rbWriter').val();
+				
+				let boardInfo = {
+						rbTitle,
+						rbContent,
+						rbVaccineKind,
+						rbWriter
+				};
+				
+				$.ajax({
+					type : 'POST',
+					url : 'api/write',
+					data : JSON.stringify(boardInfo),
+					dataType :'json',
+					contentType: "application/json; charset=UTF-8",
+					success : function(data) {
+						console.log("data.result :: ", data.result);
+						if(data.result == 1){
+							alert('게시글 작성 완료.');
+							 location.href = "/review/list";
+						} else {
+							alert('게시글 작성 실패.');
+						}
+						
+		            },
+		            error : function(error) {
+		            	console.log("error :: ", error);
+		            }
+				});
+			});
+		});
+	</script>
+	<!-- Bootstrap core JavaScript-->
+	<script src="../vendor/jquery/jquery.min.js"></script>
+	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="../js/sb-admin-2.min.js"></script>
+
+	<!-- Page level plugins -->
+	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+	<!-- Page level custom scripts -->
+	<script src="../js/demo/datatables-demo.js"></script>
+
+</body>
+
+</html>

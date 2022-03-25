@@ -12,7 +12,7 @@ import lombok.Data;
 @SuppressWarnings("serial")
 @Data
 public class LoginDTO implements UserDetails{
-
+	private int userId;
 	private String userEmail;
 	private String userPw;
 	private String userNickName;

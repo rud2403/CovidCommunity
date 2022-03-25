@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.coco.project.review.ReviewMapper">
+
+	<!-- 리뷰 게시판 - 글쓰기 -->
+	<insert id="reviewBoardWrite" parameterType="com.coco.project.register.RegisterDTO">
+		INSERT INTO review_board(rb_title, rb_content, rb_writer, rb_vaccine_kind)
+		VALUES(#{rbTitle}, #{rbContent}, #{rbWriter}, #{rbVaccineKind})
+	</insert>
+
+</mapper>

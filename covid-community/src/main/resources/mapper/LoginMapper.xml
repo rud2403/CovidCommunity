@@ -6,6 +6,7 @@
 	<!-- 로그인 -->
     <select id="getUserAccount" resultType="com.coco.project.login.LoginDTO">
         SELECT
+        	u_id		AS userId,
         	u_email 	AS userEmail,
         	u_pw 		AS userPw,
         	u_nickname 	AS userNickName,
