@@ -8,5 +8,38 @@
 		INSERT INTO review_board(rb_title, rb_content, rb_writer, rb_vaccine_kind)
 		VALUES(#{rbTitle}, #{rbContent}, #{rbWriter}, #{rbVaccineKind})
 	</insert>
-
+	
+	<!-- 리뷰 게시판 - 게시글 조회 -->
+	<select id="reviewBoardList" resultType="hashmap">
+		SELECT
+			rb_id 				AS rbId,
+			rb_title 			AS rbTitle,
+			rb_content 			AS rbContent,
+			rb_view_cnt 		AS rbViewCnt,
+			rb_like_cnt 		AS rbLikeCnt,
+			rb_register_date 	AS rbRegisterDate,
+			rb_update_date  	AS rbUpdateDate,
+			rb_writer 			AS rbWriter,
+			rb_notice_yn 		AS rbNoticeYn,
+			rb_vaccine_kind 	AS rbVaccineKind
+		FROM
+			review_board
+		<where>
+			<if test="rbInput != null and rbInput != ''">
+				<if test="rbSelect == 'title'">
+					AND rb_title LIKE CONCAT('%', #{rbInput}, '%')
+				</if>
+				<if test="rbSelect == 'content'">
+					AND rb_content LIKE CONCAT('%', #{rbInput}, '%')
+				</if>
+			</if>
+			<if test="rbVaccineKind != null and rbVaccineKind != ''">
+				AND rb_vaccine_kind = #{rbVaccineKind}
+			</if>
+		</where>
+		<if test="rbNowPage != null and rbNowPage != ''">
+			LIMIT 9 OFFSET ${rbNowPage}
+		</if>
+	</select>
+	
 </mapper>

@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .cors().disable()
         .csrf().disable()
         .authorizeRequests()
-        	.antMatchers("/", "/review/list", "/register/**", "/login/**", "/loginProc", "/forgotPw", "/resetPw").permitAll()
+        	.antMatchers("/", "/review/list", "/review/api/BoardList", "/register/**", "/login/**", "/loginProc", "/forgotPw", "/resetPw").permitAll()
         	.antMatchers("/review/write").hasRole("USER")
             .anyRequest().authenticated()
         .and()
