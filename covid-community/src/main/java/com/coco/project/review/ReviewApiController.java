@@ -50,6 +50,7 @@ public class ReviewApiController {
 		return new ResponseEntity<>(saveResult, HttpStatus.OK);
     }
 	
+	// 후기 게시판 리스트 조회
 	@GetMapping(value = "/BoardList")
 	public ResponseEntity<Object> BoardList(@RequestParam Map<String, Object> boardInfo){
 		

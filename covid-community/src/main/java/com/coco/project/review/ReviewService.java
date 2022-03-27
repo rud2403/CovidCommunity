@@ -27,6 +27,7 @@ public class ReviewService {
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("list", reviewMapper.reviewBoardList(boardInfo));
+		resultMap.put("totalCnt", reviewMapper.reviewTotalCnt(boardInfo));
 		
 		return resultMap;
 	}

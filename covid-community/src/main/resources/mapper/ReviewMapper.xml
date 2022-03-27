@@ -9,6 +9,27 @@
 		VALUES(#{rbTitle}, #{rbContent}, #{rbWriter}, #{rbVaccineKind})
 	</insert>
 	
+	<!-- 리뷰 게시판 - 게시글 총 개수 가져오기 -->
+	<select id="reviewTotalCnt" resultType="int">
+		SELECT
+			count(*)	AS totalCnt
+		FROM
+			review_board
+		<where>
+			<if test="rbInput != null and rbInput != ''">
+				<if test="rbSelect == 'title'">
+					AND rb_title LIKE CONCAT('%', #{rbInput}, '%')
+				</if>
+				<if test="rbSelect == 'content'">
+					AND rb_content LIKE CONCAT('%', #{rbInput}, '%')
+				</if>
+			</if>
+			<if test="rbVaccineKind != null and rbVaccineKind != ''">
+				AND rb_vaccine_kind = #{rbVaccineKind}
+			</if>
+		</where>
+	</select>
+	
 	<!-- 리뷰 게시판 - 게시글 조회 -->
 	<select id="reviewBoardList" resultType="hashmap">
 		SELECT
@@ -37,8 +58,8 @@
 				AND rb_vaccine_kind = #{rbVaccineKind}
 			</if>
 		</where>
-		<if test="rbNowPage != null and rbNowPage != ''">
-			LIMIT 9 OFFSET ${rbNowPage}
+		<if test="startRow != null and startRow != ''">
+			LIMIT 9 OFFSET ${startRow}
 		</if>
 	</select>
 	
