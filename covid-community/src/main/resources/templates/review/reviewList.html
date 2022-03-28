@@ -25,7 +25,9 @@
 <!-- Custom styles for this page -->
 <link href="../vendor/datatables/dataTables.bootstrap4.min.css"
 	rel="stylesheet">
-	
+
+<!-- 제이쿼리 적용 -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	
 <style>
 	.box-radio-input input[type="radio"]{
@@ -61,9 +63,6 @@
     height: 6em; /* line-height 가 1.2em 이고 5라인을 자르기 때문에 height는 1.2em * 5 = 6em */
     }
 </style>	
-
-<!-- 제이쿼리 적용 -->
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 </head>
 
@@ -445,26 +444,12 @@
 									
 								</div>
 							</fieldset>
-							
 						
-							<div class="row row-cols-1 row-cols-md-3" id="cardBody">
-							  <!-- <div class="col mb-4">
-							    <div class="card h-100">
-							      <img src="..." class="card-img-top" alt="...">
-							      <div class="card-body">
-							        <h5 class="card-title">Card title</h5>
-							        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							      </div>
-							    </div>
-							  </div> -->
-							</div>
-							
+							<div class="row row-cols-1 row-cols-md-3" id="cardBody"></div>
 							
 							<nav aria-label="Page navigation example">
 							  <ul class="pagination" id="pageNum" style="padding-left: 40%;"></ul>
 							</nav>
-						
-						
 						</div>
 					</div>
 
@@ -527,6 +512,11 @@
 			// 페이지당 보여줄 개수
 			let pageSize = 9;
 			
+			// 한 화면에 보여줄 페이지 번호의 개수 (페이지 블록)
+			let pageBlock = 5;
+			
+			// 게시글 전체 개수
+			let totalCnt = 0;
 			
 			// 게시글 리스트 가져오는 메소드
 			function getBoardList(){
@@ -558,24 +548,54 @@
 					success : function(data) {
 						console.log("data.list :: ", data.list);
 						console.log("data.totalCnt :: ", data.totalCnt);
+						
+						
 						if(data.list.length > 0){
+							let color;
+							
 							for(let i in data.list){
+								let VaccineKind = data.list[i].rbVaccineKind;
+								switch (VaccineKind) {
+								  case '1':
+									VaccineKind = '화이자';
+									color = 'bg-warning';
+								    break;
+								  case '2':
+									VaccineKind = '모더나';
+									color = 'bg-primary';
+								    break;
+								  case '3':
+									VaccineKind = '얀센';
+									color = 'bg-success';
+								    break;
+								  case '4':
+									VaccineKind = '아스트라제네카';
+									color = 'bg-info';
+								    break;
+								}
 								
 								cardHtml += `<div class="col mb-4">
 										    <div class="card h-100">
+										      <div class="card-header ${color}" style="color:white;"><b>${VaccineKind}</b></div>
 										      <img class="card-img-top">
 										      <div class="card-body">
-										        <h5 class="card-title text-center">${data.list[i].rbTitle}</h5>
+										      	<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${data.list[i].rbId}'">${data.list[i].rbTitle}</h5>
 										        <p class="card-text ellipsis">${data.list[i].rbContent}</p>
 										      </div>
 										    </div>
 										  </div>`
 							}
 						}
+						
+						
 						$('#cardBody').html(cardHtml);
 						
+						
+						console.log('rbNowPage', rbNowPage);
+						
 						// 페이지 네이션 그리기
-						drawPagination(data.totalCnt);
+						drawPagination(data.totalCnt, 0);
+						totalCnt = data.totalCnt;
 						
 		            },
 		            error : function(error) {
@@ -584,26 +604,28 @@
 				});
 			} 
 			
-			function drawPagination(totalCnt){
-				
+			function drawPagination(totalCnt, num){
+				// 페이징처리 그리기
 				let pageNum = "";
-				// 한 화면에 보여줄 페이지 번호의 개수 (페이지 블록)
-				let pageBlock = 5;
 				
 				// 전체 페이지 수
-				let pageCount = totalCnt/pageSize+(totalCnt % pageSize == 0? 0:1);
+				let pageCount = parseInt(totalCnt/pageSize+(totalCnt % pageSize == 0? 0:1));
+				
+				// 페이징처리에 보여질 페이지 넘버
+				let block_num = parseInt((rbNowPage - 1) / pageBlock) + num;
+				
 				// 페이지 블록의 시작페이지 번호
 				// let startPage = ((rbNowPage-1)/pageBlock) * pageBlock +1;
-				let startPage = rbNowPage-1)/pageBlock) * pageBlock +1;
+				let startPage = (pageBlock * block_num) + 1
 				// 페이지 블록의 끝 페이지 번호
 				// let endPage = startPage+pageBlock-1;
-				let endPage = startPage+pageBlock-1;
+				let endPage = startPage + (pageBlock - 1)
 				
 				if(endPage > pageCount){
 					endPage = pageCount;
 				}
 				if(startPage > pageBlock){
-					pageNum += `<li class="page-item">
+					pageNum += `<li class="page-item" style="cursor: pointer;">
 							        <span class="page-link" aria-hidden="true" name="pre">&laquo;</span>
 							    </li>`
 				}
@@ -612,7 +634,7 @@
 				}
 				
 				if(endPage < pageCount){
-				    pageNum += `<li class="page-item">
+				    pageNum += `<li class="page-item" style="cursor: pointer;">
 							        <span class="page-link" aria-hidden="true" name="next">&raquo;</span>
 							    </li>`
 				}
@@ -626,22 +648,25 @@
 				});
 				// 페이지 네이션 다음 클릭 시
 				$(".pagination li span[name='next']").click(function(){
-					console.log('다음 클릭');
+					rbNowPage = startPage + pageBlock;
+					drawPagination(totalCnt, 0);
+					getBoardList();
 				});
 				// 페이지 네이션 이전 클릭 시
 				$(".pagination li span[name='pre']").click(function(){
-					console.log('이전 클릭');
+					drawPagination(totalCnt, -1);
+					rbNowPage = startPage - pageBlock;
+					getBoardList();
 				});
 				
 			}
 			
-
-			
 			// 페이지 접근시 게시글 가져오기
 			getBoardList();
-			
+				
 			// 검색 버튼 클릭 시
 			$('#rbSearchButton').click(function(){
+				rbNowPage = 1;
 				getBoardList();
 			});
 			
@@ -649,11 +674,22 @@
 			$("input[name='rbVaccineKind']:radio").change(function () {
 		        //라디오 버튼 값을 가져온다.
 		        // var noticeCat = this.value;
+		        rbNowPage = 1;
 				getBoardList();       
 			});
 			
+			// 검색창 엔터 클릭 시
+			$("#rbInput").keydown(function(key) {
+                if (key.keyCode == 13) {
+                	rbNowPage = 1;
+    				getBoardList();
+                }
+            });
 			
-			
+			// 제목 클릭 시
+			$('.card-title').click(function(){
+				
+			});
 			
 		});
 	</script>
