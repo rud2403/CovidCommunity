@@ -579,7 +579,7 @@
 										      <div class="card-header ${color}" style="color:white;"><b>${VaccineKind}</b></div>
 										      <img class="card-img-top">
 										      <div class="card-body">
-										      	<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${data.list[i].rbId}'">${data.list[i].rbTitle}</h5>
+										      	<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${data.list[i].rbId}'" style="cursor: pointer;">${data.list[i].rbTitle}</h5>
 										        <p class="card-text ellipsis">${data.list[i].rbContent}</p>
 										      </div>
 										    </div>
@@ -630,7 +630,12 @@
 							    </li>`
 				}
 				for(let i = startPage; i <= endPage; i++){
-					pageNum += `<li class="page-item" style="cursor: pointer;"><span class="page-link" name="num">${i}</span></li>`
+					if(rbNowPage == i){
+						pageNum += `<li class="page-item active" style="cursor: pointer;"><span class="page-link" name="num">${i}</span></li>`
+					} else {
+						pageNum += `<li class="page-item" style="cursor: pointer;"><span class="page-link" name="num">${i}</span></li>`	
+					}
+					
 				}
 				
 				if(endPage < pageCount){

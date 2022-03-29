@@ -3,13 +3,28 @@
 
 <mapper namespace="com.coco.project.review.ReviewMapper">
 
-	<!-- 리뷰 게시판 - 글쓰기 -->
+	<sql id="selectAll">
+		SELECT
+			rb_id 				AS rbId,
+			rb_title 			AS rbTitle,
+			rb_content 			AS rbContent,
+			rb_view_cnt 		AS rbViewCnt,
+			rb_like_cnt 		AS rbLikeCnt,
+			rb_register_date 	AS rbRegisterDate,
+			rb_update_date  	AS rbUpdateDate,
+			rb_writer 			AS rbWriter,
+			rb_notice_yn 		AS rbNoticeYn,
+			rb_vaccine_kind 	AS rbVaccineKind
+	</sql>  
+
+
+	<!-- 후기 게시판 - 글쓰기 -->
 	<insert id="reviewBoardWrite" parameterType="com.coco.project.register.RegisterDTO">
 		INSERT INTO review_board(rb_title, rb_content, rb_writer, rb_vaccine_kind)
 		VALUES(#{rbTitle}, #{rbContent}, #{rbWriter}, #{rbVaccineKind})
 	</insert>
 	
-	<!-- 리뷰 게시판 - 게시글 총 개수 가져오기 -->
+	<!-- 후기 게시판 - 게시글 총 개수 가져오기 -->
 	<select id="reviewTotalCnt" resultType="int">
 		SELECT
 			count(*)	AS totalCnt
@@ -30,19 +45,9 @@
 		</where>
 	</select>
 	
-	<!-- 리뷰 게시판 - 게시글 조회 -->
+	<!-- 후기 게시판 - 게시글 조회 -->
 	<select id="reviewBoardList" resultType="hashmap">
-		SELECT
-			rb_id 				AS rbId,
-			rb_title 			AS rbTitle,
-			rb_content 			AS rbContent,
-			rb_view_cnt 		AS rbViewCnt,
-			rb_like_cnt 		AS rbLikeCnt,
-			rb_register_date 	AS rbRegisterDate,
-			rb_update_date  	AS rbUpdateDate,
-			rb_writer 			AS rbWriter,
-			rb_notice_yn 		AS rbNoticeYn,
-			rb_vaccine_kind 	AS rbVaccineKind
+		<include refid="selectAll"></include>
 		FROM
 			review_board
 		<where>
@@ -62,5 +67,37 @@
 			LIMIT 9 OFFSET ${startRow}
 		</if>
 	</select>
+	
+	<!-- 후기 게시판 - 게시글 상세정보 -->
+	<select id="reviewBoardDetail" resultType="hashmap">
+		SELECT
+			rb_id 				AS rbId,
+			rb_title 			AS rbTitle,
+			rb_content 			AS rbContent,
+			rb_view_cnt 		AS rbViewCnt,
+			rb_like_cnt 		AS rbLikeCnt,
+			rb_register_date 	AS rbRegisterDate,
+			rb_update_date  	AS rbUpdateDate,
+			rb_writer 			AS rbWriter,
+			rb_notice_yn 		AS rbNoticeYn,
+			rb_vaccine_kind 	AS rbVaccineKind,
+			u_nickname			AS uNickName
+		FROM
+			review_board rb
+		JOIN
+			user_info ui ON rb.rb_writer = ui.u_id
+		WHERE
+			rb_id = #{boardId}
+	</select>
+	
+	<!-- 후기 게시판 - 조회수 증가 -->
+	<update id="reviewBoardViewCnt">
+		UPDATE
+			review_board
+		SET
+			rb_view_cnt = rb_view_cnt + 1
+		WHERE
+			rb_id = #{boardId}
+	</update>
 	
 </mapper>

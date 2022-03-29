@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +62,26 @@ public class ReviewApiController {
 		boardList = reviewService.reviewBoardList(boardInfo);
 		
 		return new ResponseEntity<>(boardList, HttpStatus.OK);
+	}
+	
+	// 후기 게시판 상세정보
+	@GetMapping(value = "/boardDetail")
+	public ResponseEntity<Object> boardDetail(@RequestParam(value = "boardId") int boardId){
+		
+		Map<String, Object> detailResult = new HashMap<>();
+		
+		detailResult = reviewService.reviewBoardDetail(boardId);
+		
+		return new ResponseEntity<>(detailResult, HttpStatus.OK);
+	}
+	
+	// 후기 게시판 조회수 증가
+	@PostMapping(value ="/boardViewCnt")
+	public ResponseEntity<Object> boardViewCnt(@RequestBody int boardId, HttpServletRequest request, HttpServletResponse response){
+		
+		int detailResult = reviewService.reviewBoardViewCnt(request, response, boardId);
+		
+		return new ResponseEntity<>(detailResult, HttpStatus.OK);
 	}
 	
 }
