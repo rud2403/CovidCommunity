@@ -506,15 +506,24 @@
 	<script>
 		$(document).ready(function() {
 			
+			let writeResult = "[[${writeResult}]]";
+			
+			if(writeResult != ""){
+				if(writeResult == 1){
+					alert('게시글 작성 완료.');
+					writeResult = "";
+				} else {
+					alert('게시글 작성 실패.');
+					writeResult = "";
+				}
+			}
+			
 			// 현재 페이지
 			let rbNowPage = 1;
-			
 			// 페이지당 보여줄 개수
 			let pageSize = 9;
-			
 			// 한 화면에 보여줄 페이지 번호의 개수 (페이지 블록)
 			let pageBlock = 5;
-			
 			// 게시글 전체 개수
 			let totalCnt = 0;
 			
@@ -586,12 +595,7 @@
 										  </div>`
 							}
 						}
-						
-						
 						$('#cardBody').html(cardHtml);
-						
-						
-						console.log('rbNowPage', rbNowPage);
 						
 						// 페이지 네이션 그리기
 						drawPagination(data.totalCnt, 0);

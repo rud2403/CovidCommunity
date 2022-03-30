@@ -391,12 +391,20 @@
                         </div>
                         <div class="row">
                         	<div class="col">
-                        		<span id="rbContent"></span>
-                        		
+                        		<div class="m-5">
+                        			<span  id="rbContent"></span>
+                        		</div>
+                        		<div class="text-center mb-5">
+                        			<img id="rbFilePath" src="" />
+                        		</div>
                         		
                         		<div class="feeling_div">
 									  <div class="text-center">
-									  									  
+									  	
+									  	<a type="button" class="btn btn-primary" th:href="@{/review/list}">
+									    	목록으로
+									    </a>
+									  								  
 									    <button type="button" class="btn btn-outline-danger">
 									    	<i class="fa fa-heart"> 좋아요</i>
 									    </button>
@@ -417,9 +425,12 @@
                         <div class="row">
                         	<div class="col">
                         		<div class="input-group mb-3">
-								  <input type="text" class="form-control" placeholder="댓글을 입력해주세요." style="height: 50px">
+								  <input type="text" class="form-control" id="rcContent" placeholder="댓글을 입력해주세요." style="height: 50px">
+								  
+								  
+								  <input th:if="${userInfo}" type="hidden" th:value="${userInfo.userId}" id="rcWriter">
 								  <div class="input-group-append">
-								    <button class="btn btn-outline-secondary" type="button" id="button-addon2">작성</button>
+								    <button class="btn btn-outline-secondary" type="button" id="rcSubBtn">작성</button>
 								  </div>
 								</div>
                         	</div>
@@ -563,6 +574,7 @@
 						$('#rbRegisterDate').text(rbRegisterDate);
 						$('#rbViewCnt').text(detail.rbViewCnt);
 						$('#rbLikeCnt').text(detail.rbLikeCnt);
+						$("#rbFilePath").attr("src", detail.rbFilePath);
 		            },
 		            error : function(error) {
 		            	console.log("error :: ", error);
@@ -571,6 +583,37 @@
 				// 게시글 정보 가져오는 ajax 끝
 			}
 			
+			
+			// 댓글 작성 버튼 클릭 시작			
+			$('#rcSubBtn').click(function(){
+				
+				let rcContent = $('#rcContent').val(); 
+				let rcBoard = boardId;
+				let rcWriter = $('#rcWriter').val();
+				
+				let rcInfo = {
+					rcContent,
+					rcBoard,
+					rcWriter
+				};
+				
+				console.log(rcInfo);
+				
+				$.ajax({
+					type : 'POST',
+					url : '../../comment/api/write',
+					data : JSON.stringify(rcInfo),
+					contentType: "application/json; charset=UTF-8",
+					dataType :'json',
+					success : function(data) {
+						console.log("data:: ", data);
+		            },
+		            error : function(error) {
+		            	console.log("error :: ", error);
+		            }
+				});
+			})
+			// 댓글 작성 버튼 클릭 시작
 		});
 	</script>
 

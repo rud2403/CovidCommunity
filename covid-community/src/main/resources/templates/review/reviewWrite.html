@@ -51,6 +51,117 @@
   background:#23a3a7;
   color:#fff;
 }
+
+#root {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.title {
+  text-align: center;
+}
+
+.contents {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+}
+.contents .upload-box {
+  width: 100%;
+  margin-right: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contents .upload-box .drag-file {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px dashed #dbdbdb;
+}
+.contents .upload-box .drag-file.highlight {
+  border: 3px dashed red;
+}
+.contents .upload-box .drag-file .image {
+  width: 40px;
+}
+.contents .upload-box .drag-file .message {
+  margin-bottom: 0;
+}
+.contents .upload-box .drag-file .preview {
+  display: none;
+  position: absolute;
+  left: 0;
+  height: 0;
+  width: 100%;
+  height: 100%;
+}
+.contents .upload-box .file-label {
+  margin-top: 30px;
+  background-color: #5b975b;
+  color: #fff;
+  text-a
+}
+
+.file-label {
+  margin-top: 30px;
+  background-color: #23a3a7;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.file {
+  display: none;
+}
+
+
+.upload-box {
+  width: 100%;
+  box-sizing: border-box;
+  margin-right: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.upload-box .drag-file {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px dashed #dbdbdb;
+}
+.upload-box .drag-file.highlight {
+  border: 3px dashed red;
+}
+.upload-box .drag-file .image {
+  width: 40px;
+}
+.upload-box .drag-file .message {
+  margin-bottom: 0;
+}
+.upload-box .drag-file .preview {
+  display: none;
+  position: absolute;
+  left: 0;
+  height: 0;
+  width: 100%;
+  height: 100%;
+}
+
 </style>
 
 </head>
@@ -144,60 +255,95 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid"
-					style="padding-left: 12.5rem; padding-right: 12.5rem;">
+					style="padding-left: 20%; padding-right: 20%;">
 
 					<!-- Page Heading -->
 					<h1 class="h3 mb-2 text-gray-800">후기 게시판 - 글쓰기</h1>
 					<div class="card shadow mb-4">
 						<div class="card-body">
-							<fieldset class="form-group row">
-								<legend class="col-form-label col-sm-2 float-sm-left pt-0">백신</legend>
-								<div class="col-sm-10">
-									<label class="box-radio-input">
-										<input type="radio" name="rbVaccineKind" value="1" checked="checked">
-										<span>화이자</span>
-									</label>
-									<label class="box-radio-input">
-										<input type="radio" name="rbVaccineKind" value="2">
-										<span>모더나</span>
-									</label>
-									<label class="box-radio-input">
-										<input type="radio" name="rbVaccineKind" value="3">
-										<span>얀센</span>
-									</label>
-									<label class="box-radio-input">
-										<input type="radio" name="rbVaccineKind" value="4">
-										<span>아스트라제네카</span>
-									</label>
+							<!-- Form 시작 -->
+							<form method="post" th:action="@{../review/write}" id="frm" enctype="multipart/form-data">
+								<fieldset class="form-group row">
+									<legend class="col-form-label col-sm-2 float-sm-left pt-0">백신</legend>
+									<div class="col-sm-10">
+										<label class="box-radio-input">
+											<input type="radio" name="rbVaccineKind" value="1" checked="checked">
+											<span>화이자</span>
+										</label>
+										<label class="box-radio-input">
+											<input type="radio" name="rbVaccineKind" value="2">
+											<span>모더나</span>
+										</label>
+										<label class="box-radio-input">
+											<input type="radio" name="rbVaccineKind" value="3">
+											<span>얀센</span>
+										</label>
+										<label class="box-radio-input">
+											<input type="radio" name="rbVaccineKind" value="4">
+											<span>아스트라제네카</span>
+										</label>
+									</div>
+								</fieldset>
+	
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label">제목</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="rbTitle" id="rbTitle">
+									</div>
 								</div>
-							</fieldset>
-
-							<div class="form-group row">
-								<label class="col-sm-2 col-form-label">제목</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="rbTitle" id="rbTitle">
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label">내용</label>
+									<div class="col-sm-10">
+										<textarea cols="30" rows="20" class="form-control" name="rbContent" id="rbContent"></textarea>
+									</div>
 								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-2 col-form-label">내용</label>
-								<div class="col-sm-10">
-									<textarea cols="30" rows="20" class="form-control" name="rbContent" id="rbContent"></textarea>
+								
+								
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label">이미지</label>
+									
+									
+									
+									
+									
+									<div class="col-sm-10">
+										
+										<div class="upload-box">
+										  <div id="drop-file" class="drag-file">
+										    <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
+										    <p class="message">Drag files to upload</p>
+										    <img src="" alt="미리보기 이미지" class="preview">
+										  </div>
+										</div>
+										
+										
+									
+										<label class="file-label" for="chooseFile">파일 선택</label>
+										<input type="file" class="file" name="file" id="chooseFile"  onchange="dropFile.handleFiles(this.files)"  accept="image/png, image/jpeg, image/gif">
+									</div>
+									
+									<img id="preview" />
 								</div>
-							</div>
-							<div>
-								<input type="hidden" th:value="${loginDTO.userId}" id="rbWriter">
-							</div>
-							<div class="mb-4" style="text-align: center;">
-								<a type="button" class="btn btn-primary" th:href="@{/review/list}">목록으로</a>
-								<button type="submit" class="btn btn-primary" id="reviiewSub">작성</button>
-							</div>
+								
+								
+								<div>
+									<input type="hidden" th:value="${loginDTO.userId}" name="rbWriter" id="rbWriter">
+								</div>
+								
+								<!-- 버튼 그룹 시작 -->
+								<div class="mb-4" style="text-align: center;">
+									<a type="button" class="btn btn-primary" th:href="@{/review/list}">목록으로</a>
+									<button type="submit" class="btn btn-primary" id="reviiewSub" onclick="return reviewFrmcheck();">작성</button>
+								</div>
+								<!-- 버튼 그룹 끝 -->
+								
+							</form>
+							<!-- Form 끝 -->
+							
 						</div>
 					</div>
-					
-
 				</div>
 				<!-- /.container-fluid -->
-
 			</div>
 			<!-- End of Main Content -->
 
@@ -245,25 +391,99 @@
 		</div>
 	</div>
 	<script>
+	
+		function reviewFrmcheck(){
+			let rbTitle = $('#rbTitle').val();
+			let rbContent = $('#rbContent').val();
+			let rbVaccineKind = $('input[name=rbVaccineKind]:checked').val();
+			let rbWriter = $('#rbWriter').val();
+			
+			if(rbTitle == null || rbTitle == ""){
+				alert('제목을 입력해주세요.');
+				$('#rbTitle').focus();
+				return false;
+			}
+			
+			if(rbContent == null || rbContent == ""){
+				alert('내용을 입력해주세요.');
+				$('#rbContent').focus();
+				return false;
+			}
+		}
+		
+		function DropFile(dropAreaId, fileListId) {
+			  let dropArea = document.getElementById(dropAreaId);
+			  let fileList = document.getElementById(fileListId);
+
+			  function preventDefaults(e) {
+			    e.preventDefault();
+			    e.stopPropagation();
+			  }
+
+			  function highlight(e) {
+			    preventDefaults(e);
+			    dropArea.classList.add("highlight");
+			  }
+
+			  function unhighlight(e) {
+			    preventDefaults(e);
+			    dropArea.classList.remove("highlight");
+			  }
+
+			  function handleDrop(e) {
+			    unhighlight(e);
+			    let dt = e.dataTransfer;
+			    let files = dt.files;
+
+			    handleFiles(files);
+
+			    const fileList = document.getElementById(fileListId);
+			    if (fileList) {
+			      fileList.scrollTo({ top: fileList.scrollHeight });
+			    }
+			  }
+
+			  function handleFiles(files) {
+			    files = [...files];
+			    // files.forEach(uploadFile);
+			    files.forEach(previewFile);
+			  }
+
+			  function previewFile(file) {
+			    console.log(file);
+			    renderFile(file);
+			  }
+
+			  function renderFile(file) {
+			    let reader = new FileReader();
+			    reader.readAsDataURL(file);
+			    reader.onloadend = function () {
+			      let img = dropArea.getElementsByClassName("preview")[0];
+			      img.src = reader.result;
+			      img.style.display = "block";
+			    };
+			  }
+
+			  dropArea.addEventListener("dragenter", highlight, false);
+			  dropArea.addEventListener("dragover", highlight, false);
+			  dropArea.addEventListener("dragleave", unhighlight, false);
+			  dropArea.addEventListener("drop", handleDrop, false);
+
+			  return {
+			    handleFiles
+			  };
+			}
+
+			const dropFile = new DropFile("drop-file", "files");
+	
 		$(document).ready(function() {
-			$('#reviiewSub').click(function(){
+			
+			 /* $('#reviiewSub').click(function(){
 				
-				let rbTitle = $('#rbTitle').val();
-				let rbContent = $('#rbContent').val();
-				let rbVaccineKind = $('input[name=rbVaccineKind]:checked').val();
-				let rbWriter = $('#rbWriter').val();
+				let formData = new FormData();
 				
-				if(rbTitle == null || rbTitle == ""){
-					alert('제목을 입력해주세요.');
-					$('#rbTitle').focus();
-					return false;
-				}
+				formData.append("rbTitle", rbTitle);
 				
-				if(rbContent == null || rbContent == ""){
-					alert('내용을 입력해주세요.');
-					$('#rbContent').focus();
-					return false;
-				}
 				
 				let boardInfo = {
 					rbTitle,
@@ -280,6 +500,8 @@
 					contentType: "application/json; charset=UTF-8",
 					success : function(data) {
 						console.log("data.result :: ", data.result);
+						console.log("formData : ", formData);
+						
 						if(data.result == 1){
 							alert('게시글 작성 완료.');
 							 location.href = "/review/list";
@@ -292,7 +514,7 @@
 		            	console.log("error :: ", error);
 		            }
 				});
-			});
+			}); */
 		});
 	</script>
 	<!-- Bootstrap core JavaScript-->

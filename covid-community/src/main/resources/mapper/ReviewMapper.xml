@@ -14,14 +14,24 @@
 			rb_update_date  	AS rbUpdateDate,
 			rb_writer 			AS rbWriter,
 			rb_notice_yn 		AS rbNoticeYn,
-			rb_vaccine_kind 	AS rbVaccineKind
+			rb_vaccine_kind 	AS rbVaccineKind,
+			rb_file_name		AS rbFileName,
+			rb_file_path		AS rbFilePath
 	</sql>  
 
 
 	<!-- 후기 게시판 - 글쓰기 -->
 	<insert id="reviewBoardWrite" parameterType="com.coco.project.register.RegisterDTO">
-		INSERT INTO review_board(rb_title, rb_content, rb_writer, rb_vaccine_kind)
-		VALUES(#{rbTitle}, #{rbContent}, #{rbWriter}, #{rbVaccineKind})
+		<choose>
+			<when test="rbFileName != ''">
+				INSERT INTO review_board(rb_title, rb_content, rb_writer, rb_vaccine_kind, rb_file_name, rb_file_path)
+				VALUES(#{rbTitle}, #{rbContent}, #{rbWriter}, #{rbVaccineKind}, #{rbFileName}, #{rbFilePath})
+			</when>
+			<otherwise>
+				INSERT INTO review_board(rb_title, rb_content, rb_writer, rb_vaccine_kind)
+				VALUES(#{rbTitle}, #{rbContent}, #{rbWriter}, #{rbVaccineKind})
+			</otherwise>
+		</choose>
 	</insert>
 	
 	<!-- 후기 게시판 - 게시글 총 개수 가져오기 -->
@@ -63,6 +73,7 @@
 				AND rb_vaccine_kind = #{rbVaccineKind}
 			</if>
 		</where>
+		ORDER BY rb_register_date DESC
 		<if test="startRow != null and startRow != ''">
 			LIMIT 9 OFFSET ${startRow}
 		</if>
@@ -81,6 +92,8 @@
 			rb_writer 			AS rbWriter,
 			rb_notice_yn 		AS rbNoticeYn,
 			rb_vaccine_kind 	AS rbVaccineKind,
+			rb_file_name		AS rbFileName,
+			rb_file_path		AS rbFilePath,
 			u_nickname			AS uNickName
 		FROM
 			review_board rb

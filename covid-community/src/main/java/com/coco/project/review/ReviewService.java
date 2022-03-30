@@ -1,7 +1,9 @@
 package com.coco.project.review;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -9,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.coco.project.register.RegisterMapper;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ReviewService {
@@ -19,8 +20,28 @@ public class ReviewService {
 	ReviewMapper reviewMapper;
 	
 	// 후기 게시판 - 글쓰기
-	public int reviewBoardWrite(ReviewDTO reviewDTO) {
+	public int reviewBoardWrite(ReviewDTO reviewDTO, MultipartFile file) throws Exception {
 	
+		// 파일 설정 시작
+		if(file.getOriginalFilename() != "") {
+			// 파일 경로 설정
+			String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+			
+			UUID uuid = UUID.randomUUID();
+			
+			String fileName = uuid + "_" + file.getOriginalFilename();
+			
+			// 파일 객체 생성 File(경로, 이름)
+			File saveFile = new File(projectPath, fileName); 
+			
+			file.transferTo(saveFile);
+			
+			reviewDTO.setRbFileName(fileName);
+			reviewDTO.setRbFilePath("/files/" + fileName);
+		}
+		// 파일 설정 끝
+		
+		
 		int result = reviewMapper.reviewBoardWrite(reviewDTO);
 		
 		return result;

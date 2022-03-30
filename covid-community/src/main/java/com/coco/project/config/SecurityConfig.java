@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/scss/**", "/vendor/**");
+        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/scss/**", "/vendor/**", "/files/**");
     }
 	
     @Override
@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .csrf().disable()
         .authorizeRequests()
         	.antMatchers("/", "/review/list", "/review/detail/**", "/review/api/BoardList", "/review/api/boardDetail", "/review/api/boardViewCnt",   "/register/**", "/login/**", "/loginProc", "/forgotPw", "/resetPw").permitAll()
-        	.antMatchers("/review/write").hasRole("USER")
+        	.antMatchers("/review/write", "/comment/api/write").hasRole("USER")
             .anyRequest().authenticated()
         .and()
             .formLogin()

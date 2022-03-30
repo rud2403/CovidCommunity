@@ -17,5 +17,6 @@ public class ReviewDTO {
 	private int rbWriter;
 	private String rbNoticeYn;
 	private String rbVaccineKind;
-	
+	private String rbFileName;
+	private String rbFilePath;
 }
