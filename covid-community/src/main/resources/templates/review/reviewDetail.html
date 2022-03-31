@@ -378,7 +378,7 @@
                         	<div class="col-md-4" style="text-align: right;">
 	                        	<span>조회수</span>&nbsp;<span class="mr-2" id="rbViewCnt"></span>
 	                        	<span>좋아요</span>&nbsp;<span class="mr-2" id="rbLikeCnt"></span>
-                        		<span>댓글</span>&nbsp;<span id="rbLikeCnt">0</span>
+                        		<span>댓글</span>&nbsp;<span id="topCmtCnt">0</span>
                         	</div>
                         </div>
                         
@@ -419,14 +419,13 @@
                         
                         <div class="row">
                         	<div class="col">
-                        		<h4>댓글 <span>0</span></h4>
+                        		<h4>댓글 <span id="cmtCnt">0</span></h4>
                         	</div>
                         </div>
                         <div class="row">
                         	<div class="col">
                         		<div class="input-group mb-3">
 								  <input type="text" class="form-control" id="rcContent" placeholder="댓글을 입력해주세요." style="height: 50px">
-								  
 								  
 								  <input th:if="${userInfo}" type="hidden" th:value="${userInfo.userId}" id="rcWriter">
 								  <div class="input-group-append">
@@ -439,31 +438,10 @@
                         <div class="row">
                         	<div class="col">
                         		<table class="table">
-								  <tbody>
-								    <tr>
-								      <th scope="row">1</th>
-								      <td>Mark</td>
-								      <td>Otto</td>
-								      <td>@mdo</td>
-								    </tr>
-								    <tr>
-								      <th scope="row">2</th>
-								      <td>Jacob</td>
-								      <td>Thornton</td>
-								      <td>@fat</td>
-								    </tr>
-								    <tr>
-								      <th scope="row">3</th>
-								      <td>Larry</td>
-								      <td>the Bird</td>
-								      <td>@twitter</td>
-								    </tr>
-								  </tbody>
+								  <tbody id="cmtBody"></tbody>
 								</table>
                         	</div>
                         </div>
-                        
-                        
                         </div>
                     </div>
 
@@ -513,11 +491,47 @@
             </div>
         </div>
     </div>
-
+	
+	
+	<!-- 대댓글 작성 Modal 시작 -->
+	<div class="modal fade" id="cmtModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title"><span id="reTitle">대댓글 작성</span></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<!-- 대댓글 input 시작 -->
+	      	<div class="input-group mb-3">
+			  <input type="text" class="form-control" id="rcReContent" placeholder="댓글을 입력해주세요." style="height: 50px">
+			  <input th:if="${userInfo}" type="hidden" th:value="${userInfo.userId}" id="rcWriter">
+			  <input type="hidden" th:value="${boardId}" id="boardId">
+			  <input type="hidden" id="rcReRef">
+			  <div class="input-group-append">
+			    <button class="btn btn-outline-secondary" type="button" id="rcReSubBtn">작성</button>
+			  </div>
+			</div>
+			<!-- 대댓글 input 끝 -->
+			<button type="button" class="btn btn-secondary" id="closeModal" data-dismiss="modal" style="display: none;">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- 대댓글 작성 Modal 끝 -->
+	
+	
 	<script>
+		
+		let boardId = "[[${boardId}]]";
+		let rcWriter = $('#rcWriter').val();
+		console.log('boardId', boardId);
+	
+		
 		$(document).ready(function() {
-			let boardId = "[[${boardId}]]";
-			console.log('boardId', boardId);
+			
 			
 			// 게시글 조회수 증가시키는 ajax 시작
 			$.ajax({
@@ -586,34 +600,217 @@
 			
 			// 댓글 작성 버튼 클릭 시작			
 			$('#rcSubBtn').click(function(){
-				
 				let rcContent = $('#rcContent').val(); 
 				let rcBoard = boardId;
-				let rcWriter = $('#rcWriter').val();
 				
-				let rcInfo = {
-					rcContent,
-					rcBoard,
-					rcWriter
-				};
+				if(rcContent == ""){
+					alert('댓글을 입력해주세요.')
+					$('#rcContent').focus();
+					return false;
+				}
 				
-				console.log(rcInfo);
-				
-				$.ajax({
-					type : 'POST',
-					url : '../../comment/api/write',
-					data : JSON.stringify(rcInfo),
-					contentType: "application/json; charset=UTF-8",
-					dataType :'json',
-					success : function(data) {
-						console.log("data:: ", data);
-		            },
-		            error : function(error) {
-		            	console.log("error :: ", error);
-		            }
-				});
+				console.log('rcWriter : ',rcWriter);
+				if(rcWriter != null && rcWriter != ""){
+					let rcInfo = {
+						rcContent,
+						rcBoard,
+						rcWriter
+					};
+					
+					console.log(rcInfo);
+					
+					$.ajax({
+						type : 'POST',
+						url : '../../comment/api/write',
+						data : JSON.stringify(rcInfo),
+						contentType: "application/json; charset=UTF-8",
+						dataType :'json',
+						success : function(data) {
+							console.log("data:: ", data);
+							if(data == 1){
+								alert('댓글이 작성 되었습니다.');
+								$('#rcContent').val('');
+								getCmtList();
+							} else {
+								alert('댓글 작성 실패');
+							}
+							
+			            },
+			            error : function(error) {
+			            	console.log("error :: ", error);
+			            }
+					});
+				} else {
+					alert('로그인이 필요한 동작입니다.');
+					$('#rcContent').val('');
+				}
 			})
 			// 댓글 작성 버튼 클릭 시작
+			
+			function getCmtList(){
+				// 댓글 리스트 가져오는 ajax 시작
+				
+				$.ajax({
+					type : 'GET',
+					url : '../../comment/api/commentList?boardId='+boardId,
+					dataType :'json',
+					success : function(data) {
+						console.log("data.list :: ", data.list);
+						console.log("data.cnt :: ", data.cnt);
+						
+						function temp(){
+							alert('대댓글 작성 버튼 클릭');
+						}
+						
+						let cmtHtml = "";
+						// if(data.list.length > 0) 시작
+						if(data.list.length > 0){
+							
+							$('#cmtCnt').text(data.cnt);
+							$('#topCmtCnt').text(data.cnt);
+							// for 시작
+							for(let i in data.list){
+								let rbRegisterDate = data.list[i].rcRegisterDate.substring(0,16).replace("T", " ");
+								/* cmtHtml +=
+									 `<tr>
+									      <th scope="row">
+										      <div class="row">
+									      		<div class="col">
+									      			<span>${data.list[i].uNickName}</span> | <span>${rbRegisterDate}</span> 
+									      		</div>
+									      		<div class="col" style="text-align: right;">
+									      			수정 / 삭제 | <span style="cursor: pointer;" id="${data.list[i].rcReRef}"
+									      			onclick="document.getElementById('reCmtBody${data.list[i].rcReRef}').style.display == 'none'?document.getElementById('reCmtBody${data.list[i].rcReRef}').style.display = 'block' :document.getElementById('reCmtBody${data.list[i].rcReRef}').style.display = 'none';">
+									      				댓글쓰기
+									      			</span>
+									      		</div>
+										      </div>
+										      <div class="row">
+										      	<div class="col" style="font-weight: normal;">
+										      		${data.list[i].rcContent}
+										      	</div>
+										      </div>
+										      <div id="reCmtBody${data.list[i].rcReRef}" style="display: none;">
+											      <div class="input-group" >
+													  <input type="text" class="form-control" id="rcReContent${data.list[i].rcReRef}" placeholder="댓글을 입력해주세요.">
+													  <div class="input-group-append">
+													  <button class="btn btn-outline-secondary" type="button" id="rcSubBtn" onclick="temp($('#rcReContent${data.list[i].rcReRef}').val(), ${data.list[i].rcReRef})">작성</button>
+												  </div>
+												  </div>
+										      </div>
+								          </th>
+								      </tr>` */
+								// 부모 댓글 일 때
+								if(data.list[i].rcReLev == 0){
+								cmtHtml +=
+									 `<tr>
+									      <th scope="row">
+										      <div class="row">
+									      		<div class="col">
+									      			<span>${data.list[i].uNickName}</span> | <span>${rbRegisterDate}</span> 
+									      		</div>
+									      		<div class="col" style="text-align: right;">
+									      			수정 / 삭제 | <span style="cursor: pointer;" id="rcReWrite" data-toggle="modal" data-target="#cmtModal" onclick="$('#rcReRef').val('${data.list[i].rcReRef}')">댓글쓰기</span>
+									      		</div>
+										      </div>
+										      <div class="row">
+										      	<div class="col" style="font-weight: normal;">
+										      		${data.list[i].rcContent}
+										      	</div>
+										      </div>
+								          </th>
+								      </tr>`
+								// 자식 댓글일 때 
+								} else {
+									cmtHtml +=
+										 `<tr>
+										      <th scope="row">
+											      <div class="row ml-4">
+										      		<div class="col">
+										      			<span>${data.list[i].uNickName}</span> | <span>${rbRegisterDate}</span> 
+										      		</div>
+										      		<div class="col" style="text-align: right;">
+										      			수정 / 삭제
+										      		</div>
+											      </div>
+											      <div class="row ml-4">
+											      	<div class="col" style="font-weight: normal;">
+											      		${data.list[i].rcContent}
+											      	</div>
+											      </div>
+									          </th>
+									      </tr>`
+								}
+							}
+							// for 끝
+						}
+						// if(data.list.length > 0) 끝
+						
+						$('#closeModal').click();
+						$('#cmtBody').html(cmtHtml);
+						
+		            },
+		            error : function(error) {
+		            	console.log("COMMENT error :: ", error);
+		            }
+				});
+				// 댓글 리스트 가져오는 ajax 끝
+			}
+			
+			// 대댓글 작성 시작
+			$('#rcReSubBtn').click(function(){
+				let rcContent = $('#rcReContent').val();
+				let rcReRef = $('#rcReRef').val();
+				let rcBoard = boardId;
+				
+				if(rcContent == ""){
+					alert('대댓글을 입력해주세요.');
+					$('#rcReContent').focus();
+					return false;
+				}
+				
+				let rcReInfo = {
+					rcBoard,
+					rcWriter,
+					rcContent,
+					rcReRef
+				};
+				
+				if(rcWriter != null && rcWriter != ""){
+				
+					$.ajax({
+						type : 'POST',
+						url : '../../comment/api/reWrite',
+						data : JSON.stringify(rcReInfo),
+						contentType: "application/json; charset=UTF-8",
+						dataType :'json',
+						success : function(data) {
+							console.log("data:: ", data);
+							if(data == 1){
+								alert('대댓글이 작성 되었습니다.');
+								$('#rcReContent').val('');
+								getCmtList();
+							} else {
+								alert('댓글 작성 실패');
+							}
+							
+			            },
+			            error : function(error) {
+			            	console.log("error :: ", error);
+			            }
+					});
+				} else {
+					alert('로그인이 필요한 동작입니다.');
+					$('#rcReContent').val('');
+					$('#closeModal').click();
+				}
+			});
+			
+			// 대댓글 작성 끝
+			
+			// 페이지 시작 시 댓글 리스트 가져오기
+			getCmtList();
+			
 		});
 	</script>
 
