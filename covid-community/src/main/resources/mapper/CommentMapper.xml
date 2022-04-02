@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.coco.project.comment.CommentMapper">
+
+	<insert id="commentWrite" parameterType="com.coco.project.comment.CommentDTO">
+		INSERT INTO
+			review_comment (rc_content, rc_writer, rc_board, rc_re_ref, rc_re_lev, rc_re_seq)
+		VALUES
+			(#{rcContent}, #{rcWriter}, #{rcBoard}, (select no from (SELECT IFNULL(MAX(rc_re_ref) + 1, 1) as no FROM review_comment) as a_t), 0, 0);
+	</insert>
+	<!-- 댓글 - 리스트 가져오기 -->
+	<select id="commentList" resultType="hashmap">
+		SELECT
+			rc_id				AS rcId,
+			rc_content			AS rcContent, 
+			rc_writer			AS rcWriter,
+			rc_board			AS rcBoard,
+			rc_register_date	AS rcRegisterDate,
+			rc_delete_yn		AS rcDeleteYn,
+			rc_re_ref			AS rcReRef,
+			rc_re_lev			AS rcReLev,
+			rc_re_seq			AS rcReSeq,
+			u_nickname			AS uNickName
+		FROM
+			review_comment rc
+		JOIN
+			user_info ui ON ui.u_id = rc.rc_writer
+		WHERE
+			rc_board = #{boardId}
+		ORDER BY
+			rc_re_ref ASC, rc_re_seq DESC
+	</select>
+	
+	<!-- 댓글 - 개수 -->
+	<select id="commentCnt" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			review_comment
+		WHERE
+			rc_board = #{boardId}
+		AND	
+			rc_delete_yn = 'N'
+	</select>
+	
+	<!-- 대댓글 seq 업데이트 -->
+	<update id="reRefUpdate" parameterType="com.coco.project.comment.CommentDTO">
+		UPDATE
+			review_comment
+		SET
+			rc_re_seq = rc_re_seq + 1
+		WHERE
+			rc_re_ref = #{rcReRef}
+	</update>
+	
+	<!-- 대댓글 - 작성 -->
+	<insert id="reCommentWrite" parameterType="com.coco.project.comment.CommentDTO">
+		INSERT INTO
+			review_comment (rc_content, rc_writer, rc_board, rc_re_ref, rc_re_lev, rc_re_seq)
+		VALUES
+			(#{rcContent}, #{rcWriter}, #{rcBoard}, #{rcReRef}, 1, 0)
+	</insert>
+	
+	<!-- 댓글 - 수정 -->
+	<update id="commentUpdate">
+		UPDATE
+			review_comment
+		SET
+			rc_content = #{rcContent}
+		WHERE
+			rc_id = #{rcId}
+	</update>
+	
+	<!-- 댓글 - 삭제 -->
+	<update id="commentDelete">
+		UPDATE
+			review_comment
+		SET
+			rc_delete_yn = 'Y'
+		WHERE
+			rc_id = #{rcId}
+	</update>
+</mapper>

@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .authorizeRequests()
         	.antMatchers("/", "/review/list", "/review/detail/**", "/review/api/BoardList", "/review/api/boardDetail", "/review/api/boardViewCnt", "/register/**", "/login/**", "/loginProc", "/forgotPw", "/resetPw").permitAll()
         	.antMatchers("/comment/api/commentList").permitAll()
-        	.antMatchers("/review/write", "/comment/api/write").hasRole("USER")
+        	.antMatchers("/review/write", "/comment/api/write", "/comment/api/update", "/comment/api/delete").hasRole("USER")
             .anyRequest().authenticated()
         .and()
             .formLogin()

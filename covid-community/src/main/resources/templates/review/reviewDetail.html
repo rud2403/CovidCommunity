@@ -498,7 +498,7 @@
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title"><span id="reTitle">대댓글 작성</span></h5>
+	        <h5 class="modal-title"><span id="reTitle">댓글의 댓글 작성</span></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -522,17 +522,75 @@
 	</div>
 	<!-- 대댓글 작성 Modal 끝 -->
 	
+	<!-- 대댓글 작성 Modal 시작 -->
+	<div class="modal fade" id="cmtUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title"><span>댓글 수정</span></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<!-- 대댓글 input 시작 -->
+	      	<div class="input-group mb-3">
+			  <input type="text" class="form-control" id="rcReUpdateContent" placeholder="댓글을 입력해주세요." style="height: 50px">
+			  <input type="hidden" id="rcId">
+			  <div class="input-group-append">
+			    <button class="btn btn-outline-secondary" type="button" id="rcUpdateSubBtn">작성</button>
+			  </div>
+			</div>
+			<!-- 대댓글 input 끝 -->
+			<button type="button" class="btn btn-secondary" id="closeUpdateModal" data-dismiss="modal" style="display: none;">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- 대댓글 작성 Modal 끝 -->
+	
+	<!-- 댓글 삭제 Modal 시작 -->
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+	  Launch demo modal
+	</button>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="cmtDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title"><span>댓글 삭제</span></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <span>댓글을 삭제 하시겠습니까?</span>
+	        <input type="hidden" id="rcDeleteId">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" id="rcDeleteSubBtn">삭제</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeDeleteModal">취소</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- 댓글 삭제 Modal 끝 -->
+	
 	
 	<script>
 		
 		let boardId = "[[${boardId}]]";
 		let rcWriter = $('#rcWriter').val();
 		console.log('boardId', boardId);
-	
+		
+		
+		function temp(){
+			$('#rcReUpdateContent').val('${data.list[i].rcContent}');
+		};	
 		
 		$(document).ready(function() {
-			
-			
 			// 게시글 조회수 증가시키는 ajax 시작
 			$.ajax({
 				type : 'POST',
@@ -658,10 +716,6 @@
 						console.log("data.list :: ", data.list);
 						console.log("data.cnt :: ", data.cnt);
 						
-						function temp(){
-							alert('대댓글 작성 버튼 클릭');
-						}
-						
 						let cmtHtml = "";
 						// if(data.list.length > 0) 시작
 						if(data.list.length > 0){
@@ -700,51 +754,169 @@
 										      </div>
 								          </th>
 								      </tr>` */
+								      
+								      
 								// 부모 댓글 일 때
 								if(data.list[i].rcReLev == 0){
-								cmtHtml +=
-									 `<tr>
-									      <th scope="row">
-										      <div class="row">
-									      		<div class="col">
-									      			<span>${data.list[i].uNickName}</span> | <span>${rbRegisterDate}</span> 
-									      		</div>
-									      		<div class="col" style="text-align: right;">
-									      			수정 / 삭제 | <span style="cursor: pointer;" id="rcReWrite" data-toggle="modal" data-target="#cmtModal" onclick="$('#rcReRef').val('${data.list[i].rcReRef}')">댓글쓰기</span>
-									      		</div>
-										      </div>
-										      <div class="row">
-										      	<div class="col" style="font-weight: normal;">
-										      		${data.list[i].rcContent}
-										      	</div>
-										      </div>
-								          </th>
-								      </tr>`
-								// 자식 댓글일 때 
-								} else {
-									cmtHtml +=
-										 `<tr>
-										      <th scope="row">
-											      <div class="row ml-4">
+									// 삭제된 댓글이 아닐 때
+									if(data.list[i].rcDeleteYn == 'N'){
+									
+										// 로그인 됐을 때
+										if(rcWriter){
+											// 본인의 계정일 때
+											if(rcWriter == data.list[i].rcWriter) {
+												cmtHtml +=	`
+													<tr>
+									      			<th scope="row">
+												<div class="row">
 										      		<div class="col">
 										      			<span>${data.list[i].uNickName}</span> | <span>${rbRegisterDate}</span> 
 										      		</div>
 										      		<div class="col" style="text-align: right;">
-										      			수정 / 삭제
+										      			<span style="cursor: pointer;" data-toggle="modal" data-target="#cmtUpdateModal" onclick="$('#rcReUpdateContent').val('${data.list[i].rcContent}'); $('#rcId').val('${data.list[i].rcId}')">수정</span> / <span style="cursor: pointer;" data-toggle="modal" data-target="#cmtDeleteModal" onclick="$('#rcDeleteId').val('${data.list[i].rcId}')">삭제</span> | <span style="cursor: pointer;" id="rcReWrite" data-toggle="modal" data-target="#cmtModal" onclick="$('#rcReRef').val('${data.list[i].rcReRef}')">댓글쓰기</span>
 										      		</div>
 											      </div>
-											      <div class="row ml-4">
-											      	<div class="col" style="font-weight: normal;">
-											      		${data.list[i].rcContent}
+											      <div class="row">
+											      <div class="col" style="font-weight: normal;">
+										      		${data.list[i].rcContent}
 											      	</div>
 											      </div>
 									          </th>
 									      </tr>`
+											} else {
+												cmtHtml +=	`
+													<tr>
+									      			<th scope="row">
+												<div class="row">
+										      		<div class="col">
+										      			<span>${data.list[i].uNickName}</span> | <span>${rbRegisterDate}</span> 
+										      		</div>
+										      		<div class="col" style="text-align: right;">
+										      			<span style="cursor: pointer;" id="rcReWrite" data-toggle="modal" data-target="#cmtModal" onclick="$('#rcReRef').val('${data.list[i].rcReRef}')">댓글쓰기</span>
+										      		</div>
+											      </div>
+											      <div class="row">
+											      <div class="col" style="font-weight: normal;">
+										      		${data.list[i].rcContent}
+											      	</div>
+											      </div>
+									          </th>
+									      </tr>`
+											}
+										// 로그인 안됐을 때
+										} else {
+											cmtHtml +=	`
+												<tr>
+								      			<th scope="row">
+											<div class="row">
+									      		<div class="col">
+									      			<span>${data.list[i].uNickName}</span> | <span>${rbRegisterDate}</span> 
+									      		</div>
+									      		<div class="col" style="text-align: right;">
+									      			<span style="cursor: pointer;" id="rcReWrite" data-toggle="modal" data-target="#cmtModal" onclick="$('#rcReRef').val('${data.list[i].rcReRef}')">댓글쓰기</span>
+									      		</div>
+										      </div>
+										      <div class="row">
+										      <div class="col" style="font-weight: normal;">
+									      		${data.list[i].rcContent}
+										      	</div>
+										      </div>
+								          </th>
+								      </tr>`
+										}
+										
+									// 삭제된 댓글 일 때	
+									} else {
+										cmtHtml += `<tr>
+											      		<th scope="row">
+															<div class="row">
+																<div class="col">
+																	<span>삭제된 댓글 입니다.</span>
+																</div>
+													    	</div>
+											      		</th>
+											      </tr>`
+									}
+									
+								// 자식 댓글일 때 
+								} else {
+									// 삭제된 댓글이 아닐 때
+									if(data.list[i].rcDeleteYn == 'N'){
+										// 로그인 됐을 때
+										if(rcWriter){
+											// 본인 계정일 때
+											if(rcWriter == data.list[i].rcWriter){
+												cmtHtml += `
+													<tr>
+									      			<th scope="row">
+												<div class="row ml-4">
+										      		<div class="col">
+										      			<span>${data.list[i].uNickName}</span> | <span>${rbRegisterDate}</span> 
+										      		</div>
+										      		<div class="col" style="text-align: right;">
+										      			<span style="cursor: pointer;" data-toggle="modal" data-target="#cmtUpdateModal" onclick="$('#rcReUpdateContent').val('${data.list[i].rcContent}'); $('#rcId').val('${data.list[i].rcId}')">수정</span> / <span style="cursor: pointer;" data-toggle="modal" data-target="#cmtDeleteModal" onclick="$('#rcDeleteId').val('${data.list[i].rcId}')">삭제<span>
+										      		</div>
+											      </div>
+											      <div class="row ml-4">
+											      <div class="col" style="font-weight: normal;">
+										      		${data.list[i].rcContent}
+											      	</div>
+											      </div>
+									          </th>
+									      </tr>`
+											} else {
+												cmtHtml += `
+													<tr>
+									      			<th scope="row">
+												<div class="row ml-4">
+										      		<div class="col">
+										      			<span>${data.list[i].uNickName}</span> | <span>${rbRegisterDate}</span> 
+										      		</div>
+											      </div>
+											      <div class="row ml-4">
+											      <div class="col" style="font-weight: normal;">
+										      		${data.list[i].rcContent}
+											      	</div>
+											      </div>
+									          </th>
+									      </tr>`
+											}
+										// 로그인 안됐을 때
+										} else {
+												cmtHtml += `
+													<tr>
+									      			<th scope="row">
+												<div class="row ml-4">
+										      		<div class="col">
+										      			<span>${data.list[i].uNickName}</span> | <span>${rbRegisterDate}</span> 
+										      		</div>
+											      </div>
+											      <div class="row ml-4">
+											      <div class="col" style="font-weight: normal;">
+										      		${data.list[i].rcContent}
+											      	</div>
+											      </div>
+									          </th>
+									      </tr>`
+										}
+										
+									} else {
+										cmtHtml += `<tr>
+											      		<th scope="row">
+															<div class="row ml-4">
+																<div class="col">
+																	<span>삭제된 댓글 입니다.</span>
+														    	</div>
+													    	</div>
+											      		</th>
+											      </tr>`
+										
+									}
 								}
-							}
-							// for 끝
-						}
-						// if(data.list.length > 0) 끝
+							} // for 끝
+							
+						} // if(data.list.length > 0) 끝
+						
 						
 						$('#closeModal').click();
 						$('#cmtBody').html(cmtHtml);
@@ -787,7 +959,7 @@
 						success : function(data) {
 							console.log("data:: ", data);
 							if(data == 1){
-								alert('대댓글이 작성 되었습니다.');
+								alert('댓글이 작성 되었습니다.');
 								$('#rcReContent').val('');
 								getCmtList();
 							} else {
@@ -805,8 +977,93 @@
 					$('#closeModal').click();
 				}
 			});
-			
 			// 대댓글 작성 끝
+			
+			// 댓글 수정 시작
+			$('#rcUpdateSubBtn').click(function(){
+				let rcContent = $('#rcReUpdateContent').val();
+				let rcId = $('#rcId').val();
+				
+				if(rcContent == ""){
+					alert('댓글을 입력해주세요.');
+					$('#rcReUpdateContent').focus();
+					return false;
+				}
+				
+				let rcReInfo = {
+					rcContent,
+					rcId
+				};
+				
+				if(rcWriter != null && rcWriter != ""){
+					$.ajax({
+						type : 'PUT',
+						url : '../../comment/api/update',
+						data : JSON.stringify(rcReInfo),
+						contentType: "application/json; charset=UTF-8",
+						dataType :'json',
+						success : function(data) {
+							console.log("data:: ", data);
+							if(data == 1){
+								alert('댓글이 수정 되었습니다.');
+								$('#rcReUpdateContent').val('');
+								$('#closeUpdateModal').click();
+								getCmtList();
+							} else {
+								alert('댓글 수정 실패');
+							}
+							
+			            },
+			            error : function(error) {
+			            	console.log("error :: ", error);
+			            }
+					});
+				} else {
+					alert('로그인이 필요한 동작입니다.');
+					$('#rcReUpdateContent').val('');
+					$('#closeUpdateModal').click();
+				}
+			});
+			// 댓글 수정 끝
+			
+			// 댓글 삭제 시작
+			$('#rcDeleteSubBtn').click(function(){
+				console.log('댓글 삭제 클릭');
+				let rcId = $('#rcDeleteId').val();
+				
+				let rcInfo = {
+					rcId
+				};
+				
+				if(rcWriter != null && rcWriter != ""){
+					$.ajax({
+						type : 'DELETE',
+						url : '../../comment/api/delete',
+						data : JSON.stringify(rcInfo),
+						contentType: "application/json; charset=UTF-8",
+						dataType :'json',
+						success : function(data) {
+							console.log("data:: ", data);
+							if(data == 1){
+								alert('댓글이 삭제 되었습니다.');
+								$('#closeDeleteModal').click();
+								getCmtList();
+							} else {
+								alert('댓글 삭제 실패');
+							}
+							
+			            },
+			            error : function(error) {
+			            	console.log("error :: ", error);
+			            }
+					});
+				} else {
+					alert('로그인이 필요한 동작입니다.');
+					$('#closeDeleteModal').click();
+				}
+				
+			});
+			// 댓글 삭제 끝
 			
 			// 페이지 시작 시 댓글 리스트 가져오기
 			getCmtList();
