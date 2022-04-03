@@ -17,4 +17,6 @@ public interface ReviewMapper {
 	public Map<String,Object> reviewBoardDetail(int boardId);
 	// 후기 게시판 - 게시글 조회수 증가
 	public int reviewBoardViewCnt(int boardId);
+	// 후기 게시판 - 게시글 수정
+	public int reviewBoardUpdate(ReviewDTO reviewDTO);
 }

@@ -365,83 +365,91 @@
 
                     <div class="card shadow mb-4">
                         <div class="card-body">
-                        
-                        <h3 id="vaccineBadge"></h3>
-                        
-                        <div style="text-align: center;">
-                        	<h3 id="rbTitle"></h3>
-                        </div>
-                        <div class="row">
-                        	<div class="col-md-8">
-                        		<span id="rbWriter"></span>
+                        	
+                        	<div class="row">
+                        		<div class="col">
+                        			<h3 id="vaccineBadge"></h3>
+                        		</div>
+                        		<div class="col" id="rbUpdateDelete" style="text-align: right;">
+                        			
+                        		</div>
                         	</div>
-                        	<div class="col-md-4" style="text-align: right;">
-	                        	<span>조회수</span>&nbsp;<span class="mr-2" id="rbViewCnt"></span>
-	                        	<span>좋아요</span>&nbsp;<span class="mr-2" id="rbLikeCnt"></span>
-                        		<span>댓글</span>&nbsp;<span id="topCmtCnt">0</span>
-                        	</div>
-                        </div>
-                        
-                        <hr>
-                        
-                        <div class="row">
-	                        <div class="col" style="text-align: right;">
-	                        	<span id="rbRegisterDate"></span>
+	                        
+	                        
+	                        <div style="text-align: center;">
+	                        	<h3 id="rbTitle"></h3>
 	                        </div>
-                        </div>
-                        <div class="row">
-                        	<div class="col">
-                        		<div class="m-5">
-                        			<span  id="rbContent"></span>
-                        		</div>
-                        		<div class="text-center mb-5">
-                        			<img id="rbFilePath" src="" />
-                        		</div>
-                        		
-                        		<div class="feeling_div">
-									  <div class="text-center">
-									  	
-									  	<a type="button" class="btn btn-primary" th:href="@{/review/list}">
-									    	목록으로
-									    </a>
-									  								  
-									    <button type="button" class="btn btn-outline-danger">
-									    	<i class="fa fa-heart"> 좋아요</i>
-									    </button>
-									    
+	                        <div class="row">
+	                        	<div class="col-md-8">
+	                        		<span id="rbWriter"></span>
+	                        	</div>
+	                        	<div class="col-md-4" style="text-align: right;">
+		                        	<span>조회수</span>&nbsp;<span class="mr-2" id="rbViewCnt"></span>
+		                        	<span>좋아요</span>&nbsp;<span class="mr-2" id="rbLikeCnt"></span>
+	                        		<span>댓글</span>&nbsp;<span id="topCmtCnt">0</span>
+	                        	</div>
+	                        </div>
+	                        
+	                        <hr>
+	                        
+	                        <div class="row">
+		                        <div class="col" style="text-align: right;">
+		                        	<span id="rbRegisterDate"></span>
+		                        </div>
+	                        </div>
+	                        <div class="row">
+	                        	<div class="col">
+	                        		<div class="m-5">
+	                        			<span  id="rbContent"></span>
+	                        		</div>
+	                        		<div class="text-center mb-5">
+	                        			<img id="rbFilePath" src="" />
+	                        		</div>
+	                        		
+	                        		<div class="feeling_div">
+										  <div class="text-center">
+										  	
+										  	<a type="button" class="btn btn-primary" th:href="@{/review/list}">
+										    	목록으로
+										    </a>
+										  								  
+										    <button type="button" class="btn btn-outline-danger">
+										    	<i class="fa fa-heart"> 좋아요</i>
+										    </button>
+										    
+										</div>
 									</div>
-								</div>
-                        		
-                        	</div>
-                        </div>
-                        
-                        <hr>
-                        
-                        <div class="row">
-                        	<div class="col">
-                        		<h4>댓글 <span id="cmtCnt">0</span></h4>
-                        	</div>
-                        </div>
-                        <div class="row">
-                        	<div class="col">
-                        		<div class="input-group mb-3">
-								  <input type="text" class="form-control" id="rcContent" placeholder="댓글을 입력해주세요." style="height: 50px">
-								  
-								  <input th:if="${userInfo}" type="hidden" th:value="${userInfo.userId}" id="rcWriter">
-								  <div class="input-group-append">
-								    <button class="btn btn-outline-secondary" type="button" id="rcSubBtn">작성</button>
-								  </div>
-								</div>
-                        	</div>
-                        </div>
-                        
-                        <div class="row">
-                        	<div class="col">
-                        		<table class="table">
-								  <tbody id="cmtBody"></tbody>
-								</table>
-                        	</div>
-                        </div>
+	                        		
+	                        	</div>
+	                        </div>
+	                        
+	                        <hr>
+	                        
+	                        <div class="row">
+	                        	<div class="col">
+	                        		<h4>댓글 <span id="cmtCnt">0</span></h4>
+	                        	</div>
+	                        </div>
+	                        <div class="row">
+	                        	<div class="col">
+	                        		<div class="input-group mb-3">
+									  <input type="text" class="form-control" id="rcContent" placeholder="댓글을 입력해주세요." style="height: 50px">
+									  
+									  <input th:if="${userInfo}" type="hidden" th:value="${userInfo.userId}" id="rcWriter">
+									  <div class="input-group-append">
+									    <button class="btn btn-outline-secondary" type="button" id="rcSubBtn">작성</button>
+									  </div>
+									</div>
+	                        	</div>
+	                        </div>
+	                        
+	                        <div class="row">
+	                        	<div class="col">
+	                        		<table class="table">
+									  <tbody id="cmtBody"></tbody>
+									</table>
+	                        	</div>
+	                        </div>
                         </div>
                     </div>
 
@@ -584,7 +592,7 @@
 		let boardId = "[[${boardId}]]";
 		let rcWriter = $('#rcWriter').val();
 		console.log('boardId', boardId);
-		
+		console.log('rcWriter : ', rcWriter);
 		
 		function temp(){
 			$('#rcReUpdateContent').val('${data.list[i].rcContent}');
@@ -611,8 +619,8 @@
 			});
 			// 게시글 조회수 증가시키는 ajax 끝
 			
+			// 게시글 정보 가져오기 시작
 			function boardDetail() {
-				// 게시글 정보 가져오는 ajax 시작
 				$.ajax({
 					type : 'GET',
 					url : '../api/boardDetail?boardId='+boardId,
@@ -647,14 +655,21 @@
 						$('#rbViewCnt').text(detail.rbViewCnt);
 						$('#rbLikeCnt').text(detail.rbLikeCnt);
 						$("#rbFilePath").attr("src", detail.rbFilePath);
+						
+						if(data.detail.rbWriter == rcWriter){
+							let updateDeleteHtml = "";
+							
+							updateDeleteHtml += `<span onclick="location.href='../../review/update/${detail.rbId}'" style="cursor: pointer;">수정</span> / <span style="cursor: pointer;">삭제</span>`;
+							
+							$('#rbUpdateDelete').html(updateDeleteHtml);
+						}
 		            },
 		            error : function(error) {
 		            	console.log("error :: ", error);
 		            }
 				});
-				// 게시글 정보 가져오는 ajax 끝
 			}
-			
+			// 게시글 정보 가져오기 끝
 			
 			// 댓글 작성 버튼 클릭 시작			
 			$('#rcSubBtn').click(function(){
@@ -707,7 +722,6 @@
 			
 			function getCmtList(){
 				// 댓글 리스트 가져오는 ajax 시작
-				
 				$.ajax({
 					type : 'GET',
 					url : '../../comment/api/commentList?boardId='+boardId,

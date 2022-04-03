@@ -507,6 +507,8 @@
 		$(document).ready(function() {
 			
 			let writeResult = "[[${writeResult}]]";
+			let updateResult = "[[${updateResult}]]";
+			
 			
 			if(writeResult != ""){
 				if(writeResult == 1){
@@ -515,6 +517,16 @@
 				} else {
 					alert('게시글 작성 실패.');
 					writeResult = "";
+				}
+			}
+			
+			if(updateResult != ""){
+				if(updateResult == 1){
+					alert('게시글 수정 완료.');
+					updateResult = "";
+				} else {
+					alert('게시글 수정 실패.');
+					updateResult = "";
 				}
 			}
 			

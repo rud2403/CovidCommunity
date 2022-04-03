@@ -10,22 +10,18 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>CoCo - reviewWrite</title>
+<title>CoCo - reviewUpdate</title>
 
 <!-- Custom fonts for this template -->
-<link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+<link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css">
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="../css/sb-admin-2.min.css" rel="stylesheet">
+<link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 
-<!-- Custom styles for this page -->
-<link href="../vendor/datatables/dataTables.bootstrap4.min.css"
-	rel="stylesheet">
-	
 <!-- 제이쿼리 적용 -->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
@@ -258,28 +254,32 @@
 					style="padding-left: 20%; padding-right: 20%;">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">후기 게시판 - 글쓰기</h1>
+					<h1 class="h3 mb-2 text-gray-800">후기 게시판 - 글수정</h1>
 					<div class="card shadow mb-4">
 						<div class="card-body">
 							<!-- Form 시작 -->
-							<form method="post" th:action="@{../review/write}" id="frm" enctype="multipart/form-data">
+							<form method="post" th:action="@{../../review/update}" id="frm" enctype="multipart/form-data">
 								<fieldset class="form-group row">
 									<legend class="col-form-label col-sm-2 float-sm-left pt-0">백신</legend>
 									<div class="col-sm-10">
 										<label class="box-radio-input">
-											<input type="radio" name="rbVaccineKind" value="1" checked="checked">
+											<input th:if="${boardInfo.detail.rbVaccineKind} == 1" type="radio" name="rbVaccineKind" value="1" checked="checked">
+											<input th:unless="${boardInfo.detail.rbVaccineKind} == 1" type="radio" name="rbVaccineKind" value="1">
 											<span>화이자</span>
 										</label>
 										<label class="box-radio-input">
-											<input type="radio" name="rbVaccineKind" value="2">
+											<input th:if="${boardInfo.detail.rbVaccineKind} == 2" type="radio" name="rbVaccineKind" value="2" checked="checked">
+											<input th:unless="${boardInfo.detail.rbVaccineKind} == 2" type="radio" name="rbVaccineKind" value="2">
 											<span>모더나</span>
 										</label>
 										<label class="box-radio-input">
-											<input type="radio" name="rbVaccineKind" value="3">
+											<input th:if="${boardInfo.detail.rbVaccineKind} == 3" type="radio" name="rbVaccineKind" value="3" checked="checked">
+											<input th:unless="${boardInfo.detail.rbVaccineKind} == 3" type="radio" name="rbVaccineKind" value="3">
 											<span>얀센</span>
 										</label>
 										<label class="box-radio-input">
-											<input type="radio" name="rbVaccineKind" value="4">
+											<input th:if="${boardInfo.detail.rbVaccineKind} == 4" type="radio" name="rbVaccineKind" value="4" checked="checked">
+											<input th:unless="${boardInfo.detail.rbVaccineKind} == 4" type="radio" name="rbVaccineKind" value="4">
 											<span>아스트라제네카</span>
 										</label>
 									</div>
@@ -288,16 +288,18 @@
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">제목</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control" name="rbTitle" id="rbTitle">
+										<input type="text" class="form-control" name="rbTitle" id="rbTitle" th:value="${boardInfo.detail.rbTitle}">
 									</div>
 								</div>
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">내용</label>
 									<div class="col-sm-10">
-										<textarea cols="30" rows="20" class="form-control" name="rbContent" id="rbContent"></textarea>
+										<textarea cols="30" rows="20" class="form-control" name="rbContent" id="rbContent" th:text="${boardInfo.detail.rbContent}"></textarea>
 									</div>
 								</div>
 								
+								<input type="hidden" name="rbId" th:value="${boardInfo.detail.rbId}">
+								<input type="hidden" name="isUpdated" id="isUpdated">
 								
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">이미지</label>
@@ -308,28 +310,20 @@
 										  <div id="drop-file" class="drag-file">
 										    <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
 										    <p class="message">Drag files to upload</p>
-										    
 										    <img src="" alt="미리보기 이미지" class="preview">
-										    		
 										  </div>
 										  <div id="preview-de">삭제</div>
 										</div>
-									
+										
 										<label class="file-label" for="chooseFile">파일 선택</label>
 										<input type="file" class="file" name="file" id="chooseFile" onchange="dropFile.handleFiles(this.files)"  accept="image/png, image/jpeg, image/gif">
 									</div>
-															
-								</div>
-								
-								
-								<div>
-									<input type="hidden" th:value="${loginDTO.userId}" name="rbWriter" id="rbWriter">
 								</div>
 								
 								<!-- 버튼 그룹 시작 -->
 								<div class="mb-4" style="text-align: center;">
 									<a type="button" class="btn btn-primary" th:href="@{/review/list}">목록으로</a>
-									<button type="submit" class="btn btn-primary" id="reviiewSub" onclick="return reviewFrmcheck();">작성</button>
+									<button type="submit" class="btn btn-primary" id="reviewSub" onclick="return reviewFrmcheck();">수정</button>
 								</div>
 								<!-- 버튼 그룹 끝 -->
 								
@@ -392,7 +386,6 @@
 			let rbTitle = $('#rbTitle').val();
 			let rbContent = $('#rbContent').val();
 			let rbVaccineKind = $('input[name=rbVaccineKind]:checked').val();
-			let rbWriter = $('#rbWriter').val();
 			
 			if(rbTitle == null || rbTitle == ""){
 				alert('제목을 입력해주세요.');
@@ -443,6 +436,7 @@
 			    files = [...files];
 			    // files.forEach(uploadFile);
 			    files.forEach(previewFile);
+			    
 			  }
 
 			  function previewFile(file) {
@@ -473,35 +467,41 @@
 			const dropFile = new DropFile("drop-file", "files");
 	
 		$(document).ready(function() {
+			
+			let boardInfo = "[[${boardInfo.detail}]]";
+			console.log('boardInfo : ', boardInfo);
+			
+			let rbFilePath = "[[${boardInfo.detail.rbFilePath}]]";
+			console.log('rbFilePath : ', rbFilePath);
+			
+			if(rbFilePath != ""){
+				
+				console.log('경로 포함 돼있음');
+				
+				$(".preview").attr("src", rbFilePath);
+				$(".preview").css("display", "block");
+			}
+			
 			$('#preview-de').click(function(){
 				console.log('삭제 버튼 클릭');
 				$(".preview").attr("src", " ");
 				$(".preview").css("display", "none");
 				$(".preview").attr("alt", "");
 				$(".file").val("");
+				$("#isUpdated").val("Y");
 			});
 			
-			$('.preview').mouseover(function(){
-				console.log('마우스 오버 됐습니다.');
-			});
 		});
 	</script>
 	<!-- Bootstrap core JavaScript-->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../vendor/jquery/jquery.min.js"></script>
+	<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="../js/sb-admin-2.min.js"></script>
-
-	<!-- Page level plugins -->
-	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
-	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-	<!-- Page level custom scripts -->
-	<script src="../js/demo/datatables-demo.js"></script>
+	<script src="../../js/sb-admin-2.min.js"></script>
 
 </body>
 

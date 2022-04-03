@@ -16,7 +16,7 @@
 			rb_notice_yn 		AS rbNoticeYn,
 			rb_vaccine_kind 	AS rbVaccineKind,
 			rb_file_name		AS rbFileName,
-			rb_file_path		AS rbFilePath
+			IFNULL(rb_file_path, '')	AS rbFilePath
 	</sql>  
 
 
@@ -81,20 +81,8 @@
 	
 	<!-- 후기 게시판 - 게시글 상세정보 -->
 	<select id="reviewBoardDetail" resultType="hashmap">
-		SELECT
-			rb_id 				AS rbId,
-			rb_title 			AS rbTitle,
-			rb_content 			AS rbContent,
-			rb_view_cnt 		AS rbViewCnt,
-			rb_like_cnt 		AS rbLikeCnt,
-			rb_register_date 	AS rbRegisterDate,
-			rb_update_date  	AS rbUpdateDate,
-			rb_writer 			AS rbWriter,
-			rb_notice_yn 		AS rbNoticeYn,
-			rb_vaccine_kind 	AS rbVaccineKind,
-			rb_file_name		AS rbFileName,
-			rb_file_path		AS rbFilePath,
-			u_nickname			AS uNickName
+		<include refid="selectAll"></include>
+			,u_nickname			AS uNickName
 		FROM
 			review_board rb
 		JOIN
@@ -111,6 +99,25 @@
 			rb_view_cnt = rb_view_cnt + 1
 		WHERE
 			rb_id = #{boardId}
+	</update>
+	
+	<update id="reviewBoardUpdate">
+		UPDATE
+			review_board
+		SET
+		<choose>
+			<when test="rbFilePath != null">
+				rb_vaccine_kind = #{rbVaccineKind}, rb_title = #{rbTitle}, rb_content = #{rbContent}, rb_file_name = #{rbFileName}, rb_file_path = #{rbFilePath}
+			</when>
+			<when test="rbFilePath == null and isUpdated != ''">
+				rb_vaccine_kind = #{rbVaccineKind}, rb_title = #{rbTitle}, rb_content = #{rbContent}, rb_file_name = #{rbFileName}, rb_file_path = #{rbFilePath}
+			</when>
+			<otherwise>
+				rb_vaccine_kind = #{rbVaccineKind}, rb_title = #{rbTitle}, rb_content = #{rbContent}
+			</otherwise>
+		</choose>
+		WHERE
+			rb_id = #{rbId}
 	</update>
 	
 </mapper>
