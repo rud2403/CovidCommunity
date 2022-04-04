@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.coco.project.like.LikeMapper">
+
+	<!-- 후기 게시판 - 글쓰기 -->
+	<insert id="likeInsert" parameterType="com.coco.project.like.LikeDTO">
+		INSERT INTO
+			review_like(rl_user, rl_board)
+		VALUES
+			(#{rlUser}, #{rlBoard})
+	</insert>
+	
+	<!-- 후기 게시판 - 좋아요 찾기 -->
+	<select id="likeSearch" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			review_like
+		WHERE
+			rl_user = #{rlUser} AND rl_board = #{rlBoard}
+	</select>
+	
+	<!-- 후기 게시판 - 좋아요 취소 -->
+	<delete id="likeDelete">
+		DELETE
+		FROM
+			review_like
+		WHERE
+			rl_user = #{rlUser} AND rl_board = #{rlBoard}
+	</delete>
+</mapper>

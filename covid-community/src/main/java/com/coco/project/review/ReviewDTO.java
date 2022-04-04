@@ -20,4 +20,5 @@ public class ReviewDTO {
 	private String rbFileName;
 	private String rbFilePath;
 	private String isUpdated;
+	private String rbDeleteYn;
 }

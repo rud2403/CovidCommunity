@@ -391,7 +391,6 @@
 	                        </div>
 	                        
 	                        <hr>
-	                        
 	                        <div class="row">
 		                        <div class="col" style="text-align: right;">
 		                        	<span id="rbRegisterDate"></span>
@@ -405,18 +404,12 @@
 	                        		<div class="text-center mb-5">
 	                        			<img id="rbFilePath" src="" />
 	                        		</div>
-	                        		
 	                        		<div class="feeling_div">
-										  <div class="text-center">
-										  	
-										  	<a type="button" class="btn btn-primary" th:href="@{/review/list}">
-										    	목록으로
-										    </a>
-										  								  
-										    <button type="button" class="btn btn-outline-danger">
-										    	<i class="fa fa-heart"> 좋아요</i>
-										    </button>
-										    
+										<div class="text-center">
+											<a type="button" class="btn btn-primary" th:href="@{/review/list}">목록으로</a>
+											<button type="button" class="btn btn-outline-danger" id="likeBtn">
+												<i class="fa fa-heart"> 좋아요</i>
+											</button>
 										</div>
 									</div>
 	                        		
@@ -588,21 +581,15 @@
 	
 	
 	<script>
-		
 		let boardId = "[[${boardId}]]";
 		let rcWriter = $('#rcWriter').val();
 		console.log('boardId', boardId);
 		console.log('rcWriter : ', rcWriter);
 		
-		function temp(){
-			$('#rcReUpdateContent').val('${data.list[i].rcContent}');
-		};	
-		
 		$(document).ready(function() {
 			// 게시글 조회수 증가시키는 ajax 시작
 			$.ajax({
 				type : 'POST',
-				// url : '../api/boardDetail?boardId='+boardId,
 				url : '../api/boardViewCnt',
 				data : boardId,
 				contentType: "application/json; charset=UTF-8",
@@ -621,16 +608,40 @@
 			
 			// 게시글 정보 가져오기 시작
 			function boardDetail() {
+				let url = "";
+				
+				if(rcWriter == null){
+					url = '../api/boardDetail?boardId='+boardId
+				} else {
+					url = '../api/boardDetail?boardId='+boardId+'&rcWriter='+rcWriter
+				}
+				
 				$.ajax({
 					type : 'GET',
-					url : '../api/boardDetail?boardId='+boardId,
+					// url : '../api/boardDetail?boardId='+boardId,
+					url : url,
 					// data : boardId,
 					dataType :'json',
 					success : function(data) {
-						console.log("data.detail :: ", data.detail);
+						console.log("data :: ", data);
 						
-						let detail = data.detail;
-						let rbRegisterDate = data.detail.rbRegisterDate.substring(0,10);
+						let detail = data.boardDetail;
+						let likeCnt = data.likeCnt;
+						
+						if(rcWriter != null){
+							console.log('likeActive 정보 있음');
+							let likeActive = data.likeActive;
+							
+							if(likeActive == 1){
+								$('#likeBtn').addClass("active");
+							} else {
+								$('#likeBtn').removeClass("active");
+							}
+						}
+						
+						
+						let likeActive = data.likeActive;
+						let rbRegisterDate = data.boardDetail.rbRegisterDate.substring(0,10);
 						
 						
 						switch (detail.rbVaccineKind) {
@@ -654,15 +665,40 @@
 						$('#rbRegisterDate').text(rbRegisterDate);
 						$('#rbViewCnt').text(detail.rbViewCnt);
 						$('#rbLikeCnt').text(detail.rbLikeCnt);
-						$("#rbFilePath").attr("src", detail.rbFilePath);
+						$('#rbFilePath').attr("src", detail.rbFilePath);
+						$('#rbLikeCnt').text(likeCnt);
 						
-						if(data.detail.rbWriter == rcWriter){
+						if(detail.rbWriter == rcWriter){
 							let updateDeleteHtml = "";
 							
-							updateDeleteHtml += `<span onclick="location.href='../../review/update/${detail.rbId}'" style="cursor: pointer;">수정</span> / <span style="cursor: pointer;">삭제</span>`;
+							updateDeleteHtml += `<span onclick="location.href='../../review/update/${detail.rbId}'" style="cursor: pointer;">수정</span> / <span id="deleteSub" style="cursor: pointer;">삭제</span>`;
 							
 							$('#rbUpdateDelete').html(updateDeleteHtml);
 						}
+						
+						// 삭제버튼 클릭						
+						$('#deleteSub').click(function(){
+							$.ajax({
+								type : 'PUT',
+								url : '../api/boardDelete',
+								data : boardId,
+								contentType: "application/json; charset=UTF-8",
+								dataType :'json',
+								success : function(data) {
+									console.log("data:: ", data);
+									if(data == 1){
+										alert('게시글 삭제 완료');
+										location.href='../../review/list'
+									}else{
+										alert('게시글 삭제 실패');
+									}
+					            },
+					            error : function(error) {
+					            	console.log("error :: ", error);
+					            }
+							});
+							
+						});
 		            },
 		            error : function(error) {
 		            	console.log("error :: ", error);
@@ -720,8 +756,8 @@
 			})
 			// 댓글 작성 버튼 클릭 시작
 			
+			// 댓글 정보 가져오기 시작			
 			function getCmtList(){
-				// 댓글 리스트 가져오는 ajax 시작
 				$.ajax({
 					type : 'GET',
 					url : '../../comment/api/commentList?boardId='+boardId,
@@ -931,7 +967,6 @@
 							
 						} // if(data.list.length > 0) 끝
 						
-						
 						$('#closeModal').click();
 						$('#cmtBody').html(cmtHtml);
 						
@@ -940,8 +975,8 @@
 		            	console.log("COMMENT error :: ", error);
 		            }
 				});
-				// 댓글 리스트 가져오는 ajax 끝
 			}
+			// 댓글 정보 가져오기 끝
 			
 			// 대댓글 작성 시작
 			$('#rcReSubBtn').click(function(){
@@ -1079,9 +1114,51 @@
 			});
 			// 댓글 삭제 끝
 			
+			// 좋아요 버튼 클릭 시작
+			$('#likeBtn').click(function(){
+				console.log('좋아요 버튼 클릭');
+				console.log('boardId : ', boardId);
+				console.log('rcWriter : ', rcWriter);
+				// 로그인 정보 있을 때
+				if(rcWriter != null){
+					let rlInfo = {
+						rlUser : rcWriter,
+						rlBoard : boardId
+					} 
+					console.log('rlInfo : ', rlInfo);
+					
+					$.ajax({
+						type : 'POST',
+						url : '../../like/api/likeInsert',
+						data : JSON.stringify(rlInfo),
+						contentType: "application/json; charset=UTF-8",
+						dataType :'json',
+						success : function(data) {
+							console.log("data:: ", data);
+							if(data == 0){
+								alert('좋아요 취소');
+							} else if(data == 1){
+								alert('좋아요 추가');
+							} else {
+								alert('에러 발생');
+							}
+							// 게시글 상세정보 새로고침
+							boardDetail();
+			            },
+			            error : function(error) {
+			            	console.log("error :: ", error);
+			            }
+					});
+				// 로그인 정보 없을 때
+				} else {
+					alert('로그인이 필요한 동작입니다.');
+				}
+				
+			});
+			// 좋아요 버튼 클릭 끝
+			
 			// 페이지 시작 시 댓글 리스트 가져오기
 			getCmtList();
-			
 		});
 	</script>
 

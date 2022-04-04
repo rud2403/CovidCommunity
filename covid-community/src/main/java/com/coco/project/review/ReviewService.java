@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -87,8 +88,9 @@ public class ReviewService {
 	
 	// 후기 게시판 - 게시글 상세정보
 	public Map<String, Object> reviewBoardDetail(int boardId) {
+	// public Map<String, Object> reviewBoardDetail(ReviewDTO reviewDTO) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("detail", reviewMapper.reviewBoardDetail(boardId));
+		resultMap = reviewMapper.reviewBoardDetail(boardId);
 		
 		return resultMap;
 	}
@@ -146,6 +148,33 @@ public class ReviewService {
             System.out.println("cookie 값 : " + value);
     
         }
+		
+		return result;
+	}
+	
+	// 후기 게시판 삭제
+	@Transactional
+	public int reviewBoardDelete(int boardId) {
+		
+		int result = -1;
+		
+		result = reviewMapper.reviewBoardDelete(boardId);
+		
+		return result;
+	}
+	
+	// 후기 게시판 좋아요 총 개수 가져오기
+	public int reviewLikeCnt(int boardId) {
+		
+		int result = reviewMapper.reviewLikeCnt(boardId);
+		
+		return result;
+	}
+	
+	// 후기 게시판 좋아요 활성화
+	public int reviewLikeActive(int boardId, Integer rcWriter) {
+		
+		int result = reviewMapper.reviewLikeActive(boardId, rcWriter);
 		
 		return result;
 	}

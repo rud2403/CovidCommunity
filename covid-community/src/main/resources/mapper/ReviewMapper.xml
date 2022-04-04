@@ -41,6 +41,7 @@
 		FROM
 			review_board
 		<where>
+			rb_delete_yn = 'N'
 			<if test="rbInput != null and rbInput != ''">
 				<if test="rbSelect == 'title'">
 					AND rb_title LIKE CONCAT('%', #{rbInput}, '%')
@@ -61,6 +62,7 @@
 		FROM
 			review_board
 		<where>
+			rb_delete_yn = 'N'
 			<if test="rbInput != null and rbInput != ''">
 				<if test="rbSelect == 'title'">
 					AND rb_title LIKE CONCAT('%', #{rbInput}, '%')
@@ -101,6 +103,7 @@
 			rb_id = #{boardId}
 	</update>
 	
+	<!-- 후기 게시판 - 게시글 수정 -->
 	<update id="reviewBoardUpdate">
 		UPDATE
 			review_board
@@ -120,4 +123,33 @@
 			rb_id = #{rbId}
 	</update>
 	
+	<!-- 후기 게시판 - 게시글 삭제 -->
+	<update id="reviewBoardDelete">
+		UPDATE
+			review_board
+		SET
+			rb_delete_yn = 'Y'
+		WHERE
+			rb_id = #{boardId}
+	</update>
+	
+	<!-- 후기 게시판 좋아요 총 개수 가져오기 -->
+	<select id="reviewLikeCnt" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			review_like
+		WHERE
+			rl_board = #{boardId};
+	</select>	
+	
+	<!-- 후기 게시판 좋아요 활성화 -->
+	<select id="reviewLikeActive" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			review_like
+		WHERE
+			rl_user = #{rcWriter} AND rl_board = #{boardId}
+	</select>
 </mapper>

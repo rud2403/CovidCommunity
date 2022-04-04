@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         	.antMatchers("/", "/review/list", "/review/detail/**", "/review/api/BoardList", "/review/api/boardDetail", "/review/api/boardViewCnt", "/register/**", "/login/**", "/loginProc", "/forgotPw", "/resetPw").permitAll()
         	.antMatchers("/comment/api/commentList").permitAll()
         	.antMatchers("/review/write", "/review/update", "/comment/api/write", "/comment/api/update", "/comment/api/delete").hasRole("USER")
+        	.antMatchers("like/api/likeInsert").hasRole("USER")
             .anyRequest().authenticated()
         .and()
             .formLogin()
