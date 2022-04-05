@@ -401,7 +401,7 @@
 						<div class="card-body">
 							
 							<fieldset class="form-group row">
-								<legend class="col-form-label col-sm-2 float-sm-left pt-0 mt-2" style="max-width: 6.66667%;">백신</legend>
+								<legend class="col-form-label col-sm-2 float-sm-left pt-0 mt-2 ml-1" style="max-width: 6.66667%;">백신</legend>
 								<div>
 									<label class="box-radio-input">
 										<input type="radio" name="rbVaccineKind" value="" checked="checked">
@@ -428,19 +428,19 @@
 							
 							
 							<fieldset class="form-group row">
-								<legend class="col-form-label col-sm-2 float-sm-left pt-0 mt-2" style="max-width: 6.66667%;">검색</legend>
-								<div>
+								<legend class="col-form-label col-sm-2 float-sm-left pt-0 mt-2 ml-1" style="max-width: 6.66667%;">검색</legend>
+								<div class="row" style="width: 500px">
 									<!-- 셀렉트 박스 -->
-									<select id="rbSelect">
+									<select class="form-control ml-2 mr-2" id="rbSelect" style="width: 18%">
 									    <option value="title">제목</option>
 									    <option value="content">내용</option>
 									</select>
 									
 									<!-- 인풋 박스 -->
-									<input type="text" id="rbInput">
+									<input class="mr-2 form-control" type="text" id="rbInput" style="width: 40%">
 									
 									<!-- 검색 버튼 -->
-									<button id="rbSearchButton">검색</button>
+									<button class="btn btn-dark" id="rbSearchButton" style="height: 98%">검색</button>
 									
 								</div>
 							</fieldset>
@@ -596,15 +596,31 @@
 								}
 								
 								cardHtml += `<div class="col mb-4">
-										    <div class="card h-100">
-										      <div class="card-header ${color}" style="color:white;"><b>${VaccineKind}</b></div>
-										      <img class="card-img-top">
-										      <div class="card-body">
-										      	<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${data.list[i].rbId}'" style="cursor: pointer;">${data.list[i].rbTitle}</h5>
-										        <p class="card-text ellipsis">${data.list[i].rbContent}</p>
-										      </div>
-										    </div>
-										  </div>`
+											    <div class="card h-100">
+											      <div class="card-header ${color}" style="color:white;"><b>${VaccineKind}</b></div>
+											      <img class="card-img-top">
+											      <div class="card-body">
+											      	<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${data.list[i].rbId}'" style="cursor: pointer;">${data.list[i].rbTitle}</h5>
+											        <p class="card-text ellipsis">${data.list[i].rbContent}</p>
+											        
+											        <i class="fa fa-eye"> ${data.list[i].rbViewCnt}</i>&nbsp;&nbsp;
+									       			<i class="fa fa-heart"> ${data.list[i].rbLikeCnt}</i>&nbsp;&nbsp;
+									       			
+									       			
+									       			<i class="fa fa-comment"> ${data.list[i].rbCmtCnt}</i>&nbsp;&nbsp;&nbsp;&nbsp;
+									       			`
+									       			if(data.list[i].rbFilePath != ""){
+								cardHtml += 			`<i class="fa fa-image"></i>`
+									       			}
+									       			
+								cardHtml +=			`
+									       			<div style="float: right">
+									       				<span>${data.list[i].rbRegisterDate.substring(0, 10)}</span>
+									       			</div>
+									       		
+											      </div>
+											    </div>
+											  </div>`
 							}
 						}
 						$('#cardBody').html(cardHtml);
