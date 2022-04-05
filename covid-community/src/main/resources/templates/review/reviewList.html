@@ -601,13 +601,13 @@
 											      <img class="card-img-top">
 											      <div class="card-body">
 											      	<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${data.list[i].rbId}'" style="cursor: pointer;">${data.list[i].rbTitle}</h5>
-											        <p class="card-text ellipsis">${data.list[i].rbContent}</p>
+											        <p class="card-text ellipsis"> <span>${data.list[i].rbContent}</span></p>
 											        
-											        <i class="fa fa-eye"> ${data.list[i].rbViewCnt}</i>&nbsp;&nbsp;
-									       			<i class="fa fa-heart"> ${data.list[i].rbLikeCnt}</i>&nbsp;&nbsp;
+											        <i class="fa fa-eye"> <span style="font-weight: normal;">${data.list[i].rbViewCnt}</span></i>&nbsp;&nbsp;
+									       			<i class="fa fa-heart"> <span style="font-weight: normal;">${data.list[i].rbLikeCnt}</span></i>&nbsp;&nbsp;
 									       			
 									       			
-									       			<i class="fa fa-comment"> ${data.list[i].rbCmtCnt}</i>&nbsp;&nbsp;&nbsp;&nbsp;
+									       			<i class="fa fa-comment"> <span style="font-weight: normal;">${data.list[i].rbCmtCnt}</span></i>&nbsp;&nbsp;&nbsp;&nbsp;
 									       			`
 									       			if(data.list[i].rbFilePath != ""){
 								cardHtml += 			`<i class="fa fa-image"></i>`
