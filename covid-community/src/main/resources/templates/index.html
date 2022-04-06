@@ -12,7 +12,10 @@
 	<title>CoCo - Main</title>
 
 	<!-- Custom fonts for this template-->
-	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+  	/>
 	<link
 		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 		rel="stylesheet">
@@ -46,6 +49,13 @@
 				게시판
 			</div>
 
+			<li class="nav-item">
+				<a class="nav-link" th:href="@{/}">
+					<i class="fas fa-home"></i>
+					<span>홈</span>
+				</a>
+			</li>
+
 			<!-- Nav Item - Tables -->
 			<li class="nav-item">
 				<a class="nav-link" th:href="@{/review/list}">
@@ -66,6 +76,31 @@
 				<a class="nav-link" th:href="@{/vaccinationStatus}">
 					<i class="fas fa-fw fa-chart-area"></i>
 					<span>접종현황</span></a>
+			</li>
+			
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#myPageDetail"
+					aria-expanded="true" aria-controls="collapseTwo">
+					<i class="fas fa-user"></i>
+					<span>마이페이지</span>
+				</a>
+				<div id="myPageDetail" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">계정</h6>
+						<a class="collapse-item" th:href="@{myPage/myInfo}">내정보 관리</a>
+						<h6 class="collapse-header">글 관리</h6>
+						<a class="collapse-item" href="buttons.html">내가 쓴 글</a>
+						<a class="collapse-item" href="cards.html">내 댓글</a>
+						<a class="collapse-item" href="buttons.html">좋아요 누른 글</a>
+					</div>
+				</div>
+			</li>
+			
+			
+			<li class="nav-item">
+				<a class="nav-link" th:href="@{/vaccinationStatus}">
+					<i class="fas fa-fw fa-cog"></i>
+					<span>관리자페이지</span></a>
 			</li>
 
 			<!-- Divider -->
@@ -204,10 +239,10 @@
 							<li class="nav-item dropdown no-arrow">
 								<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<img class="img-profile rounded-circle" src="img/undraw_profile.svg">
 									<div th:if="${loginDTO}">
 										<span th:text="${loginDTO.userNickName}+님" style="color: black;" class="mr-2"></span>
 									</div>
-									<img class="img-profile rounded-circle" src="img/undraw_profile.svg">
 								</a>
 								<!-- Dropdown - User Information -->
 								<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -600,8 +635,8 @@
 				</div>
 				<div class="modal-body">정말 로그아웃 하시겠습니까?</div>
 				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
 					<a class="btn btn-primary" th:href="@{/logout}">확인</a>
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
 				</div>
 			</div>
 		</div>

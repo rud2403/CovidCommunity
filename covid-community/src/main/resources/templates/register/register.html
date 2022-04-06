@@ -141,12 +141,13 @@
     <script>
     	// 제이쿼리 시작
 	    $(document).ready(function(){
-			
+	    	// 이메일 인증 확인
+	    	let isCertification = false;
+	    	
 			// 생년월일 select 세팅 시작
 			let nowDate = new Date();
 			let year = nowDate.getFullYear();
 			let html = "";
-			let isCertification = false;
 			
 			for(let i=year; i > year - 40; i--){
 				html += "<option value="+i+">"+i+"</option>"

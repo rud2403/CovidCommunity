@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         	.antMatchers("/", "/review/list", "/review/detail/**", "/review/api/BoardList", "/review/api/boardDetail", "/review/api/boardViewCnt", "/register/**", "/login/**", "/loginProc", "/forgotPw", "/resetPw").permitAll()
         	.antMatchers("/comment/api/commentList", "/vaccinationStatus", "/15077756/v1/vaccine-stat").permitAll()
         	.antMatchers("/review/write", "/review/update", "/comment/api/write", "/comment/api/update", "/comment/api/delete").hasRole("USER")
-        	.antMatchers("like/api/likeInsert").hasRole("USER")
+        	.antMatchers("like/api/likeInsert", "myPage/**").hasRole("USER")
             .anyRequest().authenticated()
         .and()
             .formLogin()
@@ -42,7 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .failureHandler(loginFailureHandler)
             // .failureUrl("/loginDenied")
         .and()
-            .logout();
+            .logout()
+            .logoutSuccessUrl("/");
     }
 
     @Bean

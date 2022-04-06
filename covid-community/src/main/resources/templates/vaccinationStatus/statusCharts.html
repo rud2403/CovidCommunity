@@ -375,7 +375,50 @@
                                     <h6 class="m-0 font-weight-bold text-primary">전국 접종현황</h6>
                                 </div>
                                 <div class="card-body">
-                                    <hr>
+                                    
+                                    <div class="row text-center">
+                                    	<div class="col-4">
+                                    		<div><h5>전국 1차 접종</h5></div>
+                                    		<div>
+                                    			<h4>
+	                                    			<span id="firstCntPer"></span>
+	                                    			<span>%</span>
+                                    			</h4>
+                                    		</div>
+                                    		<div>
+                                    			<span id="firstCnt"></span>
+                                    			<span style="color: red;">▲</span>
+											</div>
+										</div>
+                                    	<div class="col-4">
+                                    		<div><h5>전국 2차 접종</h5></div>
+                                    		<div>
+                                    			<h4>
+	                                    			<span id="secondCntPer"></span>
+	                                    			<span>%</span>
+                                    			</h4>
+                                    		</div>
+                                    		<div>
+                                    			<span id="secondCnt"></span>
+                                    			<span style="color: red;">▲</span>
+											</div>
+										</div>
+                                    	<div class="col-4">
+                                    		<div><h5>전국 3차 접종</h5></div>
+                                    		<div>
+                                    			<h4>
+	                                    			<span id="thirdCntPer"></span>
+	                                    			<span>%</span>
+                                    			</h4>
+                                    		</div>
+                                    		<div>
+                                    			<span id="thirdCnt"></span>
+                                    			<span style="color: red;">▲</span>
+                                    		</div>
+										</div>
+                                    </div>
+                                    
+                                    
                                 </div>
                             </div>
 
@@ -385,12 +428,9 @@
                                     <h6 class="m-0 font-weight-bold text-primary">지역별 접종현황</h6>
                                 </div>
                                 <div class="card-body">
-                                
-                                
-                                
                                 	<table class="table">
 									  <thead>
-									    <tr>
+									    <tr class="text-center">
 									      <th scope="col">지역</th>
 									      <th scope="col">1차 신규</th>
 									      <th scope="col">1차 접종자</th>
@@ -400,13 +440,8 @@
 									      <th scope="col">3차 접종자</th>
 									    </tr>
 									  </thead>
-									  <tbody id="tbd">
-									  </tbody>
+									  <tbody id="tbd"></tbody>
 									</table>
-									
-									
-									
-									
                                 </div>
                             </div>
 
@@ -480,29 +515,72 @@
 				success : function(data) {
 					let result = data.data
 					let statusHtml = "";					
+
+					console.log(result);
+					
+					let totalFirstCnt = result[0].totalFirstCnt;
+					let totalSecondCnt = result[0].totalSecondCnt;
+					let totalThirdCnt = result[0].totalThirdCnt;
+					
+					let firstCntPer = (totalFirstCnt / 51628117) * 100;
+					firstCntPer = firstCntPer.toFixed(1);
+					
+					let secondCntPer = (totalSecondCnt / 51628117) * 100;
+					secondCntPer = secondCntPer.toFixed(1);
+					
+					let thirdCntPer = (totalThirdCnt / 51628117) * 100;
+					thirdCntPer = thirdCntPer.toFixed(1);
+					
+					$('#firstCntPer').text(firstCntPer);
+					$('#secondCntPer').text(secondCntPer);
+					$('#thirdCntPer').text(thirdCntPer);
+					
+					$('#firstCnt').text(numberWithCommas(result[0].firstCnt));
+					$('#secondCnt').text(numberWithCommas(result[0].secondCnt));
+					$('#thirdCnt').text(numberWithCommas(result[0].thirdCnt));
 					
 					for(let i=1; i < result.length; i++){
-						console.log(result[i]);
+						// console.log(result[i]);
 						
-						statusHtml +=  `<tr>
+						statusHtml +=  `<tr class="text-center">
 									      <th scope="col">${result[i].sido}</th>
-									      <th scope="col">${result[i].firstCnt}<sapn>명</span></th>
-									      <th scope="col">${result[i].totalFirstCnt}<sapn>명</span></th>
-									      <th scope="col">${result[i].secondCnt}<sapn>명</span></th>
-									      <th scope="col">${result[i].totalSecondCnt}<sapn>명</span></th>
-									      <th scope="col">${result[i].thirdCnt}<sapn>명</span></th>
-									      <th scope="col">${result[i].totalThirdCnt}<sapn>명</span></th>
+									      <th scope="col">${numberWithCommas(result[i].firstCnt)}<span class="ml-1" style="color: red;">▲</span></th>
+									      <th scope="col">${numberWithCommas(result[i].totalFirstCnt)}<sapn class="ml-1">명</span></th>
+									      <th scope="col">${numberWithCommas(result[i].secondCnt)}<span class="ml-1" style="color: red;">▲</span></th>
+									      <th scope="col">${numberWithCommas(result[i].totalSecondCnt)}<sapn class="ml-1">명</span></th>
+									      <th scope="col">${numberWithCommas(result[i].thirdCnt)}<span class="ml-1" style="color: red;">▲</span></th>
+									      <th scope="col">${numberWithCommas(result[i].totalThirdCnt)}<sapn class="ml-1">명</span></th>
 									    </tr>`
 					}
-					
 					$('#tbd').html(statusHtml);
-				
 	            },
 	            error : function(error) {
 	            	console.log("error :: ", error);
 	            }
 			});
 		});
+		
+		// 숫자 , 찍기 함수
+		function numberWithCommas(x){
+			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	</script>
 	
     <!-- Bootstrap core JavaScript-->
@@ -514,6 +592,9 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    
+    <!-- 차트.js cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 
 </body>
