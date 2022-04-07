@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.coco.project.myPage.MyPageMapper">
+
+	<select id="nickNameCheck" parameterType="com.coco.project.register.RegisterDTO" resultType="Integer">
+		SELECT
+			count(*)
+		FROM
+			user_info
+		WHERE
+			u_nickname = #{userNickName} and u_id != #{userId};
+	</select>
+
+	<update id="updateUserInfo">
+		UPDATE
+			user_info SET u_pw = #{userPw}, u_nickname = #{userNickName}, u_birth = #{userBirth}, u_addr = #{userAddr}
+		WHERE
+			u_id = #{userId}
+	</update>
+</mapper>
