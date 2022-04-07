@@ -88,7 +88,7 @@
 		</where>
 		ORDER BY rb_register_date DESC
 		<if test="startRow != null and startRow != ''">
-			LIMIT 9 OFFSET ${startRow}
+			LIMIT 8 OFFSET ${startRow}
 		</if>
 	</select>
 	

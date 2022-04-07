@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>CoCo - 후기 게시판</title>
+<title>CoCo - 마이페이지</title>
 
 <!-- Custom fonts for this template -->
 <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -387,59 +387,10 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">후기 게시판</h1>
-					<div class="mb-3" style="text-align: right;">
-						<a type="button" class="btn btn-primary" th:href="@{/review/write}">글쓰기</a>
-					</div>
-
+					<h1 class="h3 mb-2 text-gray-800">내가 쓴 글</h1>
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-body">
-							
-							<fieldset class="form-group row">
-								<legend class="col-form-label col-sm-2 float-sm-left pt-0 mt-2 ml-1" style="max-width: 6.66667%;">백신</legend>
-								<div>
-									<label class="box-radio-input">
-										<input type="radio" name="rbVaccineKind" value="" checked="checked">
-										<span>전체</span>
-									</label>
-									<label class="box-radio-input">
-										<input type="radio" name="rbVaccineKind" value="1">
-										<span>화이자</span>
-									</label>
-									<label class="box-radio-input">
-										<input type="radio" name="rbVaccineKind" value="2">
-										<span>모더나</span>
-									</label>
-									<label class="box-radio-input">
-										<input type="radio" name="rbVaccineKind" value="3">
-										<span>얀센</span>
-									</label>
-									<label class="box-radio-input">
-										<input type="radio" name="rbVaccineKind" value="4">
-										<span>아스트라제네카</span>
-									</label>
-								</div>
-							</fieldset>
-							
-							
-							<fieldset class="form-group row">
-								<legend class="col-form-label col-sm-2 float-sm-left pt-0 mt-2 ml-1" style="max-width: 6.66667%;">검색</legend>
-								<div class="row" style="width: 500px">
-									<!-- 셀렉트 박스 -->
-									<select class="form-control ml-2 mr-2" id="rbSelect" style="width: 18%">
-									    <option value="title">제목</option>
-									    <option value="content">내용</option>
-									</select>
-									
-									<!-- 인풋 박스 -->
-									<input class="mr-2 form-control" type="text" id="rbInput" style="width: 40%">
-									
-									<!-- 검색 버튼 -->
-									<button class="btn btn-dark" id="rbSearchButton" style="height: 98%">검색</button>
-									
-								</div>
-							</fieldset>
 						
 							<div class="row row-cols-1 row-cols-md-2" id="cardBody"></div>
 							
@@ -502,29 +453,7 @@
 	<script>
 		$(document).ready(function() {
 			
-			let writeResult = "[[${writeResult}]]";
-			let updateResult = "[[${updateResult}]]";
-			
-			
-			if(writeResult != ""){
-				if(writeResult == 1){
-					alert('게시글 작성 완료.');
-					writeResult = "";
-				} else {
-					alert('게시글 작성 실패.');
-					writeResult = "";
-				}
-			}
-			
-			if(updateResult != ""){
-				if(updateResult == 1){
-					alert('게시글 수정 완료.');
-					updateResult = "";
-				} else {
-					alert('게시글 수정 실패.');
-					updateResult = "";
-				}
-			}
+			let userId = "[[${loginDTO.userId}]]";
 			
 			// 현재 페이지
 			let rbNowPage = 1;
@@ -542,23 +471,15 @@
 				let startRow = (rbNowPage-1)*pageSize;
 				// 게시글 목록 초기화
 				let cardHtml = "";
-				// 백신 종류
-				let rbVaccineKind = $('input[name=rbVaccineKind]:checked').val();
-				// 제목 or 내용
-				let rbSelect = $('#rbSelect').val();
-				// input 값
-				let rbInput = $('#rbInput').val();
 				
 				let boardInfo = {
 					startRow,
-					rbVaccineKind,
-					rbSelect,
-					rbInput
+					userId
 				};
 				
 				$.ajax({
 					type : 'GET',
-					url : '../review/api/BoardList',
+					url : '../myPage/api/myBoardList',
 					data : boardInfo,
 					dataType :'json',
 					contentType: "application/json; charset=UTF-8",
@@ -598,9 +519,9 @@
 											      <div class="card-body">
 											      	<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${data.list[i].rbId}'" style="cursor: pointer;">${data.list[i].rbTitle}</h5>
 											      	<div class="row mb-4">`
-											      	
-											      	
-											      	if(data.list[i].rbFilePath != ""){
+								      	
+								      	
+								      				if(data.list[i].rbFilePath != ""){
 					      		cardHtml +=  			`<div class="col-9">
 												        	<p class="card-text ellipsis"> <span>${data.list[i].rbContent}</span></p>
 												        </div>
@@ -714,33 +635,6 @@
 			
 			// 페이지 접근시 게시글 가져오기
 			getBoardList();
-				
-			// 검색 버튼 클릭 시
-			$('#rbSearchButton').click(function(){
-				rbNowPage = 1;
-				getBoardList();
-			});
-			
-			// 라디오 버튼 변경 시
-			$("input[name='rbVaccineKind']:radio").change(function () {
-		        //라디오 버튼 값을 가져온다.
-		        // var noticeCat = this.value;
-		        rbNowPage = 1;
-				getBoardList();       
-			});
-			
-			// 검색창 엔터 클릭 시
-			$("#rbInput").keydown(function(key) {
-                if (key.keyCode == 13) {
-                	rbNowPage = 1;
-    				getBoardList();
-                }
-            });
-			
-			// 제목 클릭 시
-			$('.card-title').click(function(){
-				
-			});
 			
 		});
 	</script>

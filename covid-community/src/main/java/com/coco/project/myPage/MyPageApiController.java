@@ -1,12 +1,17 @@
 package com.coco.project.myPage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.coco.project.register.RegisterDTO;
@@ -18,7 +23,8 @@ public class MyPageApiController {
 	@Autowired
 	MyPageService myPageService;
 	
-	@PutMapping("myInfo")
+	// 마이페이지 내 정보 관리
+	@PutMapping("/myInfo")
 	@Transactional
 	public ResponseEntity<Object> myInfo(@RequestBody RegisterDTO registerDTO){
 		
@@ -39,5 +45,27 @@ public class MyPageApiController {
 		}
 		
 		return new ResponseEntity<>(updateResult, HttpStatus.OK);
+	}
+	
+	// 마이페이지 내가 쓴 글 리스트
+	@GetMapping("/myBoardList")
+	public ResponseEntity<Object> myBoard(@RequestParam Map<String, Object> boardInfo){
+		
+		Map<String, Object> boardList = new HashMap<>();
+		
+		boardList = myPageService.myBoardList(boardInfo);
+		
+		return new ResponseEntity<>(boardList, HttpStatus.OK);
+	}
+	
+	// 마이페이지 내 댓글
+	@GetMapping("/myComment")
+	public ResponseEntity<Object> myComment(@RequestParam Map<String, Object> userInfo){
+		
+		Map<String, Object> commentList = new HashMap<>();
+		
+		commentList = myPageService.myComment(userInfo);
+		
+		return new ResponseEntity<>(commentList, HttpStatus.OK);
 	}
 }

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>COCO - MyInfo</title>
+    <title>CoCo - MyInfo</title>
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -477,8 +477,6 @@
     </div>
 
 	<script type="text/javascript">
-		
-	
 		$(document).ready(function(){
 			
 			let userInfo = "[[${loginDTO}]]";
@@ -496,11 +494,8 @@
 			// 생년월일 설정 시작
 			let userBirth =	"[[${loginDTO.userBirth}]]"
 			
-			
 			userBirth = userBirth.split("/");
 			console.log('userBirth : ', userBirth);
-			
-			
 			
 			// 생년월일 select 세팅 시작
 			let nowDate = new Date();
@@ -535,7 +530,6 @@
 			$("#selectDate").append(html);
 			html = "";
 			// 생년월일 select 세팅 끝
-		
 			
 			// 다음 주소 api 시작
 			$("#address_kakao").click(function(){
@@ -547,8 +541,6 @@
 			        }
 			    }).open();
 			});
-			
-			
 			
 			$('#subBtn').click(function(){
 				
@@ -563,7 +555,6 @@
 				
 				// 닉네임 유효성 체크
 				let specialCheck = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
-				
 				
 				if(userPw == null || userPw == ""){
 					alert('비밀번호를 입력해주세요.');
@@ -585,7 +576,6 @@
 					$("#user_name").focus();
 					return false;
 				}
-				
 				if(userNickName.search(/\s/) != -1) {
 					alert('닉네임에 빈칸을 포함할 수 없습니다.');
 					$("#user_nickName").focus();
@@ -595,7 +585,6 @@
 					$("#user_nickName").focus();
 					return false;
 				}
-				
 				if(addrKaKao == null || addrKaKao == ""){
 					alert('주소를 입력해주세요.');
 					$("#address_kakao").focus();
@@ -606,7 +595,6 @@
 					$("#address_kakao_detail").focus();
 					return false;
 				}
-				
 				
 				let userInfo = {
 					userId,

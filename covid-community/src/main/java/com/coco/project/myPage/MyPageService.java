@@ -1,5 +1,8 @@
 package com.coco.project.myPage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,5 +38,27 @@ public class MyPageService {
 		result = myPageMapper.updateUserInfo(registerDTO);
 		
 		return result;
+	}
+	
+	// 마이페이지 - 내가 쓴 글
+	public Map<String,Object> myBoardList(Map<String, Object> boardInfo){
+		
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		resultMap.put("list", myPageMapper.myBoardList(boardInfo));
+		resultMap.put("totalCnt", myPageMapper.myBoardListCnt(boardInfo));
+		
+		return resultMap;
+	}
+	
+	// 마이페이지 - 내 댓글
+	public Map<String,Object> myComment(Map<String, Object> userInfo){
+		
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		resultMap.put("list", myPageMapper.myComment(userInfo));
+		resultMap.put("totalCnt", myPageMapper.myCommentCnt(userInfo));
+		
+		return resultMap;
 	}
 }

@@ -18,4 +18,91 @@
 		WHERE
 			u_id = #{userId}
 	</update>
+	
+	<!-- 마이페이지 - 내가 쓴 글 리스트 -->
+	<select id="myBoardList" resultType="hashmap">
+		SELECT
+			rb_id 						AS rbId,
+			rb_title 					AS rbTitle,
+			rb_content 					AS rbContent,
+			rb_view_cnt 				AS rbViewCnt,
+			rb_register_date 			AS rbRegisterDate,
+			rb_update_date  			AS rbUpdateDate,
+			rb_writer 					AS rbWriter,
+			rb_notice_yn 				AS rbNoticeYn,
+			rb_vaccine_kind 			AS rbVaccineKind,
+			rb_file_name				AS rbFileName,
+			IFNULL(rb_file_path, '')	AS rbFilePath,
+			(select
+				count(*)
+			from
+				review_like
+			where
+				rl_board = rbId) AS rbLikeCnt,
+			(select
+				count(*)
+			from
+				review_comment
+			where
+				rc_board = rbId AND rc_delete_yn = 'N')	AS rbCmtCnt
+		FROM
+			review_board rb
+		WHERE
+			rb_delete_yn = 'N' AND rb_writer = #{userId}
+		ORDER by
+			rb_register_date DESC
+		limit
+			8 OFFSET ${startRow}
+	</select>
+	
+	<!-- 마이페이지 - 내가 쓴 글 총 개수 -->
+	<select id="myBoardListCnt" resultType="int">
+		SELECT
+			count(*)	AS totalCnt
+		FROM
+			review_board
+		WHERE
+			rb_delete_yn = 'N' AND rb_writer = #{userId}
+	</select>
+	
+	<!-- 마이페이지 - 내 댓글 -->
+	<select id="myComment" resultType="hashmap">
+		SELECT
+			rc_id				AS rcId,
+			rc_content 			AS rcContent,
+			rc_writer  			AS rcWriter,
+			rc_board			AS rcBoard,
+			rc_register_date 	AS rcRegisterDate,
+			rc_delete_yn		AS rcDeleteYn,
+			rb_id				AS rbId,
+			rb_title			AS rbTitle,
+			rb_content 			AS rbContent,
+			rb_writer 			AS rbWriter,
+			rb_view_cnt 		AS rbViewCnt,
+			rb_like_cnt 		AS rbLikeCnt,
+			rb_register_date 	AS rbRegisterDate,
+			rb_file_path 		AS rbFilePath,
+			ui.u_nickname 		AS uNickName
+		FROM
+			review_comment rc
+		JOIN
+			review_board rb ON rc_board = rb.rb_id
+		JOIN
+			user_info ui ON rb.rb_writer = ui.u_id
+		WHERE
+			rc_delete_yn = 'N' AND rc_writer = #{userId}
+		ORDER BY
+			rc_register_date DESC
+		LIMIT
+			8 OFFSET ${startRow}
+	</select>
+	<!-- 마이페이지 내 댓글 총 개수 -->
+	<select id="myCommentCnt" resultType="int">
+		SELECT
+			count(*)	AS totalCnt
+		FROM
+			review_comment
+		WHERE
+			rc_delete_yn = 'N' AND rc_writer = #{userId}
+	</select>
 </mapper>

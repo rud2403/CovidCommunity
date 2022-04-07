@@ -13,12 +13,26 @@ import com.coco.project.login.LoginDTO;
 public class MyPageController {
 	// 마이 페이지 - 내정보 관리 이동
 	@GetMapping(value = "/myInfo")
-    String login(@AuthenticationPrincipal LoginDTO loginDTO, Model model){
-		
+    String myInfo(@AuthenticationPrincipal LoginDTO loginDTO, Model model){
 		model.addAttribute("loginDTO", loginDTO);
 		
         return "myPage/myInfo";
     }
 	
+	// 마이 페이지 - 내가 쓴 글
+	@GetMapping(value = "/myBoardList")
+    String myPost(@AuthenticationPrincipal LoginDTO loginDTO, Model model){
+		model.addAttribute("loginDTO", loginDTO);
+		
+        return "myPage/myBoardList";
+    }
 	
+	// 마이 페이지 - 내가 쓴 글
+	@GetMapping(value = "/myComment")
+    String myComment(@AuthenticationPrincipal LoginDTO loginDTO, Model model){
+		model.addAttribute("loginDTO", loginDTO);
+		
+        return "myPage/myComment";
+    }
+		
 }
