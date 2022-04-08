@@ -79,10 +79,22 @@
 			rb_content 			AS rbContent,
 			rb_writer 			AS rbWriter,
 			rb_view_cnt 		AS rbViewCnt,
-			rb_like_cnt 		AS rbLikeCnt,
 			rb_register_date 	AS rbRegisterDate,
-			rb_file_path 		AS rbFilePath,
-			ui.u_nickname 		AS uNickName
+			IFNULL(rb_file_path, '')	AS rbFilePath,
+			rb_vaccine_kind		AS rbVaccineKind,
+			ui.u_nickname 		AS uNickName,
+			(SELECT
+				count(*)
+			FROM
+				review_like
+			WHERE
+				rl_board = rbId)		AS rbLikeCnt,
+			(SELECT
+				count(*)
+			FROM
+				review_comment
+			WHERE
+				rc_board = rbId AND rc_delete_yn = 'N')		AS rbCmtCnt
 		FROM
 			review_comment rc
 		JOIN
@@ -96,6 +108,7 @@
 		LIMIT
 			8 OFFSET ${startRow}
 	</select>
+	
 	<!-- 마이페이지 내 댓글 총 개수 -->
 	<select id="myCommentCnt" resultType="int">
 		SELECT

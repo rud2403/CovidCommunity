@@ -390,34 +390,15 @@
 					<h1 class="h3 mb-2 text-gray-800">내 댓글</h1>
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
-						<div class="card-body">
+						<div class="card-body" style="width: 70%; margin: auto;">
 						
 							<div class="row row-cols-1 row-cols-md-1" id="cardBody">
-								<div class="card">
-								    <div class="card-body">
-								      <h5 class="card-title">Card title</h5>
-								      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-								      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-								      
-								      <div class="row row-cols-1 row-cols-md-1" id="cardBody">
-											<div class="card">
-											    <div class="card-body">
-											      <h5 class="card-title">Card title</h5>
-											      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-											      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-											    </div>
-											  </div>
-										
-										</div>
-								      
-								      
-								    </div>
-								  </div>
+								
 							
 							</div>
 							
 							<nav aria-label="Page navigation example">
-							  <ul class="pagination" id="pageNum" style="padding-left: 40%;"></ul>
+							  <ul class="pagination" id="pageNum" style="padding-left: 45%;"></ul>
 							</nav>
 						</div>
 					</div>
@@ -509,78 +490,105 @@
 						console.log("data.list :: ", data.list);
 						console.log("data.totalCnt :: ", data.totalCnt);
 						
+						let list = data.list;
 						
-						/* if(data.list.length > 0){
-							let color;
+						
+						
+						if(data.list.length > 0){
+							
 							
 							for(let i in data.list){
-								let VaccineKind = data.list[i].rbVaccineKind;
+								let color;
+								let VaccineKind = list[i].rbVaccineKind;
+								let rcRegisterDate = list[i].rcRegisterDate.substring(0, 10);
+								let rbRegisterDate = list[i].rbRegisterDate.substring(0, 10);
+								
 								switch (VaccineKind) {
 								  case '1':
 									VaccineKind = '화이자';
-									color = 'bg-warning';
+									color = 'badge-warning';
 								    break;
 								  case '2':
 									VaccineKind = '모더나';
-									color = 'bg-primary';
+									color = 'badge-primary';
 								    break;
 								  case '3':
 									VaccineKind = '얀센';
-									color = 'bg-success';
+									color = 'badge-success';
 								    break;
 								  case '4':
 									VaccineKind = '아스트라제네카';
-									color = 'bg-info';
+									color = 'badge-info';
 								    break;
 								}
 								
-								cardHtml += `<div class="col mb-4">
-											    <div class="card h-100">
-											      <div class="card-header ${color}" style="color:white;"><b>${VaccineKind}</b></div>
-											      <img class="card-img-top">
-											      <div class="card-body">
-											      	<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${data.list[i].rbId}'" style="cursor: pointer;">${data.list[i].rbTitle}</h5>
-											      	<div class="row mb-4">`
-								      	
-								      	
-								      				if(data.list[i].rbFilePath != ""){
-					      		cardHtml +=  			`<div class="col-9">
-												        	<p class="card-text ellipsis"> <span>${data.list[i].rbContent}</span></p>
-												        </div>
-												        <div class="col-3">
-												        	<img id="rbFilePath" src="${data.list[i].rbFilePath}" width="80%" height="100%"/>
-												        </div>`
-											      	} else {
-					      		cardHtml +=				`<div class="col">	
-											        		<p class="card-text ellipsis"> <span>${data.list[i].rbContent}</span></p>
-											        	</div>`
-											      	}
-											        
-											        
-					        	cardHtml +=			`</div>
-											        
-											        
-											        <i class="fa fa-eye"> <span style="font-weight: normal;">${data.list[i].rbViewCnt}</span></i>&nbsp;&nbsp;
-									       			<i class="fa fa-heart"> <span style="font-weight: normal;">${data.list[i].rbLikeCnt}</span></i>&nbsp;&nbsp;
-									       			
-									       			
-									       			<i class="fa fa-comment"> <span style="font-weight: normal;">${data.list[i].rbCmtCnt}</span></i>&nbsp;&nbsp;&nbsp;&nbsp;
-									       			`
-									       			if(data.list[i].rbFilePath != ""){
-								cardHtml += 			`<i class="fa fa-image"></i>`
-									       			}
-									       			
-								cardHtml +=			`
-									       			<div style="float: right">
-									       				<span>${data.list[i].rbRegisterDate.substring(0, 10)}</span>
-									       			</div>
-									       		
-											      </div>
+								cardHtml += `<div class="card mb-3">
+											    <div class="card-body">
+											      <span class="card-title">${rcRegisterDate}</span>
+											      <h5 class="card-text mt-3 mb-4" onclick="location.href='../review/detail/${data.list[i].rbId}'" style="cursor: pointer;">${list[i].rcContent}</h5>
+											      <div class="row row-cols-1 row-cols-md-1" id="cardBody">
+														<div class="card">
+														    <div class="card-body">
+														    	<div class="row">
+														    		<div class="col">
+														      			<h4 class="card-title">
+																			<span class="badge ${color}">${VaccineKind}</span>
+																		</h4>
+														      		</div>
+														      	</div>
+														      	<div class="row">
+														      		<div class="col text-center">
+														      			<h4 class="card-text" onclick="location.href='../review/detail/${data.list[i].rbId}'" style="cursor: pointer;">${list[i].rbTitle}</h4>
+														      		</div>
+														      	</div>
+														      	<div class="row">
+														      		<div class="col" style="text-align: right;">
+														      			<p class="card-text">${list[i].uNickName}</p>
+														      		</div>
+														      	</div>
+														      	<div class="row mt-4 mb-4">`
+														      	
+									      						if(list[i].rbFilePath != ""){
+								      		cardHtml +=  			`<div class="col-10">
+															        	<p class="card-text ellipsis"> <span>${data.list[i].rbContent}</span></p>
+															        </div>
+															        <div class="col-2">
+															        	<img id="rbFilePath" src="${data.list[i].rbFilePath}" width="80%" height="100%"/>
+															        </div>`
+														      	} else {
+								      		cardHtml +=				`<div class="col">	
+														        		<p class="card-text ellipsis"> <span>${data.list[i].rbContent}</span></p>
+														        	</div>`
+														      	}
+														      		
+														      		
+								        	cardHtml +=		      	`</div>
+														      	<div class="row">
+														      		<div class="col">
+														      			<i class="fa fa-eye"> <span style="font-weight: normal;">${list[i].rbViewCnt}</span></i>&nbsp;&nbsp;
+												       					<i class="fa fa-heart"> <span style="font-weight: normal;">${list[i].rbLikeCnt}</span></i>&nbsp;&nbsp;
+												       					<i class="fa fa-comment"> <span style="font-weight: normal;">${list[i].rbCmtCnt}</span></i>&nbsp;&nbsp;&nbsp;&nbsp;
+												       					`
+																		if(list[i].rbFilePath != ""){
+											cardHtml += 					`<i class="fa fa-image"></i>`
+														       			}
+												       					
+											cardHtml +=			`</div>
+														      		<div class="col" style="text-align: right;">
+														      			<span>${rbRegisterDate}</span>
+														      		</div>
+														      	</div>
+														    </div>
+														  </div>
+													
+													</div>
+											      
+											      
 											    </div>
 											  </div>`
 							}
 						}
-						$('#cardBody').html(cardHtml); */
+						$('#cardBody').html(cardHtml);
 						
 						// 페이지 네이션 그리기
 						drawPagination(data.totalCnt, 0);
