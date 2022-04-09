@@ -68,4 +68,15 @@ public class MyPageApiController {
 		
 		return new ResponseEntity<>(commentList, HttpStatus.OK);
 	}
+	
+	// 마이페이지 내가 좋아요 한 글
+	@GetMapping("/myLike")
+	public ResponseEntity<Object> myLike(@RequestParam Map<String, Object> userInfo){
+		
+		Map<String, Object> likeList = new HashMap<>();
+		
+		likeList = myPageService.myLike(userInfo);
+		
+		return new ResponseEntity<>(likeList, HttpStatus.OK);
+	}
 }

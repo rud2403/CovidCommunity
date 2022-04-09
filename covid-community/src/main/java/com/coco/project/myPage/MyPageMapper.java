@@ -22,4 +22,8 @@ public interface MyPageMapper {
 	public List<Map<String,Object>> myComment(Map<String,Object> userInfo);
 	// 마이페이지 내 댓글 총 개수
 	public int myCommentCnt(Map<String,Object> userInfo);
+	// 마이페이지 내가 좋아요한 글
+	public List<Map<String,Object>> myLike(Map<String,Object> userInfo);
+	// 마이페이지 내가 좋아요한 글 총 개수
+	public int myLikeCnt(Map<String,Object> userInfo);
 }

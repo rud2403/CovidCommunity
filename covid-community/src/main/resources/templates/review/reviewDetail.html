@@ -406,7 +406,8 @@
 	                        		</div>
 	                        		<div class="feeling_div">
 										<div class="text-center">
-											<a type="button" class="btn btn-primary" th:href="@{/review/list}">목록으로</a>
+											<a type="button" class="btn btn-primary" id="moveList">목록으로</a>
+											<!-- <a type="button" class="btn btn-primary" id="moveList" th:href="@{/review/list}">목록으로</a> -->
 											<button type="button" class="btn btn-outline-danger" id="likeBtn">
 												<i class="fa fa-heart"> 좋아요</i>
 											</button>
@@ -1156,6 +1157,23 @@
 				
 			});
 			// 좋아요 버튼 클릭 끝
+			
+			// 목록으로 버튼 클릭
+			$('#moveList').click(function(){
+				console.log(document.referrer);
+				if(document.referrer == "http://localhost:8080/review/list"){
+					location.href="/review/list"
+				} else if(document.referrer == "http://localhost:8080/myPage/myBoardList"){
+					console.log(document.referrer);
+					location.href="../../myPage/myBoardList"
+				} else if(document.referrer ==  "http://localhost:8080/myPage/myComment"){
+					location.href="../../myPage/myComment"
+				} else if(document.referrer ==  "http://localhost:8080/myPage/myLike"){
+					location.href="../../myPage/myLike"
+				} else {
+					location.href="/review/list"
+				}
+			});
 			
 			// 페이지 시작 시 댓글 리스트 가져오기
 			getCmtList();

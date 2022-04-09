@@ -61,4 +61,15 @@ public class MyPageService {
 		
 		return resultMap;
 	}
+	
+	// 마이페이지 - 내가 좋아요 한 글
+	public Map<String,Object> myLike(Map<String, Object> userInfo){
+		
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		resultMap.put("list", myPageMapper.myLike(userInfo));
+		resultMap.put("totalCnt", myPageMapper.myLikeCnt(userInfo));
+		
+		return resultMap;
+	}
 }

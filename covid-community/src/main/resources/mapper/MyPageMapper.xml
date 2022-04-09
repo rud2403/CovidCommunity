@@ -65,6 +65,7 @@
 			rb_delete_yn = 'N' AND rb_writer = #{userId}
 	</select>
 	
+	
 	<!-- 마이페이지 - 내 댓글 -->
 	<select id="myComment" resultType="hashmap">
 		SELECT
@@ -74,6 +75,55 @@
 			rc_board			AS rcBoard,
 			rc_register_date 	AS rcRegisterDate,
 			rc_delete_yn		AS rcDeleteYn,
+			rb_id				AS rbId,
+			rb_title			AS rbTitle,
+			rb_content 			AS rbContent,
+			rb_writer 			AS rbWriter,
+			rb_view_cnt 		AS rbViewCnt,
+			rb_like_cnt 		AS rbLikeCnt,
+			rb_register_date 	AS rbRegisterDate,
+			rb_vaccine_kind		AS rbVaccineKind,
+			IFNULL(rb_file_path, '')	AS rbFilePath,
+			ui.u_nickname 		AS uNickName,
+			(select
+				count(*)
+			from
+				review_like
+			where
+				rl_board = rbId)	AS rbLikeCnt,
+			(select
+				count(*)
+			from
+				review_comment
+			where
+				rc_board = rbId AND rc_delete_yn = 'N')	AS rbCmtCnt
+		FROM
+			review_comment rc
+		JOIN
+			review_board rb on rc_board = rb.rb_id
+		JOIN
+			user_info ui ON rb.rb_writer = ui.u_id
+		WHERE
+			rc_delete_yn = 'N' and rc_writer = #{userId}
+		ORDER BY
+			rc_register_date DESC
+		LIMIT
+			8 OFFSET ${startRow}
+	</select>
+	
+	<select id="myCommentCnt" resultType="int">
+		SELECT
+			count(*)	AS totalCnt
+		FROM
+			review_comment
+		WHERE
+			rc_delete_yn = 'N' AND rc_writer = #{userId}
+	
+	</select>
+	
+	<!-- 마이페이지 - 내가 좋아요한 글 -->
+	<select id="myLike" resultType="hashmap">
+		SELECT
 			rb_id				AS rbId,
 			rb_title			AS rbTitle,
 			rb_content 			AS rbContent,
@@ -96,26 +146,28 @@
 			WHERE
 				rc_board = rbId AND rc_delete_yn = 'N')		AS rbCmtCnt
 		FROM
-			review_comment rc
+			review_like rl
 		JOIN
-			review_board rb ON rc_board = rb.rb_id
+			review_board rb ON rb_id = rl.rl_board
 		JOIN
 			user_info ui ON rb.rb_writer = ui.u_id
 		WHERE
-			rc_delete_yn = 'N' AND rc_writer = #{userId}
+			rb_delete_yn = 'N' AND rl_user = 7
 		ORDER BY
-			rc_register_date DESC
+			rb_register_date DESC
 		LIMIT
 			8 OFFSET ${startRow}
 	</select>
 	
 	<!-- 마이페이지 내 댓글 총 개수 -->
-	<select id="myCommentCnt" resultType="int">
+	<select id="myLikeCnt" resultType="int">
 		SELECT
 			count(*)	AS totalCnt
 		FROM
-			review_comment
+			review_like rl
+		JOIN
+			review_board rb ON rb.rb_id = rl.rl_board  
 		WHERE
-			rc_delete_yn = 'N' AND rc_writer = #{userId}
+			rb_delete_yn = 'N' AND rl_user = #{userId}
 	</select>
 </mapper>

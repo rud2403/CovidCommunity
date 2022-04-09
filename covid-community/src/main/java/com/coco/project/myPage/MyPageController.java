@@ -34,5 +34,13 @@ public class MyPageController {
 		
         return "myPage/myComment";
     }
+	
+	// 마이 페이지 - 내가 쓴 글
+	@GetMapping(value = "/myLike")
+    String myLike(@AuthenticationPrincipal LoginDTO loginDTO, Model model){
+		model.addAttribute("loginDTO", loginDTO);
+		
+        return "myPage/myLike";
+    }
 		
 }
