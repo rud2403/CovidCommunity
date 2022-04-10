@@ -9,17 +9,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>COCO - defStatus</title>
+    <title>CoCo - 관리자페이지</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom fonts for this template -->
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-	<!-- 제이쿼리 적용 -->
+    <!-- Custom styles for this template -->
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    
+    <!-- 제이쿼리 적용 -->
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 
@@ -122,14 +123,14 @@
             </li>
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tables</span></a>
@@ -156,9 +157,11 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                    <form class="form-inline">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </form>
 
                     <!-- Topbar Search -->
                     <form
@@ -268,8 +271,6 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -280,8 +281,6 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -292,8 +291,6 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -304,8 +301,6 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
@@ -325,8 +320,6 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -360,81 +353,53 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">발생현황</h1>
+                    <h1 class="h3 mb-2 text-gray-800">유저 관리</h1>
 
-                    <!-- Content Row 시작 -->
-                    <div class="row">
-                        <div class="col-xl-12 col-lg-12">
-                            <!-- Area Chart -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">전국 발생현황</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row text-center mb-3">
-                                    	<div class="col">
-                                    		<div><h5>총 확진자 수</h5></div>
-                                    		<div>
-                                    			<h4>
-	                                    			<span id="defCnt"></span>
-	                                    			<span>명</span>
-                                    			</h4>
-                                    		</div>
-										</div>
-                                    </div>
-                                    <div class="row">
-                                    	<div class="col-4 text-right">
-                                    		<div>신규 확진자 수</div>
-                                    		<div>
-                                    			<span id="incDec"></span>
-                                    			<span style="color: red;">▲</span>
-                                    		</div>
-
-										</div>
-                                    	<div class="col-4 text-center">
-                                    		<div>10만명당 발생 수</div>
-                                    		<div>
-                                    			<span id="qurRate">1234</span>
-                                    			<span>명</span>
-                                    		</div>
-										</div>
-										<div class="col-4">
-                                    		<div>사망자 수</div>
-                                    		<div>
-	                                   			<span id="deathCnt">1234</span>
-	                                   			<span>명</span>
-                                    		</div>
-										</div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-
-                            <!-- Bar Chart -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">지역별 발생현황</h6>
-                                </div>
-                                <div class="card-body">
-                                	<table class="table">
-									  <thead>
-									    <tr class="text-center">
-									      <th scope="col">지역</th>
-									      <th scope="col">총 확진자 수</th>
-									      <th scope="col">신규 확진자 수</th>
-									      <th scope="col">10만명당 발생자 수</th>
-									      <th scope="col">사망자 수</th>
-									    </tr>
-									  </thead>
-									  <tbody id="tbd"></tbody>
-									</table>
-                                </div>
-                            </div>
-
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                        
+                        
+                        	<fieldset class="form-group row">
+								<legend class="col-form-label col-sm-2 float-sm-left pt-0 mt-2 ml-1" style="max-width: 6.66667%;">검색</legend>
+								<div class="row" style="width: 500px">
+									<!-- 셀렉트 박스 -->
+									<select class="form-control ml-2 mr-2" id="selectVal" style="width: 18%">
+									    <option value="title">제목</option>
+									    <option value="content">내용</option>
+									</select>
+									
+									<!-- 인풋 박스 -->
+									<input class="mr-2 form-control" type="text" id="inputVal" style="width: 40%">
+									
+									<!-- 검색 버튼 -->
+									<button class="btn btn-dark" id="rbSearchButton" style="height: 98%">검색</button>
+									
+								</div>
+							</fieldset>
+                        
+                        	<table class="table">
+							  <thead>
+							    <tr>
+							      <th scope="col"></th>
+							      <th scope="col">이메일</th>
+							      <th scope="col">비밀번호</th>
+							      <th scope="col">닉네임</th>
+							      <th scope="col">생년월일</th>
+							      <th scope="col">주소</th>
+							      <th scope="col">권한</th>
+							      <th scope="col">가입일자</th>
+							      <th scope="col">활성화 여부</th>
+							    </tr>
+							  </thead>
+							  <tbody id="cardBody"></tbody>
+							</table>
+							<nav aria-label="Page navigation example">
+							  	<ul class="pagination" id="pageNum" style="padding-left: 40%;"></ul>
+							</nav>
                         </div>
-
                     </div>
-					<!-- Content Row 끝 -->
+
                 </div>
                 <!-- /.container-fluid -->
 
@@ -481,64 +446,156 @@
             </div>
         </div>
     </div>
-	
-	<script>
-		$(document).ready(function() {
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		// 현재 페이지
+		let rbNowPage = 1;
+		// 페이지당 보여줄 개수
+		let pageSize = 10;
+		// 한 화면에 보여줄 페이지 번호의 개수 (페이지 블록)
+		let pageBlock = 5;
+		// 게시글 전체 개수
+		let totalCnt = 0;
+		
+		// 게시글 리스트 가져오는 메소드
+		function getBoardList(){
+			
+			// 페이지별 시작 행
+			let startRow = (rbNowPage-1)*pageSize;
+			// 게시글 목록 초기화
+			let cardHtml = "";
+			// select 값
+			let selectVal = $('#selectVal').val();
+			// input 값
+			let inputVal = $('#inputVal').val();
+			
+			let reqInfo = {
+				startRow,
+				selectVal,
+				inputVal
+			};
 			
 			$.ajax({
 				type : 'GET',
-				url : 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=wtMZjBn6VpRJGD8MbHV2dLgwn0TWIoCd%2FaY7UeZZVLkjqqIRobA%2FfbOGZoXiU8SUu%2BZvtnvp%2BRBxYeT1KX9L%2FA%3D%3D',
+				url : '../admin/api/userList',
+				data : reqInfo,
 				dataType :'json',
+				contentType: "application/json; charset=UTF-8",
 				success : function(data) {
-					console.log("data2 : ", data.response.body.items.item)
-					let defData = data.response.body.items.item;
-					let tbdHtml = "";
+					console.log("data.list :: ", data.list);
+					console.log("data.totalCnt :: ", data.totalCnt);
+					let repData = data.list;
 					
-					
-					$('#defCnt').text(numberWithCommas(defData[18].defCnt));
-					$('#incDec').text(numberWithCommas(defData[18].incDec));
-					$('#qurRate').text(numberWithCommas(defData[18].qurRate));
-					$('#deathCnt').text(numberWithCommas(defData[18].deathCnt));
-					
-					for(let i=defData.length -2; i > -1; i--){
-						// console.log(result[i]);
-						
-						tbdHtml +=  `<tr class="text-center">
-								      <th scope="col">${defData[i].gubun}</th>
-								      <th scope="col">${numberWithCommas(defData[i].defCnt)}<span class="ml-1">명</span></th>
-								      <th scope="col">${numberWithCommas(defData[i].incDec)}<sapn class="ml-1" style="color: red;">▲</span></th>
-								      <th scope="col">${numberWithCommas(defData[i].qurRate)}<span class="ml-1" >명</span></th>
-								      <th scope="col">${numberWithCommas(defData[i].deathCnt)}<sapn class="ml-1">명</span></th>
-								    </tr>`
+					if(data.list.length > 0){
+						for(let i in repData){
+							
+							let regDate = repData[i].uRegDate.substring(0,10);
+							
+							cardHtml += `<tr>
+										  <td>${repData[i].uId}</td>
+										  <td>${repData[i].uEmail}</td>
+									      <td><input value=""></td>
+									      <td><input value="${repData[i].uNickName}"></td>
+									      <td><input value="${repData[i].uBirth}"></td>
+									      <td><input value="${repData[i].uAddr}"></td>
+									      <td>${repData[i].uRole}</td>
+									      <td>${regDate}</td>
+									      <td>${repData[i].uEnabled}</td>
+									    </tr>`
+						}
 					}
+					$('#cardBody').html(cardHtml);
 					
-					$('#tbd').html(tbdHtml);
+					// 페이지 네이션 그리기
+					drawPagination(data.totalCnt, 0);
+					totalCnt = data.totalCnt;
+					
 	            },
 	            error : function(error) {
 	            	console.log("error :: ", error);
 	            }
 			});
-			
-		});
+		} 
 		
-		// 숫자 , 찍기 함수
-		function numberWithCommas(x){
-			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		function drawPagination(totalCnt, num){
+			// 페이징처리 그리기
+			let pageNum = "";
+			
+			// 전체 페이지 수
+			let pageCount = parseInt(totalCnt/pageSize+(totalCnt % pageSize == 0? 0:1));
+			
+			// 페이징처리에 보여질 페이지 넘버
+			let block_num = parseInt((rbNowPage - 1) / pageBlock) + num;
+			
+			// 페이지 블록의 시작페이지 번호
+			// let startPage = ((rbNowPage-1)/pageBlock) * pageBlock +1;
+			let startPage = (pageBlock * block_num) + 1
+			// 페이지 블록의 끝 페이지 번호
+			// let endPage = startPage+pageBlock-1;
+			let endPage = startPage + (pageBlock - 1)
+			
+			if(endPage > pageCount){
+				endPage = pageCount;
+			}
+			if(startPage > pageBlock){
+				pageNum += `<li class="page-item" style="cursor: pointer;">
+						        <span class="page-link" aria-hidden="true" name="pre">&laquo;</span>
+						    </li>`
+			}
+			for(let i = startPage; i <= endPage; i++){
+				if(rbNowPage == i){
+					pageNum += `<li class="page-item active" style="cursor: pointer;"><span class="page-link" name="num">${i}</span></li>`
+				} else {
+					pageNum += `<li class="page-item" style="cursor: pointer;"><span class="page-link" name="num">${i}</span></li>`	
+				}
+				
+			}
+			
+			if(endPage < pageCount){
+			    pageNum += `<li class="page-item" style="cursor: pointer;">
+						        <span class="page-link" aria-hidden="true" name="next">&raquo;</span>
+						    </li>`
+			}
+			
+			$('#pageNum').html(pageNum);
+			
+			// 페이지 네이션 넘버 클릭 시
+			$(".pagination li span[name='num']").click(function(){
+				rbNowPage = $(this).text();
+				getBoardList();
+			});
+			// 페이지 네이션 다음 클릭 시
+			$(".pagination li span[name='next']").click(function(){
+				rbNowPage = startPage + pageBlock;
+				drawPagination(totalCnt, 0);
+				getBoardList();
+			});
+			// 페이지 네이션 이전 클릭 시
+			$(".pagination li span[name='pre']").click(function(){
+				drawPagination(totalCnt, -1);
+				rbNowPage = startPage - pageBlock;
+				getBoardList();
+			});
+			
 		}
+		
+		// 페이지 접근시 게시글 가져오기
+		getBoardList();
+		
+	});
 	</script>
-	
+
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-    
-    <!-- 차트.js cdn -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="../js/sb-admin-2.min.js"></script>
 
 
 </body>

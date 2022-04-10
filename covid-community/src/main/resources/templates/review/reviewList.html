@@ -719,8 +719,6 @@
 			
 			// 라디오 버튼 변경 시
 			$("input[name='rbVaccineKind']:radio").change(function () {
-		        //라디오 버튼 값을 가져온다.
-		        // var noticeCat = this.value;
 		        rbNowPage = 1;
 				getBoardList();       
 			});
@@ -732,11 +730,6 @@
     				getBoardList();
                 }
             });
-			
-			// 제목 클릭 시
-			$('.card-title').click(function(){
-				
-			});
 			
 		});
 	</script>
