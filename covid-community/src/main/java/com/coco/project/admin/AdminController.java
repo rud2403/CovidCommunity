@@ -19,4 +19,12 @@ public class AdminController {
 		
 		return "/admin/userManagement";
 	}
+	
+	@GetMapping("/boardManagement")
+	public String boardManagement(@AuthenticationPrincipal LoginDTO loginDTO, Model model){
+		
+		model.addAttribute("loginDTO", loginDTO);
+		
+		return "/admin/boardManagement";
+	}
 }

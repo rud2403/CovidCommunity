@@ -16,4 +16,8 @@ public interface AdminMapper {
 	public int userListCnt(Map<String,Object> reqInfo);
 	// 관리자페이지 - 유저정보 수정
 	public int userUpdate(RegisterDTO registerDTO);
+	// 관리자페이지 - 게시글 정보
+	public List<Map<String,Object>> boardList(Map<String,Object> reqInfo);
+	// 관리자 페이지 - 게시글정보 총개수
+	public int boardListCnt(Map<String,Object> reqInfo);
 }

@@ -26,11 +26,11 @@ public class AdminApiController {
 	@GetMapping("/userList")
 	public ResponseEntity<Object> userList(@RequestParam Map<String, Object> reqInfo){
 		
-		Map<String, Object> boardList = new HashMap<>();
+		Map<String, Object> userList = new HashMap<>();
 		
-		boardList = adminservice.userList(reqInfo);
+		userList = adminservice.userList(reqInfo);
 		
-		return new ResponseEntity<>(boardList, HttpStatus.OK);
+		return new ResponseEntity<>(userList, HttpStatus.OK);
 	}
 	
 	// 관리자페이지 - 유저정보 수정
@@ -40,5 +40,16 @@ public class AdminApiController {
 		int updateResult = adminservice.userUpdate(registerDTO);
 		
 		return new ResponseEntity<>(updateResult, HttpStatus.OK);
+	}
+	
+	// 관리자 페이지 - 게시글 목록
+	@GetMapping("/boardList")
+	public ResponseEntity<Object> boardList(@RequestParam Map<String, Object> reqInfo){
+		
+		Map<String, Object> boardList = new HashMap<>();
+		
+		boardList = adminservice.boardList(reqInfo);
+		
+		return new ResponseEntity<>(boardList, HttpStatus.OK);
 	}
 }

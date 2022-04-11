@@ -38,5 +38,16 @@ public class AdminService {
 		int userUpdate = adminMapper.userUpdate(registerDTO);
 		
 		return userUpdate; 
-	};
+	}
+	
+	// 관리자 페이지 - 게시글 정보
+	public Map<String,Object> boardList(Map<String, Object> reqInfo){
+		
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		resultMap.put("list", adminMapper.boardList(reqInfo));
+		resultMap.put("totalCnt", adminMapper.boardListCnt(reqInfo));
+		
+		return resultMap;
+	}
 }
