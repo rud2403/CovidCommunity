@@ -3,15 +3,7 @@
 
 <mapper namespace="com.coco.project.admin.AdminMapper">
 
-
-	<!-- <update id="updateUserInfo">
-		UPDATE
-			user_info SET u_pw = #{userPw}, u_nickname = #{userNickName}, u_birth = #{userBirth}, u_addr = #{userAddr}
-		WHERE
-			u_id = #{userId}
-	</update> -->
-	
-	<!-- 마이페이지 - 내가 쓴 글 리스트 -->
+	<!-- 관리자페이지 - 유저정보 리스트 -->
 	<select id="userList" resultType="hashmap">
 		SELECT
 			u_id 		AS uId,
@@ -26,13 +18,23 @@
 			u_enabled 	AS uEnabled
 		FROM
 			user_info ui
+		<where>
+			<if test="inputVal != null and inputVal != ''">
+				<if test="selectVal == 'email'">
+					AND u_email LIKE CONCAT('%', #{inputVal}, '%')
+				</if>
+				<if test="selectVal == 'nickName'">
+					AND u_nickName LIKE CONCAT('%', #{inputVal}, '%')
+				</if>
+			</if>
+		</where>
 		ORDER by
 			u_regDate DESC
 		LIMIT
 			10 OFFSET ${startRow};
 	</select>
 	
-	<!-- 마이페이지 - 내가 쓴 글 총 개수 -->
+	<!-- 관리자페이지 - 유저리스트 총 개수 -->
 	<select id="userListCnt" resultType="int">
 		SELECT
 			count(*)	AS totalCnt
@@ -40,5 +42,19 @@
 			user_info
 	</select>
 	
+	<!-- 관리자페이지 - 유저정보 수정 -->
+	<update id="userUpdate">
+		UPDATE
+			user_info
+	   SET
+	   		u_role = #{userRole},
+	   		u_enabled = #{userEnabled}
+	   		<if test="userPw != null and userPw !=''">,u_pw = #{userPw}</if>
+	      	<if test="userNickName != null and userNickName !=''">,u_nickname = #{userNickName}</if>
+	      	<if test="userBirth != null and userBirth !=''">,u_birth = #{userBirth}</if>
+	      	<if test="userAddr != null and userAddr !=''">,u_addr = #{userAddr}</if>
+		WHERE
+			u_id = #{userId}
+	</update>
 	
 </mapper>
