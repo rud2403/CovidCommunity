@@ -461,7 +461,7 @@
 		let totalCnt = 0;
 		
 		// 게시글 리스트 가져오는 메소드
-		function userList(){
+		function boardList(){
 			
 			// 페이지별 시작 행
 			let startRow = (rbNowPage-1)*pageSize;
@@ -496,10 +496,10 @@
 							
 							cardHtml += `<tr>
 										  <td><span id="boardId" value="${resData[i].rbId}">${resData[i].rbId}</span></td>
-										  <td>${resData[i].rbTitle}</td>
+										  <td><span onclick="location.href='../review/detail/${resData[i].rbId}'" style="cursor:pointer">${resData[i].rbTitle}</span></td>
 										  <td>${resData[i].uNickName}</td>
 									      <td>
-									      <select id="rbVaccineKind" class="form-control" style="width:150px;">`
+									      <select id="rbVaccineKind" class="form-control" style="width:180px;">`
 									      	if("1" == resData[i].rbVaccineKind){
 		      			cardHtml +=				`<option value="1" selected>화이자</option>
 		      									<option value="2">모더나</option>
@@ -532,7 +532,7 @@
 									      
 									      
 									      <td class="text-center" id="uEnabled">
-									      	<select class="form-control" id="rbNoticeYn">`
+									      	<select class="form-control" id="rbNoticeYn" style="width:100px;">`
 									      	
 									      		if('Y' == resData[i].rbNoticeYn){
 							cardHtml +=			    `<option value="Y" selected>Y</option>
@@ -545,7 +545,7 @@
 							cardHtml +=		`</select>
 									      </td>
 									      <td>
-									      <select class="form-control" id="rbDeleteYn">`
+									      <select class="form-control" id="rbDeleteYn" style="width:100px;">`
 										      
 										      if('Y' == resData[i].rbDeleteYn){
 							cardHtml +=			`<option value="Y" selected>Y</option>
@@ -556,7 +556,7 @@
 										      }
 							cardHtml +=	 `</select>
 									      </td>
-									      <td><button class="btn-sm btn-dark" id="subBtn" onclick="userUpdate()")>수정</button></td>
+									      <td><button class="btn-sm btn-dark" id="subBtn" onclick="boardUpdate()")>수정</button></td>
 									    </tr>`
 						}
 						
@@ -576,24 +576,16 @@
 			});
 		} 
 		
-		
-		
-		
 		function drawPagination(totalCnt, num){
 			// 페이징처리 그리기
 			let pageNum = "";
-			
 			// 전체 페이지 수
 			let pageCount = parseInt(totalCnt/pageSize+(totalCnt % pageSize == 0? 0:1));
-			
 			// 페이징처리에 보여질 페이지 넘버
 			let block_num = parseInt((rbNowPage - 1) / pageBlock) + num;
-			
 			// 페이지 블록의 시작페이지 번호
-			// let startPage = ((rbNowPage-1)/pageBlock) * pageBlock +1;
 			let startPage = (pageBlock * block_num) + 1
 			// 페이지 블록의 끝 페이지 번호
-			// let endPage = startPage+pageBlock-1;
 			let endPage = startPage + (pageBlock - 1)
 			
 			if(endPage > pageCount){
@@ -624,76 +616,70 @@
 			// 페이지 네이션 넘버 클릭 시
 			$(".pagination li span[name='num']").click(function(){
 				rbNowPage = $(this).text();
-				userList();
+				boardList();
 			});
 			// 페이지 네이션 다음 클릭 시
 			$(".pagination li span[name='next']").click(function(){
 				rbNowPage = startPage + pageBlock;
 				drawPagination(totalCnt, 0);
-				userList();
+				boardList();
 			});
 			// 페이지 네이션 이전 클릭 시
 			$(".pagination li span[name='pre']").click(function(){
 				drawPagination(totalCnt, -1);
 				rbNowPage = startPage - pageBlock;
-				userList();
+				boardList();
 			});
 			
 		}
 		
 		// 페이지 접근시 게시글 가져오기
-		userList();
+		boardList();
 		
 		// 검색 버튼 클릭 시
 		$('#searchButton').click(function(){
 			rbNowPage = 1;
-			userList();
+			boardList();
 		});
 		
 		// 검색창 엔터 클릭 시
 		$("#inputVal").keydown(function(key) {
             if (key.keyCode == 13) {
             	rbNowPage = 1;
-				userList();
+				boardList();
             }
         });
 		
 	});
 	
-	function userUpdate(){
+	function boardUpdate(){
 		
-		let userId = $('#userId').text();
-		let userPw = $('#userPw').val();
-		let userNickName = $('#userNickName').val();
-		let userBirth = $('#userBirth').val();
-		let userAddr = $('#userAddr').val();
-		let userRole = $('#userRole').val();	
-		let userEnabled = $('#userEnabled').val();
+		let rbId = $('#boardId').text();
+		let rbVaccineKind = $('#rbVaccineKind').val();
+		let rbNoticeYn = $('#rbNoticeYn').val();
+		let rbDeleteYn = $('#rbDeleteYn').val();
 		
-		let userInfo = {
-				userId,
-				userPw,
-				userNickName,
-				userBirth,
-				userAddr,
-				userRole,
-				userEnabled
+		let boardInfo = {
+				rbId,
+				rbVaccineKind,
+				rbNoticeYn,
+				rbDeleteYn
 		}
 		
-		console.log('userInfo : ', userInfo);
+		console.log('boardInfo : ', boardInfo);
 		
 		$.ajax({
 			type : 'PUT',
-			url : '../admin/api/userUpdate',
-			data : JSON.stringify(userInfo),
+			url : '../admin/api/boardUpdate',
+			data : JSON.stringify(boardInfo),
 			dataType :'json',
 			contentType: "application/json; charset=UTF-8",
 			success : function(data) {
 				console.log(data);
 				if(data == 1){
-					alert('회원정보 수정 완료');
+					alert('게시글 수정 완료');
 				} else {
-					alert('회원정보 수정 실패');
+					alert('게시글 수정 실패');
 				}
 				
             },
@@ -701,8 +687,6 @@
             	console.log("error :: ", error);
             }
 		});
-		
-		
 	}
 	
 	</script>
@@ -716,8 +700,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="../js/sb-admin-2.min.js"></script>
-
-
 </body>
 
 </html>

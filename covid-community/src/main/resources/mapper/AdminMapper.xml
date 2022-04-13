@@ -111,4 +111,15 @@
 			review_board
 	</select>
 	
+	<!-- 관리자페이지 - 게시글정보 수정  -->
+	<update id="boardUpdate">
+		UPDATE
+			review_board
+	   SET
+	   		rb_vaccine_kind= #{rbVaccineKind},
+	   		rb_notice_yn = #{rbNoticeYn},
+	   		rb_delete_yn = #{rbDeleteYn}
+		WHERE
+			rb_id = #{rbId}
+	</update>
 </mapper>

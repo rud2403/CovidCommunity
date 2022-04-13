@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.coco.project.register.RegisterDTO;
+import com.coco.project.review.ReviewDTO;
 
 @Service
 public class AdminService {
@@ -49,5 +50,13 @@ public class AdminService {
 		resultMap.put("totalCnt", adminMapper.boardListCnt(reqInfo));
 		
 		return resultMap;
+	}
+	
+	// 관리자 페이지 - 게시글정보 수정
+	public int boardUpdate(ReviewDTO reviewDTO) {
+		
+		int boardUpdate = adminMapper.boardUpdate(reviewDTO);
+		
+		return boardUpdate;
 	}
 }

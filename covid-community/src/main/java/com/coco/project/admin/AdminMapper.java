@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.coco.project.register.RegisterDTO;
+import com.coco.project.review.ReviewDTO;
 
 @Mapper
 public interface AdminMapper {
@@ -20,4 +21,6 @@ public interface AdminMapper {
 	public List<Map<String,Object>> boardList(Map<String,Object> reqInfo);
 	// 관리자 페이지 - 게시글정보 총개수
 	public int boardListCnt(Map<String,Object> reqInfo);
+	// 관리자 페이지 - 게시글정보 수정
+	public int boardUpdate(ReviewDTO reviewDTO);
 }

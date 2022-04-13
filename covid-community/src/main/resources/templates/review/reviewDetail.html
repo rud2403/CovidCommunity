@@ -584,7 +584,10 @@
 	<script>
 		let boardId = "[[${boardId}]]";
 		let rcWriter = $('#rcWriter').val();
-		console.log('boardId', boardId);
+		let uesrRole = "[[${userInfo.userRole}]]";
+		
+		console.log('uesrRole : ', uesrRole);
+		console.log('boardId : ', boardId);
 		console.log('rcWriter : ', rcWriter);
 		
 		$(document).ready(function() {
@@ -669,7 +672,7 @@
 						$('#rbFilePath').attr("src", detail.rbFilePath);
 						$('#rbLikeCnt').text(likeCnt);
 						
-						if(detail.rbWriter == rcWriter){
+						if(detail.rbWriter == rcWriter || uesrRole == "ROLE_ADMIN"){
 							let updateDeleteHtml = "";
 							
 							updateDeleteHtml += `<span onclick="location.href='../../review/update/${detail.rbId}'" style="cursor: pointer;">수정</span> / <span id="deleteSub" style="cursor: pointer;">삭제</span>`;
@@ -1160,7 +1163,6 @@
 			
 			// 목록으로 버튼 클릭
 			$('#moveList').click(function(){
-				console.log(document.referrer);
 				if(document.referrer == "http://localhost:8080/review/list"){
 					location.href="/review/list"
 				} else if(document.referrer == "http://localhost:8080/myPage/myBoardList"){
@@ -1170,6 +1172,8 @@
 					location.href="../../myPage/myComment"
 				} else if(document.referrer ==  "http://localhost:8080/myPage/myLike"){
 					location.href="../../myPage/myLike"
+				} else if(document.referrer == "http://localhost:8080/admin/boardManagement") {
+					location.href="../../admin/boardManagement"
 				} else {
 					location.href="/review/list"
 				}

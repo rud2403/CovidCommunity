@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.coco.project.register.RegisterDTO;
+import com.coco.project.review.ReviewDTO;
 
 @RestController
 @RequestMapping("admin/api")
@@ -51,5 +52,14 @@ public class AdminApiController {
 		boardList = adminservice.boardList(reqInfo);
 		
 		return new ResponseEntity<>(boardList, HttpStatus.OK);
+	}
+	
+	// 관리자페이지 - 게시글정보 수정
+	@PutMapping("/boardUpdate")
+	public ResponseEntity<Object> boardUpdate(@RequestBody ReviewDTO reviewDTO){
+		
+		int updateResult = adminservice.boardUpdate(reviewDTO);
+		
+		return new ResponseEntity<>(updateResult, HttpStatus.OK);
 	}
 }
