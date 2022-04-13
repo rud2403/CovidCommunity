@@ -510,6 +510,7 @@
 	      	<div class="input-group mb-3">
 			  <input type="text" class="form-control" id="rcReContent" placeholder="댓글을 입력해주세요." style="height: 50px">
 			  <input th:if="${userInfo}" type="hidden" th:value="${userInfo.userId}" id="rcWriter">
+			  <input th:if="${userInfo}" type="hidden" th:value="${userInfo.userRole}" id="userRole">
 			  <input type="hidden" th:value="${boardId}" id="boardId">
 			  <input type="hidden" id="rcReRef">
 			  <div class="input-group-append">
@@ -584,9 +585,9 @@
 	<script>
 		let boardId = "[[${boardId}]]";
 		let rcWriter = $('#rcWriter').val();
-		let uesrRole = "[[${userInfo.userRole}]]";
+		let userRole = $('#userRole').val();
 		
-		console.log('uesrRole : ', uesrRole);
+		console.log('userRole : ', userRole);
 		console.log('boardId : ', boardId);
 		console.log('rcWriter : ', rcWriter);
 		
@@ -672,7 +673,7 @@
 						$('#rbFilePath').attr("src", detail.rbFilePath);
 						$('#rbLikeCnt').text(likeCnt);
 						
-						if(detail.rbWriter == rcWriter || uesrRole == "ROLE_ADMIN"){
+						if(detail.rbWriter == rcWriter || userRole == "ROLE_ADMIN"){
 							let updateDeleteHtml = "";
 							
 							updateDeleteHtml += `<span onclick="location.href='../../review/update/${detail.rbId}'" style="cursor: pointer;">수정</span> / <span id="deleteSub" style="cursor: pointer;">삭제</span>`;
