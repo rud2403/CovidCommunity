@@ -1,4 +1,4 @@
-package com.coco.project.login;
+package com.coco.project.handlers;
 
 import java.io.IOException;
 import java.net.URLEncoder;

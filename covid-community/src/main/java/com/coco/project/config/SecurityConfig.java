@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration
@@ -17,6 +18,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	private AuthenticationFailureHandler loginFailureHandler;
+	
+	@Autowired
+	private AccessDeniedHandler accessDeniedHandler;
 	
 	@Override
     public void configure(WebSecurity web) throws Exception {
@@ -36,7 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	    	.antMatchers("/review/update", "/comment/api/write", "/comment/api/update", "/comment/api/delete").hasAnyRole("USER", "ADMIN")
         	.antMatchers("/like/api/likeInsert", "/myPage/**", "/review/write").hasAnyRole("USER", "ADMIN")
         	.antMatchers("/admin/**", "/admin/api/**").hasRole("ADMIN")
-            .anyRequest().authenticated()
         .and()
             .formLogin()
             .loginPage("/login").permitAll()
@@ -46,6 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .and()
             .logout()
             .logoutSuccessUrl("/")
+        .and()
+        	.exceptionHandling().accessDeniedHandler(accessDeniedHandler)
         .and().csrf().disable();
     }
 
