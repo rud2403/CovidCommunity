@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.coco.project.main.MainMapper">
+
+	<!-- 메인페이지 - 최신글 -->
+	<select id="latestBoardList" resultType="hashmap">
+		SELECT
+			rb_id 				AS rbId,
+			rb_title 			AS rbTitle,
+			rb_content 			AS rbContent,
+			rb_view_cnt 		AS rbViewCnt,
+			rb_like_cnt 		AS rbLikeCnt,
+			rb_register_date 	AS rbRegisterDate, 
+			rb_update_date 		AS rbUpdateDate, 
+			rb_writer 			AS rbWriter,
+			rb_notice_yn 		AS rbNoticeYn,
+			rb_vaccine_kind 	AS rbVaccineKind, 
+			rb_delete_yn 		AS rbDeleteYn,
+			(SELECT
+				count(*)
+			FROM
+				review_like
+			WHERE
+				rl_board = rbId) AS rbLikeCnt,
+			(SELECT
+				count(*)
+			FROM
+				review_comment
+			WHERE
+				rc_board = rbId AND rc_delete_yn = 'N') AS rbCmtCnt
+		FROM
+			review_board
+		WHERE
+			rb_delete_yn = "N"
+		ORDER BY
+			rb_register_date DESC
+		LIMIT
+			5 OFFSET 0
+	</select>
+	
+	<!-- 메인페이지 - 인기글 -->
+	<select id="popBoardList" resultType="hashmap">
+		SELECT
+			rb_id 				AS rbId,
+			rb_title 			AS rbTitle,
+			rb_content 			AS rbContent,
+			rb_view_cnt 		AS rbViewCnt,
+			rb_register_date 	AS rbRegisterDate, 
+			rb_update_date 		AS rbUpdateDate, 
+			rb_writer 			AS rbWriter,
+			rb_notice_yn 		AS rbNoticeYn,
+			rb_vaccine_kind 	AS rbVaccineKind, 
+			rb_delete_yn 		AS rbDeleteYn,
+			(SELECT
+				count(*)
+			FROM
+				review_like
+			WHERE
+				rl_board = rbId) AS rbLikeCnt,
+			(SELECT
+				count(*)
+			FROM
+				review_comment
+			WHERE
+				rc_board = rbId AND rc_delete_yn = 'N') AS rbCmtCnt	
+		FROM
+			review_board
+		WHERE
+			rb_delete_yn = "N"
+		ORDER BY
+			rbLikeCnt desc, rbViewCnt desc, rbCmtCnt desc
+		LIMIT
+			5 OFFSET 0
+	</select>
+
+</mapper>

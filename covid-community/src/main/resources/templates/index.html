@@ -290,11 +290,50 @@
 							<div class="col">
 								<div class="row">
 									<div class="col">발생 현황</div>
-									<div class="col" style="text-align: right;">더보기</div>
+									<a class="col" th:href="@{/defStatus}" style="text-align: right; cursor:pointer;">더보기</a>
 								</div>
 								<div class="card shadow mb-4">
 									<!-- Card Body -->
 									<div class="card-body">
+									
+										<div class="row text-center mb-3">
+	                                    	<div class="col">
+	                                    		<div><h5>총 확진자 수</h5></div>
+	                                    		<div>
+	                                    			<h4>
+		                                    			<span id="defCnt"></span>
+		                                    			<span>명</span>
+	                                    			</h4>
+	                                    		</div>
+											</div>
+	                                    </div>
+	                                    <div class="row">
+	                                    	<div class="col-4 text-right">
+	                                    		<div>신규 확진자 수</div>
+	                                    		<div>
+	                                    			<span id="incDec"></span>
+	                                    			<span style="color: red;">▲</span>
+	                                    		</div>
+	
+											</div>
+	                                    	<div class="col-4 text-center">
+	                                    		<div>10만명당 발생 수</div>
+	                                    		<div>
+	                                    			<span id="qurRate"></span>
+	                                    			<span>명</span>
+	                                    		</div>
+											</div>
+											<div class="col-4">
+	                                    		<div>사망자 수</div>
+	                                    		<div>
+		                                   			<span id="deathCnt"></span>
+		                                   			<span>명</span>
+	                                    		</div>
+											</div>
+	                                    </div>
+									
+									
+									
 									</div>
 								</div>
 							</div>
@@ -303,26 +342,60 @@
 							<div class="col">
 								<div class="row">
 									<div class="col">접종 현황</div>
-									<div class="col" style="text-align: right;">더보기</div>
+									<a class="col" th:href="@{/vaccinationStatus}" style="text-align: right; cursor: pointer;">더보기</a>
 								</div>
 								<div class="card shadow mb-4">
 									<!-- Card Body -->
 									<div class="card-body">
+									
+										<div class="row text-center">
+	                                    	<div class="col-4">
+	                                    		<div><h5>1차 접종</h5></div>
+	                                    		<div>
+	                                    			<h4>
+		                                    			<span id="firstCntPer"></span>
+		                                    			<span>%</span>
+	                                    			</h4>
+	                                    		</div>
+	                                    		<div>
+	                                    			<span id="firstCnt"></span>
+	                                    			<span style="color: red;">▲</span>
+												</div>
+											</div>
+	                                    	<div class="col-4">
+	                                    		<div><h5>2차 접종</h5></div>
+	                                    		<div>
+	                                    			<h4>
+		                                    			<span id="secondCntPer"></span>
+		                                    			<span>%</span>
+	                                    			</h4>
+	                                    		</div>
+	                                    		<div>
+	                                    			<span id="secondCnt"></span>
+	                                    			<span style="color: red;">▲</span>
+												</div>
+											</div>
+	                                    	<div class="col-4">
+	                                    		<div><h5>3차 접종</h5></div>
+	                                    		<div>
+	                                    			<h4>
+		                                    			<span id="thirdCntPer"></span>
+		                                    			<span>%</span>
+	                                    			</h4>
+	                                    		</div>
+	                                    		<div>
+	                                    			<span id="thirdCnt"></span>
+	                                    			<span style="color: red;">▲</span>
+	                                    		</div>
+											</div>
+	                                    </div>
 									</div>
 								</div>
 							</div>
 						</div>
 						
 						
-						
-						
 						<div class="row">
-						
-						
-						
-						
-						
-						
 						
 						
 						
@@ -334,37 +407,23 @@
 									<div class="col-6">
 										<div class="row">
 											<div class="col">최신글</div>
-											<div class="col" style="text-align: right;">더보기</div>
+											<a class="col" th:href="@{/review/list}" style="text-align: right; cursor: pointer;">더보기</a>
 										</div>
 										<div class="card shadow mb-4">
 											
 											<!-- Card Body -->
-											<div class="card-body" style="padding: 0px">
-												<div class="m-3">
-													ss
-												</div>
-												<hr>
-												<div class="m-3">
-													dd
-												</div>
+											<div class="card-body" id="latestBoardList" style="padding: 0px">
 											</div>
 										</div>
 									</div>
 									<div class="col-6">
 										<div class="row">
 											<div class="col">인기글</div>
-											<div class="col" style="text-align: right;">더보기</div>
+											<a class="col" th:href="@{/review/list}" style="text-align: right; cursor: pointer;">더보기</a>
 										</div>
 										<div class="card shadow mb-4">
 											<!-- Card Body -->
-											<div class="card-body" style="padding: 0px">
-												<div class="m-3">
-													ss
-												</div>
-												<hr>
-												<div class="m-3">
-													dd
-												</div>
+											<div class="card-body" id="popBoardList" style="padding: 0px">
 											</div>
 										</div>
 									</div>
@@ -386,46 +445,12 @@
 							<!-- 로그인 및 url -->
 							<div class="col-4">
 							
-							
-							
 								<div class="row mt-4">
 									<div class="col">
 										<div class="card shadow mb-4">
 											<!-- Card Body -->
 											<div class="card-body">
-												<div class="row">
-													<div class="col-8">
-														<div class="row">
-															<span class="mr-3">아이디</span>
-															<input>
-														</div>
-														<div class="row">
-															<span class="mr-3">비밀번호</span>
-															<input>
-														</div>
-													</div>
-													<div class="col-4">
-														<button class="btn btn-primary" style="width: 50%">로그인</button>
-													</div>
-												</div>
-												<hr>
-												<div class="row">
-													<div class="col" style="text-align: right;">
-														ㅇ회원가입 ㅇ비밀번호 찾기
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								
-								
-								<div class="row">
-									<div class="col">
-										<div class="card shadow mb-4">
-											<!-- Card Body -->
-											<div class="card-body">
+												<a href="https://ncvr2.kdca.go.kr/" style="cursor: pointer;">접종 예약 하러가기</a>
 											</div>
 										</div>
 									</div>
@@ -437,6 +462,7 @@
 										<div class="card shadow mb-4">
 											<!-- Card Body -->
 											<div class="card-body">
+												<a th:href="@{/review/write}">접종 후기 쓰러가기</a>
 											</div>
 										</div>
 									</div>
@@ -448,6 +474,7 @@
 										<div class="card shadow mb-4">
 											<!-- Card Body -->
 											<div class="card-body">
+												<a href="https://m.place.naver.com/rest/vaccine?vaccineFilter=used" style="cursor: pointer;">잔여백신 보러가기</a>
 											</div>
 										</div>
 									</div>
@@ -456,22 +483,7 @@
 							
 							</div>
 						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
 					</div>
-					
-					
-					
 					
 					<!-- Content Row -->
 
@@ -485,7 +497,7 @@
 			<footer class="sticky-footer bg-white">
 				<div class="container my-auto">
 					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Your Website 2021</span>
+						<span>Copyright &copy; CovidCommunity 2022</span>
 					</div>
 				</div>
 			</footer>
@@ -541,8 +553,31 @@
 				contentType: "application/json; charset=UTF-8",
 				dataType :'json',
 				success : function(data) {
-					let result = data.data
-					console.log('접종현황 result : ',result);
+					let vaccineData = data.data
+					console.log('vaccineData : ',vaccineData);
+					
+					let totalFirstCnt = vaccineData[0].totalFirstCnt;
+					let totalSecondCnt = vaccineData[0].totalSecondCnt;
+					let totalThirdCnt = vaccineData[0].totalThirdCnt;
+					
+					let firstCntPer = (totalFirstCnt / 51628117) * 100;
+					firstCntPer = firstCntPer.toFixed(1);
+					
+					let secondCntPer = (totalSecondCnt / 51628117) * 100;
+					secondCntPer = secondCntPer.toFixed(1);
+					
+					let thirdCntPer = (totalThirdCnt / 51628117) * 100;
+					thirdCntPer = thirdCntPer.toFixed(1);
+					
+					$('#firstCntPer').text(firstCntPer);
+					$('#secondCntPer').text(secondCntPer);
+					$('#thirdCntPer').text(thirdCntPer);
+					
+					$('#firstCnt').text(vaccineData[0].firstCnt);
+					$('#secondCnt').text(vaccineData[0].secondCnt);
+					$('#thirdCnt').text(vaccineData[0].thirdCnt);
+					
+					
 	            },
 	            error : function(error) {
 	            	console.log("error :: ", error);
@@ -556,12 +591,207 @@
 				dataType :'json',
 				success : function(data) {
 					let defData = data.response.body.items.item;
-					console.log("발생현황 result : ", defData)
+					console.log("defData : ", defData)
+					
+					$('#defCnt').text(numberWithCommas(defData[18].defCnt));
+					$('#incDec').text(numberWithCommas(defData[18].incDec));
+					$('#qurRate').text(numberWithCommas(defData[18].qurRate));
+					$('#deathCnt').text(numberWithCommas(defData[18].deathCnt));
+					
+					
 	            },
 	            error : function(error) {
 	            	console.log("error :: ", error);
 	            }
 			});
+			
+			// 최신글 & 인기글 가져오기
+			$.ajax({
+				type : 'GET',
+				url : 'main/api/boardList',
+				dataType :'json',
+				success : function(data) {
+					console.log("data : ", data);
+					console.log("data.latestBoardList : ", data.latestBoardList);
+					console.log("data.popBoardList : ", data.popBoardList);
+					
+					let latestBoardList = data.latestBoardList;
+					let popBoardList = data.popBoardList;
+					
+					let lblHtml = "";
+					
+					if(latestBoardList.length > 0){
+					
+						for(let i in latestBoardList){
+							
+							let color;
+							let rbRegisterDate = latestBoardList[i].rbRegisterDate.substring(0, 10);
+							let VaccineKind = latestBoardList[i].rbVaccineKind;
+							switch (VaccineKind) {
+							  case '1':
+								VaccineKind = '화이자';
+								color = 'badge-warning';
+							    break;
+							  case '2':
+								VaccineKind = '모더나';
+								color = 'badge-primary';
+							    break;
+							  case '3':
+								VaccineKind = '얀센';
+								color = 'badge-success';
+							    break;
+							  case '4':
+								VaccineKind = '아스트라제네카';
+								color = 'badge-info';
+							    break;
+							}
+							
+							if(i == latestBoardList.length - 1){
+								lblHtml += `<div class="col m-3">
+												<div class="row">
+												<h5><span class="badge ${color}">${VaccineKind}</span></h5>
+											</div>
+											<div class="row mb-2" style="margin: auto;">
+											<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${latestBoardList[i].rbId}'" style="cursor: pointer;">${latestBoardList[i].rbTitle}</h5>
+											</div>
+											<div class="row mb-2">
+												<div class="col">
+												${latestBoardList[i].rbContent}
+												</div>
+											</div>
+											<div class="row">
+												<div class="col">
+													<i class="fa fa-eye"> <span style="font-weight: normal;">${latestBoardList[i].rbViewCnt}</span></i>&nbsp;&nbsp;
+									       			<i class="fa fa-heart"> <span style="font-weight: normal;">${latestBoardList[i].rbLikeCnt}</span></i>&nbsp;&nbsp;
+									       			<i class="fa fa-comment"> <span style="font-weight: normal;">${latestBoardList[i].rbCmtCnt}</span></i>&nbsp;&nbsp;
+								       			</div>
+								       			<div class="col mr-4" style="text-align: right;">${rbRegisterDate}</div>
+											</div>
+										</div>`
+							} else {
+								lblHtml += `<div class="col m-3">
+													<div class="row">
+													<h5><span class="badge ${color}">${VaccineKind}</span></h5>
+												</div>
+												<div class="row mb-2" style="margin: auto;">
+													<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${latestBoardList[i].rbId}'" style="cursor: pointer;">${latestBoardList[i].rbTitle}</h5>
+												</div>
+												<div class="row mb-2">
+													<div class="col">
+													${latestBoardList[i].rbContent}
+													</div>
+												</div>
+												<div class="row">
+													<div class="col">
+														<i class="fa fa-eye"> <span style="font-weight: normal;">${latestBoardList[i].rbViewCnt}</span></i>&nbsp;&nbsp;
+										       			<i class="fa fa-heart"> <span style="font-weight: normal;">${latestBoardList[i].rbLikeCnt}</span></i>&nbsp;&nbsp;
+										       			<i class="fa fa-comment"> <span style="font-weight: normal;">${latestBoardList[i].rbCmtCnt}</span></i>&nbsp;&nbsp;
+									       			</div>
+									       			<div class="col mr-4" style="text-align: right;">${rbRegisterDate}</div>
+												</div>
+											</div>
+											<hr>`
+							}
+						}
+					}
+					
+					$('#latestBoardList').append(lblHtml);
+					
+					
+					
+					
+					
+					
+					
+					let pblHtml = "";
+					
+					if(popBoardList.length > 0){
+					
+						for(let i in popBoardList){
+							
+							let color;
+							let rbRegisterDate = popBoardList[i].rbRegisterDate.substring(0, 10);
+							let VaccineKind = popBoardList[i].rbVaccineKind;
+							switch (VaccineKind) {
+							  case '1':
+								VaccineKind = '화이자';
+								color = 'badge-warning';
+							    break;
+							  case '2':
+								VaccineKind = '모더나';
+								color = 'badge-primary';
+							    break;
+							  case '3':
+								VaccineKind = '얀센';
+								color = 'badge-success';
+							    break;
+							  case '4':
+								VaccineKind = '아스트라제네카';
+								color = 'badge-info';
+							    break;
+							}
+							
+							if(i == popBoardList.length - 1){
+								pblHtml += `<div class="col m-3">
+												<div class="row">
+												<h5><span class="badge ${color}">${VaccineKind}</span></h5>
+											</div>
+											<div class="row mb-2" style="margin: auto;">
+											<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${popBoardList[i].rbId}'" style="cursor: pointer;">${popBoardList[i].rbTitle}</h5>
+											</div>
+											<div class="row mb-2">
+												<div class="col">
+												${popBoardList[i].rbContent}
+												</div>
+											</div>
+											<div class="row">
+												<div class="col">
+													<i class="fa fa-eye"> <span style="font-weight: normal;">${popBoardList[i].rbViewCnt}</span></i>&nbsp;&nbsp;
+									       			<i class="fa fa-heart"> <span style="font-weight: normal;">${popBoardList[i].rbLikeCnt}</span></i>&nbsp;&nbsp;
+									       			<i class="fa fa-comment"> <span style="font-weight: normal;">${popBoardList[i].rbCmtCnt}</span></i>&nbsp;&nbsp;
+								       			</div>
+								       			<div class="col mr-4" style="text-align: right;">${rbRegisterDate}</div>
+											</div>
+										</div>`
+							} else {
+								pblHtml += `<div class="col m-3">
+													<div class="row">
+													<h5><span class="badge ${color}">${VaccineKind}</span></h5>
+												</div>
+												<div class="row mb-2" style="margin: auto;">
+													<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${popBoardList[i].rbId}'" style="cursor: pointer;">${popBoardList[i].rbTitle}</h5>
+												</div>
+												<div class="row mb-2">
+													<div class="col">
+													${popBoardList[i].rbContent}
+													</div>
+												</div>
+												<div class="row">
+													<div class="col">
+														<i class="fa fa-eye"> <span style="font-weight: normal;">${popBoardList[i].rbViewCnt}</span></i>&nbsp;&nbsp;
+										       			<i class="fa fa-heart"> <span style="font-weight: normal;">${popBoardList[i].rbLikeCnt}</span></i>&nbsp;&nbsp;
+										       			<i class="fa fa-comment"> <span style="font-weight: normal;">${popBoardList[i].rbCmtCnt}</span></i>&nbsp;&nbsp;
+									       			</div>
+									       			<div class="col mr-4" style="text-align: right;">${rbRegisterDate}</div>
+												</div>
+											</div>
+											<hr>`
+							}
+						}
+					}
+					
+					$('#popBoardList').append(pblHtml);
+					
+					
+					
+					
+					
+	            },
+	            error : function(error) {
+	            	console.log("error :: ", error);
+	            }
+			});
+			
 		});
 		
 		// 숫자 , 찍기 함수

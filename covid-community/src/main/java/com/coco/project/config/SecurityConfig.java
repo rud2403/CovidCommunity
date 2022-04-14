@@ -27,13 +27,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
         .cors().disable()
-        .csrf().disable()
         .authorizeRequests()
-        	.antMatchers("/", "/review/list", "/review/detail/**", "/review/api/BoardList", "/review/api/boardDetail", "/review/api/boardViewCnt", "/register/**", "/login/**", "/loginProc", "/forgotPw", "/resetPw").permitAll()
-        	.antMatchers("/comment/api/commentList", "/15077756/v1/vaccine-stat").permitAll()
-        	.antMatchers("/vaccinationStatus", "/defStatus").permitAll()
-        	.antMatchers("/review/write", "/review/update", "/comment/api/write", "/comment/api/update", "/comment/api/delete").hasRole("USER")
-        	.antMatchers("/like/api/likeInsert", "/myPage/**").hasAnyRole("USER", "ADMIN")
+	    	.antMatchers("/", "/review/list", "/review/detail/**", "/review/api/BoardList").permitAll()
+	    	.antMatchers( "/review/api/boardDetail", "/review/api/boardViewCnt").permitAll()
+	    	.antMatchers("/register/**", "/login/**", "/loginProc", "/forgotPw", "/resetPw", "/main/**").permitAll()
+	    	.antMatchers("/comment/api/commentList", "/15077756/v1/vaccine-stat").permitAll()
+	    	.antMatchers("/vaccinationStatus", "/defStatus").permitAll()
+	    	.antMatchers("/review/update", "/comment/api/write", "/comment/api/update", "/comment/api/delete").hasAnyRole("USER", "ADMIN")
+        	.antMatchers("/like/api/likeInsert", "/myPage/**", "/review/write").hasAnyRole("USER", "ADMIN")
         	.antMatchers("/admin/**", "/admin/api/**").hasRole("ADMIN")
             .anyRequest().authenticated()
         .and()
@@ -44,7 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .failureHandler(loginFailureHandler)
         .and()
             .logout()
-            .logoutSuccessUrl("/");
+            .logoutSuccessUrl("/")
+        .and().csrf().disable();
     }
 
     @Bean
