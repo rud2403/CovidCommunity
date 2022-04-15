@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>CoCo - MyInfo</title>
+    <title>CoCo - 마이페이지</title>
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -617,6 +617,9 @@
 		            	console.log('data : ', data);
 		            	if(data == 1){
 		            		alert('회원정보가 수정 되었습니다.');
+		            		$("#user_pw").val("");
+		            		$("#user_pwCon").val("");
+		            		
 		            	} else if(data == 0){
 		            		alert('회원정보 수정 오류');
 		            	} else if (data ==2 ){

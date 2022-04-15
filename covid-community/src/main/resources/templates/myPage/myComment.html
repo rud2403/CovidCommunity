@@ -539,10 +539,6 @@
 														      		</div>
 														      	</div>
 														      	
-														      	
-														      	
-														      	
-														      	
 														      	<div class="row">
 														      		<div class="col text-center">
 														      			<h4 class="card-text" onclick="location.href='../review/detail/${data.list[i].rbId}'" style="cursor: pointer;">${list[i].rbTitle}</h4>
@@ -594,6 +590,8 @@
 											    </div>
 											  </div>`
 							}
+						} else {
+							cardHtml = `<div class="mt-4"><h4>내가 쓴 댓글이 없습니다.</h4></div>`
 						}
 						$('#cardBody').html(cardHtml);
 						

@@ -28,16 +28,14 @@
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
-		<!-- Sidebar -->
+		<!-- 사이드 바 시작 -->
 		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 			<!-- Sidebar - Brand -->
 			<a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
-				<div class="sidebar-brand-icon rotate-n-15">
-					<i class="fas fa-laugh-wink"></i>
-				</div>
-				<div class="sidebar-brand-text mx-3">CoCo</div>
+				<div class="sidebar-brand-text mx-3">Covid Community</div>
 			</a>
+				
 
 			<!-- Divider -->
 			<hr class="sidebar-divider">
@@ -69,51 +67,46 @@
 					<span>접종현황</span></a>
 			</li>
 			
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#myPageDetail"
-					aria-expanded="true" aria-controls="collapseTwo">
-					<i class="fas fa-user"></i>
-					<span>마이페이지</span>
-				</a>
-				<div id="myPageDetail" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">계정</h6>
-						<a class="collapse-item" th:href="@{myPage/myInfo}">내정보 관리</a>
-						<h6 class="collapse-header">글 관리</h6>
-						<a class="collapse-item" th:href="@{myPage/myBoardList}">내가 쓴 글</a>
-						<a class="collapse-item" th:href="@{myPage/myComment}">내 댓글</a>
-						<a class="collapse-item" th:href="@{myPage/myLike}">좋아요 누른 글</a>
+			<div th:if="${loginDTO}">
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#myPageDetail"
+						aria-expanded="true" aria-controls="collapseTwo">
+						<i class="fas fa-user"></i>
+						<span>마이페이지</span>
+					</a>
+					<div id="myPageDetail" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<h6 class="collapse-header">계정</h6>
+							<a class="collapse-item" th:href="@{myPage/myInfo}">내정보 관리</a>
+							<h6 class="collapse-header">글 관리</h6>
+							<a class="collapse-item" th:href="@{myPage/myBoardList}">내가 쓴 글</a>
+							<a class="collapse-item" th:href="@{myPage/myComment}">내 댓글</a>
+							<a class="collapse-item" th:href="@{myPage/myLike}">좋아요 누른 글</a>
+						</div>
 					</div>
-				</div>
-			</li>
-			
-			
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#adminPageDetail"
-					aria-expanded="true" aria-controls="collapseTwo">
-					<i class="fas fa-fw fa-cog"></i>
-					<span>관리자페이지</span>
-				</a>
-				<div id="adminPageDetail" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" th:href="@{admin/userManagement}">유저 관리</a>
-						<a class="collapse-item" th:href="@{admin/boardManagement}">게시글 관리</a>
-					</div>
-				</div>
-			</li>
-
-
-
-			<!-- Divider -->
-			<hr class="sidebar-divider d-none d-md-block">
-
-			<!-- Sidebar Toggler (Sidebar) -->
-			<div class="text-center d-none d-md-inline">
-				<button class="rounded-circle border-0" id="sidebarToggle"></button>
+				</li>
 			</div>
-
+			
+			
+			<div th:if="${loginDTO}">
+				<div th:if="${loginDTO.userRole == 'ROLE_ADMIN'}">
+					<li class="nav-item">
+						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#adminPageDetail"
+							aria-expanded="true" aria-controls="collapseTwo">
+							<i class="fas fa-fw fa-cog"></i>
+							<span>관리자페이지</span>
+						</a>
+						<div id="adminPageDetail" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+							<div class="bg-white py-2 collapse-inner rounded">
+								<a class="collapse-item" th:href="@{admin/userManagement}">유저 관리</a>
+								<a class="collapse-item" th:href="@{admin/boardManagement}">게시글 관리</a>
+							</div>
+						</div>
+					</li>
+				</div>
+			</div>
 		</ul>
-		<!-- End of Sidebar -->
+		<!-- 사이드 바 끝 -->
 
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
@@ -124,38 +117,8 @@
 				<!-- Topbar -->
 				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-					<!-- Sidebar Toggle (Topbar) -->
-					<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-						<i class="fa fa-bars"></i>
-					</button>
-
-					<!-- Topbar Navbar -->
+					<!-- 상단 네비바 시작 -->
 					<ul class="navbar-nav ml-auto">
-
-						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
-						<li class="nav-item dropdown no-arrow d-sm-none">
-							<a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fas fa-search fa-fw"></i>
-							</a>
-							<!-- Dropdown - Messages -->
-							<div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-								aria-labelledby="searchDropdown">
-								<form class="form-inline mr-auto w-100 navbar-search">
-									<div class="input-group">
-										<input type="text" class="form-control bg-light border-0 small"
-											placeholder="Search for..." aria-label="Search"
-											aria-describedby="basic-addon2">
-										<div class="input-group-append">
-											<button class="btn btn-primary" type="button">
-												<i class="fas fa-search fa-sm"></i>
-											</button>
-										</div>
-									</div>
-								</form>
-							</div>
-						</li>
-
 						<!-- Nav Item - Alerts -->
 						<div th:if="${loginDTO}">
 							<!-- 회원 닉네임 보이는 구역 시작 -->
@@ -166,7 +129,7 @@
 										<span th:text="${loginDTO.userNickName}" style="color: black;" class="mr-2"></span>
 									</div>
 								</a>
-								<!-- Dropdown - User Information -->
+								<!-- 닉네임 클릭시 드롭다운 -->
 								<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 									aria-labelledby="userDropdown">
 									<a class="dropdown-item" th:href="@{/myPage/myInfo}">
@@ -187,7 +150,7 @@
 							<a class="mt-4" id="signUpTxt" style="cursor: pointer;" th:href="@{/register}">회원가입</a>
 						</div>
 					</ul>
-
+					<!-- 상단 네비바 끝 -->
 				</nav>
 				<!-- End of Topbar -->
 
@@ -240,8 +203,6 @@
 	                                    		</div>
 											</div>
 	                                    </div>
-									
-									
 									
 									</div>
 								</div>

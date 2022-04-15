@@ -392,7 +392,10 @@
 					<div class="card shadow mb-4">
 						<div class="card-body">
 						
-							<div class="row row-cols-1 row-cols-md-2" id="cardBody"  style="width: 90%; margin: auto;"></div>
+							<div class="row row-cols-1 row-cols-md-2" id="cardBody"  style="width: 90%; margin: auto;">
+							
+								
+							</div>
 							
 							<nav aria-label="Page navigation example">
 							  <ul class="pagination" id="pageNum" style="padding-left: 40%;"></ul>
@@ -564,7 +567,10 @@
 											    </div>
 											  </div>`
 							}
+						} else {
+							cardHtml = `<div class="mt-4"><h4>내가 쓴 글이 없습니다.</h4></div>`
 						}
+						
 						$('#cardBody').html(cardHtml);
 						
 						// 페이지 네이션 그리기

@@ -152,7 +152,7 @@
 		JOIN
 			user_info ui ON rb.rb_writer = ui.u_id
 		WHERE
-			rb_delete_yn = 'N' AND rl_user = 7
+			rb_delete_yn = 'N' AND rl_user = #{userId}
 		ORDER BY
 			rb_register_date DESC
 		LIMIT

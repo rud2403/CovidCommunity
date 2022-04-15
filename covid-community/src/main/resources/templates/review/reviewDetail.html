@@ -524,7 +524,7 @@
 	</div>
 	<!-- 대댓글 작성 Modal 끝 -->
 	
-	<!-- 대댓글 작성 Modal 시작 -->
+	<!-- 대댓글 수정 Modal 시작 -->
 	<div class="modal fade" id="cmtUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -549,7 +549,7 @@
 	    </div>
 	  </div>
 	</div>
-	<!-- 대댓글 작성 Modal 끝 -->
+	<!-- 대댓글 수정 Modal 끝 -->
 	
 	<!-- 댓글 삭제 Modal 시작 -->
 	<!-- Button trigger modal -->
@@ -692,7 +692,11 @@
 									console.log("data:: ", data);
 									if(data == 1){
 										alert('게시글 삭제 완료');
-										location.href='../../review/list'
+										if(document.referrer == 'http://localhost:8080/myPage/myBoardList'){
+											location.href='../../myPage/myBoardList'
+										}else {
+											location.href='../../review/list'	
+										}
 									}else{
 										alert('게시글 삭제 실패');
 									}
@@ -711,8 +715,8 @@
 			}
 			// 게시글 정보 가져오기 끝
 			
-			// 댓글 작성 버튼 클릭 시작			
-			$('#rcSubBtn').click(function(){
+			// 댓글 작성 메소드 시작
+			function rcWrite() {
 				let rcContent = $('#rcContent').val(); 
 				let rcBoard = boardId;
 				
@@ -757,6 +761,12 @@
 					alert('로그인이 필요한 동작입니다.');
 					$('#rcContent').val('');
 				}
+			}
+			// 댓글 작성 메소드 끝
+			
+			// 댓글 작성 버튼 클릭 시작			
+			$('#rcSubBtn').click(function(){
+				rcWrite();
 			})
 			// 댓글 작성 버튼 클릭 시작
 			
@@ -982,8 +992,8 @@
 			}
 			// 댓글 정보 가져오기 끝
 			
-			// 대댓글 작성 시작
-			$('#rcReSubBtn').click(function(){
+			// 대댓글 작성 메소드
+			function rcReWrite() {
 				let rcContent = $('#rcReContent').val();
 				let rcReRef = $('#rcReRef').val();
 				let rcBoard = boardId;
@@ -1029,11 +1039,18 @@
 					$('#rcReContent').val('');
 					$('#closeModal').click();
 				}
+			};
+			
+			// 대댓글 작성 시작
+			$('#rcReSubBtn').click(function(){
+				rcReWrite();
 			});
 			// 대댓글 작성 끝
 			
-			// 댓글 수정 시작
-			$('#rcUpdateSubBtn').click(function(){
+			
+			
+			// 댓글 수정 메소드
+			function rcUpdate() {
 				let rcContent = $('#rcReUpdateContent').val();
 				let rcId = $('#rcId').val();
 				
@@ -1076,6 +1093,11 @@
 					$('#rcReUpdateContent').val('');
 					$('#closeUpdateModal').click();
 				}
+			};
+			
+			// 댓글 수정 시작
+			$('#rcUpdateSubBtn').click(function(){
+				rcUpdate();
 			});
 			// 댓글 수정 끝
 			
@@ -1117,6 +1139,27 @@
 				
 			});
 			// 댓글 삭제 끝
+			
+			// 댓글 작성 엔터 클릭 시
+			$("#rcContent").keydown(function(key) {
+                if (key.keyCode == 13) {
+                	rcWrite();
+                }
+            });
+			
+			// 대댓글 작성 엔터 클릭 시
+			$("#rcReContent").keydown(function(key) {
+                if (key.keyCode == 13) {
+                	rcReWrite();
+                }
+            });
+			
+			// 댓글 수정 엔터 클릭 시
+			$("#rcReUpdateContent").keydown(function(key) {
+                if (key.keyCode == 13) {
+                	rcUpdate();
+                }
+            });
 			
 			// 좋아요 버튼 클릭 시작
 			$('#likeBtn').click(function(){
@@ -1182,6 +1225,7 @@
 			// 페이지 시작 시 댓글 리스트 가져오기
 			getCmtList();
 		});
+		
 	</script>
 
 
