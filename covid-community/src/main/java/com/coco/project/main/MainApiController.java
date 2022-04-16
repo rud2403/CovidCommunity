@@ -17,9 +17,8 @@ public class MainApiController {
 	@Autowired
 	MainService mainService;
 	
-	
 	@GetMapping("/boardList")
-	public ResponseEntity<Object> boardList(){
+	public ResponseEntity<Object> boardList() throws Exception{
 		
 		Map<String, Object> boardList = new HashMap<>();
 		

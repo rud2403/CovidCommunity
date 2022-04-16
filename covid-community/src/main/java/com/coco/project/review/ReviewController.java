@@ -19,7 +19,7 @@ import com.coco.project.login.LoginDTO;
 public class ReviewController {
 	
 	@Autowired
-	ReviewService reviewService;
+	ReviewServiceImpl reviewService;
 	
 	// 후기 게시판 - 리스트
 	@GetMapping(value = "/list")

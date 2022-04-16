@@ -25,7 +25,7 @@ public class AdminApiController {
 	
 	// 관리자페이지 - 유저 목록
 	@GetMapping("/userList")
-	public ResponseEntity<Object> userList(@RequestParam Map<String, Object> reqInfo){
+	public ResponseEntity<Object> userList(@RequestParam Map<String, Object> reqInfo) throws Exception {
 		
 		Map<String, Object> userList = new HashMap<>();
 		
@@ -36,7 +36,7 @@ public class AdminApiController {
 	
 	// 관리자페이지 - 유저정보 수정
 	@PutMapping("/userUpdate")
-	public ResponseEntity<Object> userUpdate(@RequestBody RegisterDTO registerDTO){
+	public ResponseEntity<Object> userUpdate(@RequestBody RegisterDTO registerDTO) throws Exception {
 		
 		int updateResult = adminservice.userUpdate(registerDTO);
 		
@@ -45,7 +45,7 @@ public class AdminApiController {
 	
 	// 관리자 페이지 - 게시글 목록
 	@GetMapping("/boardList")
-	public ResponseEntity<Object> boardList(@RequestParam Map<String, Object> reqInfo){
+	public ResponseEntity<Object> boardList(@RequestParam Map<String, Object> reqInfo) throws Exception {
 		
 		Map<String, Object> boardList = new HashMap<>();
 		
@@ -56,7 +56,7 @@ public class AdminApiController {
 	
 	// 관리자페이지 - 게시글정보 수정
 	@PutMapping("/boardUpdate")
-	public ResponseEntity<Object> boardUpdate(@RequestBody ReviewDTO reviewDTO){
+	public ResponseEntity<Object> boardUpdate(@RequestBody ReviewDTO reviewDTO) throws Exception {
 		
 		int updateResult = adminservice.boardUpdate(reviewDTO);
 		

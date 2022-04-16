@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coco.project.like.LikeService;
+import com.coco.project.like.LikeServiceImpl;
 
 @RestController
 @RequestMapping("review/api")
@@ -29,7 +29,7 @@ public class ReviewApiController {
 	
 	// 후기 게시판 리스트 조회
 	@GetMapping("/BoardList")
-	public ResponseEntity<Object> BoardList(@RequestParam Map<String, Object> boardInfo){
+	public ResponseEntity<Object> BoardList(@RequestParam Map<String, Object> boardInfo) throws Exception {
 		
 		Map<String, Object> boardList = new HashMap<>();
 		
@@ -40,7 +40,7 @@ public class ReviewApiController {
 	
 	// 후기 게시판 상세정보
 	@GetMapping("/boardDetail")
-	public ResponseEntity<Object> boardDetail(@RequestParam("boardId") int boardId, @RequestParam(value = "rcWriter", required = false) Integer rcWriter){
+	public ResponseEntity<Object> boardDetail(@RequestParam("boardId") int boardId, @RequestParam(value = "rcWriter", required = false) Integer rcWriter) throws Exception {
 	// public ResponseEntity<Object> boardDetail(@RequestBody ReviewDTO reviewDTO){	
 		Map<String, Object> detailResult = new HashMap<>();
 		
@@ -58,7 +58,7 @@ public class ReviewApiController {
 	
 	// 후기 게시판 조회수 증가
 	@PostMapping("/boardViewCnt")
-	public ResponseEntity<Object> boardViewCnt(@RequestBody int boardId, HttpServletRequest request, HttpServletResponse response){
+	public ResponseEntity<Object> boardViewCnt(@RequestBody int boardId, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		int detailResult = reviewService.reviewBoardViewCnt(request, response, boardId);
 		
@@ -67,7 +67,7 @@ public class ReviewApiController {
 	
 	// 후기 게시판 삭제
 	@PutMapping("/boardDelete")
-	public ResponseEntity<Object> boardDelete(@RequestBody int boardId){
+	public ResponseEntity<Object> boardDelete(@RequestBody int boardId) throws Exception {
 		
 		int deleteResult = reviewService.reviewBoardDelete(boardId);
 		

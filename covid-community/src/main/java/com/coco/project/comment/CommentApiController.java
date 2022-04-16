@@ -35,7 +35,7 @@ public class CommentApiController {
 	
 	// 댓글 - 리스트 가져오기
 	@GetMapping(value = "/commentList")
-	public ResponseEntity<Object> commentList(@RequestParam(value = "boardId") int boardId){
+	public ResponseEntity<Object> commentList(@RequestParam(value = "boardId") int boardId) throws Exception{
 		
 		Map<String, Object> listResult = new HashMap<>();
 		

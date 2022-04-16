@@ -18,7 +18,7 @@ public class LikeApiController {
 	LikeService likeService;
 	
 	@PostMapping("/likeInsert")
-	public ResponseEntity<Object> likeInsert(@RequestBody LikeDTO likeDTO) {
+	public ResponseEntity<Object> likeInsert(@RequestBody LikeDTO likeDTO) throws Exception{
 		
 		int insertResult = -1;
 		int deleteResult = -1;
@@ -39,9 +39,6 @@ public class LikeApiController {
 				insertResult = -1;
 			}
 		}
-		
-		
-		
 		return new ResponseEntity<>(insertResult, HttpStatus.OK);
 	}
 }

@@ -1,25 +1,8 @@
 package com.coco.project.main;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+public interface MainService {
 
-@Service
-public class MainService {
-
-	@Autowired
-	MainMapper mainMapper;
-	
-	public Map<String, Object> boardList(){
-		
-		Map<String, Object> resultMap = new HashMap<String,Object>();
-		
-		resultMap.put("latestBoardList", mainMapper.latestBoardList());
-		resultMap.put("popBoardList", mainMapper.popBoardList());
-		
-		return resultMap;
-	}
-	
+	public Map<String, Object> boardList();
 }
