@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coco.project.register.RegisterService;
+import com.coco.project.register.RegisterServiceImpl;
 
 @RestController
 @RequestMapping(value = "login/api")

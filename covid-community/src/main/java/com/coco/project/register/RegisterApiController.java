@@ -81,7 +81,7 @@ public class RegisterApiController {
 	
 	// 이메일 인증
 	@PostMapping(value = "/certiEmail")
-    public Map<String, String> certiEmail(@RequestBody String userEmail) {
+    public Map<String, String> certiEmail(@RequestBody String userEmail) throws Exception {
 		
 		// String[] strArr = userEmail.replace("=", "").split("%40");
 		
@@ -112,13 +112,14 @@ public class RegisterApiController {
 	
 	// 유저 회원가입
 	@PostMapping(value = "/userRegister")
-    public ResponseEntity<Object> userRegister(@RequestBody RegisterDTO registerDTO) {
+    public ResponseEntity<Object> userRegister(@RequestBody RegisterDTO registerDTO) throws Exception {
 		
 		int result = registerService.userRegister(registerDTO);
 		
 		Map<String, Object> registerResult = new HashMap<>();
 		
 		registerResult.put("result", result);
+		
         return new ResponseEntity<>(registerResult, HttpStatus.OK);
     }
 	
