@@ -32,6 +32,17 @@
 	    line-height: 1.2em;
 	    height: 6em; /* line-height 가 1.2em 이고 5라인을 자르기 때문에 height는 1.2em * 5 = 6em */
     }
+    
+    .titleEllipsis {
+        overflow: hidden;
+	    text-overflow: ellipsis;
+	    display: -webkit-box;
+	    -webkit-line-clamp: 1; /* 라인수 */
+	    -webkit-box-orient: vertical;
+	    word-wrap:break-word; 
+	    line-height: 1.2em;
+	    height: 1.4em; /* line-height 가 1.2em 이고 5라인을 자르기 때문에 height는 1.2em * 5 = 6em */
+    }
 	
 	</style>
 
@@ -500,7 +511,7 @@
 												<div class="row">
 												<h5><span class="badge ${color}">${VaccineKind}</span></h5>
 											</div>
-											<div class="row mb-2" style="margin: auto;">
+											<div class="row mb-4 titleEllipsis mr-3" style="margin: auto;">
 												<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${latestBoardList[i].rbId}'" style="cursor: pointer;">${latestBoardList[i].rbTitle}</h5>
 											</div>
 											<div class="row mb-2">
@@ -522,7 +533,7 @@
 													<div class="row">
 													<h5><span class="badge ${color}">${VaccineKind}</span></h5>
 												</div>
-												<div class="row mb-2" style="margin: auto;">
+												<div class="row mb-4 titleEllipsis mr-3" style="margin: auto;">
 													<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${latestBoardList[i].rbId}'" style="cursor: pointer;">${latestBoardList[i].rbTitle}</h5>
 												</div>
 												<div class="row mb-2">
@@ -579,8 +590,8 @@
 												<div class="row">
 												<h5><span class="badge ${color}">${VaccineKind}</span></h5>
 											</div>
-											<div class="row mb-2" style="margin: auto;">
-											<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${popBoardList[i].rbId}'" style="cursor: pointer;">${popBoardList[i].rbTitle}</h5>
+											<div class="row mb-4 titleEllipsis mr-3" style="margin: auto;">
+												<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${popBoardList[i].rbId}'" style="cursor: pointer;">${popBoardList[i].rbTitle}</h5>
 											</div>
 											<div class="row mb-2">
 												<div class="col ellipsis" style="padding-right: 28px;">
@@ -601,7 +612,7 @@
 													<div class="row">
 													<h5><span class="badge ${color}">${VaccineKind}</span></h5>
 												</div>
-												<div class="row mb-2" style="margin: auto;">
+												<div class="row mb-4 titleEllipsis mr-3" style="margin: auto;">
 													<h5 class="card-title text-center" id="rbTitle" onclick="location.href='../review/detail/${popBoardList[i].rbId}'" style="cursor: pointer;">${popBoardList[i].rbTitle}</h5>
 												</div>
 												<div class="row mb-2">

@@ -22,6 +22,20 @@
     
     <!-- 제이쿼리 적용 -->
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	
+	<style type="text/css">
+		.titleEllipsis {
+	        overflow: hidden;
+		    text-overflow: ellipsis;
+		    display: -webkit-box;
+		    -webkit-line-clamp: 1; /* 라인수 */
+		    -webkit-box-orient: vertical;
+		    word-wrap:break-word; 
+		    line-height: 1.2em;
+		    height: 1.2em; /* line-height 가 1.2em 이고 5라인을 자르기 때문에 height는 1.2em * 5 = 6em */
+		    width: 200px;
+	    }
+	</style>
 </head>
 
 <body id="page-top">
@@ -496,7 +510,10 @@
 							
 							cardHtml += `<tr>
 										  <td><span id="boardId" value="${resData[i].rbId}">${resData[i].rbId}</span></td>
-										  <td><span onclick="location.href='../review/detail/${resData[i].rbId}'" style="cursor:pointer">${resData[i].rbTitle}</span></td>
+										  <td>
+										  <div class="titleEllipsis">
+										  	<span onclick="location.href='../review/detail/${resData[i].rbId}'" style="cursor:pointer;">${resData[i].rbTitle}</span></td>
+										  </div>
 										  <td>${resData[i].uNickName}</td>
 									      <td>
 									      <select id="rbVaccineKind" class="form-control" style="width:180px;">`
