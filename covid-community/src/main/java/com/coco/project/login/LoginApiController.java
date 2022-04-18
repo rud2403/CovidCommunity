@@ -21,6 +21,7 @@ public class LoginApiController {
 	@Autowired
 	LoginService loginService;
 	
+	// 비밀번호 변경
 	@Transactional
 	@PostMapping(value = "/resetPw")
 	public ResponseEntity<Object> resetPw(@RequestBody Map<String, String> userInfo) throws Exception {

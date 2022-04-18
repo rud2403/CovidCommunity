@@ -2,16 +2,18 @@ package com.coco.project.login;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import lombok.Data;
 
 @SuppressWarnings("serial")
 @Data
-public class LoginDTO implements UserDetails{
+public class LoginDTO implements UserDetails, OAuth2User{
 	private int userId;
 	private String userEmail;
 	private String userPw;
@@ -48,6 +50,18 @@ public class LoginDTO implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		return this.userEnabled == 1?true:false;
+	}
+	
+	// OAuth2
+	@Override
+	public Map<String, Object> getAttributes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
