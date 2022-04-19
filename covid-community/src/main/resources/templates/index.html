@@ -16,6 +16,10 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
   	/>
+  	
+  	<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
 	<!-- Custom styles for this template-->
 	<link href="css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- 제이쿼리 적용 -->
@@ -60,12 +64,11 @@
 			<a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
 				<div class="sidebar-brand-text mx-3">Covid Community</div>
 			</a>
-				
-
+			
 			<!-- Divider -->
 			<hr class="sidebar-divider">
 
-			<li class="nav-item">
+			<li class="nav-item active">
 				<a class="nav-link" th:href="@{/}">
 					<i class="fas fa-home"></i>
 					<span>홈</span>
@@ -85,13 +88,11 @@
 					<i class="fas fa-fw fa-chart-area"></i>
 					<span>발생현황</span></a>
 			</li>
-			
 			<li class="nav-item">
 				<a class="nav-link" th:href="@{/vaccinationStatus}">
 					<i class="fas fa-fw fa-chart-area"></i>
 					<span>접종현황</span></a>
 			</li>
-			
 			<div th:if="${loginDTO}">
 				<li class="nav-item">
 					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#myPageDetail"
@@ -111,8 +112,6 @@
 					</div>
 				</li>
 			</div>
-			
-			
 			<div th:if="${loginDTO}">
 				<div th:if="${loginDTO.userRole == 'ROLE_ADMIN'}">
 					<li class="nav-item">
@@ -133,16 +132,15 @@
 		</ul>
 		<!-- 사이드 바 끝 -->
 
-		<!-- Content Wrapper -->
+		<!-- 본문 시작 -->
 		<div id="content-wrapper" class="d-flex flex-column">
 
 			<!-- Main Content -->
 			<div id="content">
 
-				<!-- Topbar -->
+				<!-- 상단 네비바 시작 -->
 				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-					<!-- 상단 네비바 시작 -->
 					<ul class="navbar-nav ml-auto">
 						<!-- Nav Item - Alerts -->
 						<div th:if="${loginDTO}">
@@ -175,9 +173,8 @@
 							<a class="mt-4" id="signUpTxt" style="cursor: pointer;" th:href="@{/register}">회원가입</a>
 						</div>
 					</ul>
-					<!-- 상단 네비바 끝 -->
 				</nav>
-				<!-- End of Topbar -->
+				<!-- 상단 네비바 끝 -->
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid" style="width: 90%">
@@ -358,7 +355,7 @@
 			</div>
 			<!-- End of Main Content -->
 
-			<!-- Footer -->
+			<!-- 푸터 시작 -->
 			<footer class="sticky-footer bg-white">
 				<div class="container my-auto">
 					<div class="copyright text-center my-auto">
@@ -366,10 +363,10 @@
 					</div>
 				</div>
 			</footer>
-			<!-- End of Footer -->
+			<!-- 푸터 끝 -->
 
 		</div>
-		<!-- End of Content Wrapper -->
+		<!-- 본문 끝 -->
 
 	</div>
 	<!-- End of Page Wrapper -->
@@ -379,7 +376,7 @@
 		<i class="fas fa-angle-up"></i>
 	</a>
 
-	<!-- Logout Modal-->
+	<!-- 로그아웃 모달 -->
 	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog" role="document">

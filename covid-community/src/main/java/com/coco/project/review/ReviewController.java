@@ -23,7 +23,9 @@ public class ReviewController {
 	
 	// 후기 게시판 - 리스트
 	@GetMapping(value = "/list")
-    String list(){
+    String list(@AuthenticationPrincipal LoginDTO loginDTO, Model model){
+		
+		model.addAttribute("loginDTO", loginDTO);
         return "/review/reviewList";
     }
 	
