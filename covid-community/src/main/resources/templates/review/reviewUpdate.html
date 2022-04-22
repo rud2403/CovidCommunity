@@ -395,7 +395,6 @@
 
 			  function handleFiles(files) {
 			    files = [...files];
-			    // files.forEach(uploadFile);
 			    files.forEach(previewFile);
 			    
 			  }
@@ -436,9 +435,6 @@
 			console.log('rbFilePath : ', rbFilePath);
 			
 			if(rbFilePath != ""){
-				
-				console.log('경로 포함 돼있음');
-				
 				$(".preview").attr("src", rbFilePath);
 				$(".preview").css("display", "block");
 			}

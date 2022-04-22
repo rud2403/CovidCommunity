@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	    	.antMatchers("/", "/review/list", "/review/detail/**", "/review/api/BoardList").permitAll()
 	    	.antMatchers( "/review/api/boardDetail", "/review/api/boardViewCnt").permitAll()
 	    	.antMatchers("/register/**", "/login/**", "/loginProc", "/forgotPw", "/resetPw", "/main/**").permitAll()
-	    	.antMatchers("/comment/api/commentList", "/15077756/v1/vaccine-stat").permitAll()
+	    	.antMatchers("/comment/api/commentList", "/15077756/v1/vaccine-stat", "/service/rest/Covid19/getCovid19SidoInfStateJson").permitAll()
 	    	.antMatchers("/vaccinationStatus", "/defStatus").permitAll()
 	    	.antMatchers("/review/update", "/comment/api/write", "/comment/api/update", "/comment/api/delete").hasAnyRole("USER", "ADMIN")
         	.antMatchers("/like/api/likeInsert", "/myPage/**", "/review/write").hasAnyRole("USER", "ADMIN")

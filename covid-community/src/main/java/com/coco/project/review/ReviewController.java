@@ -49,7 +49,7 @@ public class ReviewController {
 	// 후기게시판 글쓰기
 	@Transactional
 	@PostMapping(value = "/write")
-    public String write(ReviewDTO reviewDTO, MultipartFile file, Model model) {
+    public String write(@AuthenticationPrincipal LoginDTO loginDTO, ReviewDTO reviewDTO, MultipartFile file, Model model) {
 		
 		int result = -1;
 		
@@ -62,13 +62,16 @@ public class ReviewController {
 			// 게시글 작성 성공
 			if(result == 1) {
 				model.addAttribute("writeResult", result);
+				model.addAttribute("loginDTO", loginDTO);
 				return "/review/reviewList";
 			// 게시글 작성 실패
 			} else if(result == 0) {
 				model.addAttribute("writeResult", result);
+				model.addAttribute("loginDTO", loginDTO);
 				return "/review/reviewList";
 			} else {
 				model.addAttribute("writeResult", result);
+				model.addAttribute("loginDTO", loginDTO);
 				return "/review/reviewList";
 			}
 		} catch (Exception e) {
@@ -76,6 +79,7 @@ public class ReviewController {
 		}
 		
 		model.addAttribute("writeResult", result);
+		model.addAttribute("loginDTO", loginDTO);
 		return "/review/reviewList";
 		
     }
@@ -92,7 +96,7 @@ public class ReviewController {
 	// 후기게시판 글수정
 	@Transactional
 	@PostMapping(value = "/update")
-    public String update(ReviewDTO reviewDTO, MultipartFile file, Model model) {
+    public String update(ReviewDTO reviewDTO, MultipartFile file, @AuthenticationPrincipal LoginDTO loginDTO, Model model) {
 		
 		int result = -1;
 		
@@ -105,13 +109,16 @@ public class ReviewController {
 			// 게시글 수정 성공
 			if(result == 1) {
 				model.addAttribute("updateResult", result);
+				model.addAttribute("loginDTO", loginDTO);
 				return "/review/reviewList";
 			// 게시글 작성 실패
 			} else if(result == 0) {
 				model.addAttribute("updateResult", result);
+				model.addAttribute("loginDTO", loginDTO);
 				return "/review/reviewList";
 			} else {
 				model.addAttribute("updateResult", result);
+				model.addAttribute("loginDTO", loginDTO);
 				return "/review/reviewList";
 			}
 		} catch (Exception e) {
@@ -119,6 +126,7 @@ public class ReviewController {
 		}
 		
 		model.addAttribute("updateResult", result);
+		model.addAttribute("loginDTO", loginDTO);
 		return "/review/reviewList";
 		
     }

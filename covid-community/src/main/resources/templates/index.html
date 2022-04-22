@@ -434,9 +434,9 @@
 					$('#secondCntPer').text(secondCntPer);
 					$('#thirdCntPer').text(thirdCntPer);
 					
-					$('#firstCnt').text(vaccineData[0].firstCnt);
-					$('#secondCnt').text(vaccineData[0].secondCnt);
-					$('#thirdCnt').text(vaccineData[0].thirdCnt);
+					$('#firstCnt').text(numberWithCommas(vaccineData[0].firstCnt));
+					$('#secondCnt').text(numberWithCommas(vaccineData[0].secondCnt));
+					$('#thirdCnt').text(numberWithCommas(vaccineData[0].thirdCnt));
 	            },
 	            error : function(error) {
 	            	console.log("error :: ", error);
