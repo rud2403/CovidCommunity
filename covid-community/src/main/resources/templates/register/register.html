@@ -165,8 +165,6 @@
 			// 이메일 중복체크 시작
 			$("#user_email").keyup(function(){
 				
-				console.log('이메일 값 입력');
-				
 				let userEmail = $("#user_email").val();
 				
 				// 이메일 유효성검사
@@ -283,10 +281,8 @@
 					dataType :'json',
 					contentType: "application/json; charset=UTF-8",
 					success : function(data) {
-						console.log("data.key :: ", data.key);
 						
 						$('#certiConBtn').click(function(){
-							console.log('확인 키 클릭');
 							
 							// 인증 키 값이 일치할 경우
 							if(data.key == $('#certi_num').val()){
@@ -322,7 +318,6 @@
 			
 			// 가입하기 버튼 클릭 시작
 			$('#registerBtn').click(function(){
-				console.log('가입하기 버튼 클릭');
 				let userEmail = $("#user_email").val();
 				let userPw = $("#user_pw").val();
 				let userPwCon = $("#user_pwCon").val();
@@ -381,9 +376,6 @@
 	           		userAddr
 			    };
 				
-				console.log('가입하기 api 전송');
-				console.log('userInfo : ', userInfo);
-				
 				$.ajax({
 		            async: true,
 		            type : 'POST',
@@ -392,7 +384,6 @@
 		            dataType : "json",
 		            contentType: "application/json; charset=UTF-8",
 		            success : function(data) {
-		            	console.log('data : ', data);
 		            	if(data.result == 1){
 		            		alert('회원가입이 완료 됐습니다.');
 		            		// 로그인 창으로 이동

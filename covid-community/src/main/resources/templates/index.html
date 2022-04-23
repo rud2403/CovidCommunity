@@ -405,7 +405,6 @@
 		    let date = ("0" + now.getDate()).slice(-2);
 			
 			let ymd = year+'-'+month+'-'+date;
-			console.log('ymd : ', ymd);
 			
 			// 접종현황 ajax
 			$.ajax({
@@ -415,7 +414,6 @@
 				dataType :'json',
 				success : function(data) {
 					let vaccineData = data.data
-					console.log('vaccineData : ',vaccineData);
 					
 					let totalFirstCnt = vaccineData[0].totalFirstCnt;
 					let totalSecondCnt = vaccineData[0].totalSecondCnt;
@@ -450,8 +448,6 @@
 				dataType :'json',
 				success : function(data) {
 					let defData = data.response.body.items.item;
-					console.log("defData : ", defData)
-					
 					$('#defCnt').text(numberWithCommas(defData[18].defCnt));
 					$('#incDec').text(numberWithCommas(defData[18].incDec));
 					$('#qurRate').text(numberWithCommas(defData[18].qurRate));
@@ -468,9 +464,6 @@
 				url : 'main/api/boardList',
 				dataType :'json',
 				success : function(data) {
-					console.log("data : ", data);
-					console.log("data.latestBoardList : ", data.latestBoardList);
-					console.log("data.popBoardList : ", data.popBoardList);
 					
 					let latestBoardList = data.latestBoardList;
 					let popBoardList = data.popBoardList;

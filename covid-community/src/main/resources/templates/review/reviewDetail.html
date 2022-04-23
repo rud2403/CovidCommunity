@@ -371,10 +371,6 @@
 		let rcWriter = $('#rcWriter').val();
 		let userRole = $('#userRole').val();
 		
-		console.log('userRole : ', userRole);
-		console.log('boardId : ', boardId);
-		console.log('rcWriter : ', rcWriter);
-		
 		$(document).ready(function() {
 			// 게시글 조회수 증가시키는 ajax 시작
 			$.ajax({
@@ -384,10 +380,7 @@
 				contentType: "application/json; charset=UTF-8",
 				dataType :'json',
 				success : function(data) {
-					console.log("data:: ", data);
-					
 					boardDetail();
-					
 	            },
 	            error : function(error) {
 	            	console.log("error :: ", error);
@@ -412,13 +405,10 @@
 					// data : boardId,
 					dataType :'json',
 					success : function(data) {
-						console.log("data :: ", data);
-						
 						let detail = data.boardDetail;
 						let likeCnt = data.likeCnt;
 						
 						if(rcWriter != null){
-							console.log('likeActive 정보 있음');
 							let likeActive = data.likeActive;
 							
 							if(likeActive == 1){
@@ -474,7 +464,6 @@
 								contentType: "application/json; charset=UTF-8",
 								dataType :'json',
 								success : function(data) {
-									console.log("data:: ", data);
 									if(data == 1){
 										alert('게시글 삭제 완료');
 										if(document.referrer == 'http://localhost:8080/myPage/myBoardList'){
@@ -511,15 +500,12 @@
 					return false;
 				}
 				
-				console.log('rcWriter : ',rcWriter);
 				if(rcWriter != null && rcWriter != ""){
 					let rcInfo = {
 						rcContent,
 						rcBoard,
 						rcWriter
 					};
-					
-					console.log(rcInfo);
 					
 					$.ajax({
 						type : 'POST',
@@ -528,7 +514,6 @@
 						contentType: "application/json; charset=UTF-8",
 						dataType :'json',
 						success : function(data) {
-							console.log("data:: ", data);
 							if(data == 1){
 								alert('댓글이 작성 되었습니다.');
 								$('#rcContent').val('');
@@ -562,9 +547,6 @@
 					url : '../../comment/api/commentList?boardId='+boardId,
 					dataType :'json',
 					success : function(data) {
-						console.log("data.list :: ", data.list);
-						console.log("data.cnt :: ", data.cnt);
-						
 						let cmtHtml = "";
 						// if(data.list.length > 0) 시작
 						if(data.list.length > 0){
@@ -805,7 +787,6 @@
 						contentType: "application/json; charset=UTF-8",
 						dataType :'json',
 						success : function(data) {
-							console.log("data:: ", data);
 							if(data == 1){
 								alert('댓글이 작성 되었습니다.');
 								$('#rcReContent').val('');
@@ -858,7 +839,6 @@
 						contentType: "application/json; charset=UTF-8",
 						dataType :'json',
 						success : function(data) {
-							console.log("data:: ", data);
 							if(data == 1){
 								alert('댓글이 수정 되었습니다.');
 								$('#rcReUpdateContent').val('');
@@ -888,7 +868,6 @@
 			
 			// 댓글 삭제 시작
 			$('#rcDeleteSubBtn').click(function(){
-				console.log('댓글 삭제 클릭');
 				let rcId = $('#rcDeleteId').val();
 				
 				let rcInfo = {
@@ -903,7 +882,6 @@
 						contentType: "application/json; charset=UTF-8",
 						dataType :'json',
 						success : function(data) {
-							console.log("data:: ", data);
 							if(data == 1){
 								alert('댓글이 삭제 되었습니다.');
 								$('#closeDeleteModal').click();
@@ -948,16 +926,12 @@
 			
 			// 좋아요 버튼 클릭 시작
 			$('#likeBtn').click(function(){
-				console.log('좋아요 버튼 클릭');
-				console.log('boardId : ', boardId);
-				console.log('rcWriter : ', rcWriter);
 				// 로그인 정보 있을 때
 				if(rcWriter != null){
 					let rlInfo = {
 						rlUser : rcWriter,
 						rlBoard : boardId
 					} 
-					console.log('rlInfo : ', rlInfo);
 					
 					$.ajax({
 						type : 'POST',
@@ -966,7 +940,6 @@
 						contentType: "application/json; charset=UTF-8",
 						dataType :'json',
 						success : function(data) {
-							console.log("data:: ", data);
 							if(data == 0){
 								alert('좋아요 취소');
 							} else if(data == 1){
@@ -994,7 +967,6 @@
 				if(document.referrer == "http://localhost:8080/review/list"){
 					location.href="/review/list"
 				} else if(document.referrer == "http://localhost:8080/myPage/myBoardList"){
-					console.log(document.referrer);
 					location.href="../../myPage/myBoardList"
 				} else if(document.referrer ==  "http://localhost:8080/myPage/myComment"){
 					location.href="../../myPage/myComment"

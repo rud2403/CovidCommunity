@@ -71,8 +71,6 @@
 		    
 		    userEmail = userInfo.replace('%40', '@').replace('userEmail=', '');
 		    
-		    console.log(userEmail);
-		    
 		    $('#certiConBtn').click(function(){
 		    	let userPw = $('#user_pw').val();
 		    	let userPwCon = $('#user_pw_con').val();
@@ -90,14 +88,10 @@
 		    	}
 		    	
 		    	if(userPw == userPwCon){
-		    		console.log('비밀번호 일치');
-		    		
 		    		let userInfo = {
 		    				userEmail,
 		    				userPw
 		    		}
-		    		
-		    		console.log("userInfo : ", userInfo);
 		    		
 		    		// 패스워드 변경하는 ajax
 		    		$.ajax({
@@ -107,7 +101,6 @@
 						dataType :'json',
 						contentType: "application/json; charset=UTF-8",
 						success : function(data) {
-							console.log("data.result :: ", data.result);
 							if(data.result == 1){
 								alert('비밀번호가 변경 됐습니다.');
 								 location.href = "/login";
@@ -121,7 +114,6 @@
 			            }
 					});
 		    	} else {
-		    		console.log('비밀번호 불일치');
 		    		alert('비밀번호가 다릅니다.');
 		    	}
 		    });

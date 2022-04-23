@@ -403,7 +403,6 @@
 			  }
 
 			  function previewFile(file) {
-			    console.log(file);
 			    renderFile(file);
 			  }
 
@@ -431,16 +430,12 @@
 	
 		$(document).ready(function() {
 			$('#preview-de').click(function(){
-				console.log('삭제 버튼 클릭');
 				$(".preview").attr("src", " ");
 				$(".preview").css("display", "none");
 				$(".preview").attr("alt", "");
 				$(".file").val("");
 			});
 			
-			$('.preview').mouseover(function(){
-				console.log('마우스 오버 됐습니다.');
-			});
 		});
 	</script>
 	<!-- Bootstrap core JavaScript-->

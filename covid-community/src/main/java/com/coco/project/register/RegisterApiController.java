@@ -83,10 +83,6 @@ public class RegisterApiController {
 	@PostMapping(value = "/certiEmail")
     public Map<String, String> certiEmail(@RequestBody String userEmail) throws Exception {
 		
-		// String[] strArr = userEmail.replace("=", "").split("%40");
-		
-		// userEmail = strArr[0] + "@" + strArr[1];
-		
 		Random random=new Random();  //난수 생성을 위한 랜덤 클래스
 		String key="";  //인증번호 
 

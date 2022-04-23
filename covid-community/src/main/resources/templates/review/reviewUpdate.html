@@ -400,7 +400,6 @@
 			  }
 
 			  function previewFile(file) {
-			    console.log(file);
 			    renderFile(file);
 			  }
 
@@ -429,10 +428,8 @@
 		$(document).ready(function() {
 			
 			let boardInfo = "[[${boardInfo}]]";
-			console.log('boardInfo : ', boardInfo);
 			
 			let rbFilePath = "[[${boardInfo.rbFilePath}]]";
-			console.log('rbFilePath : ', rbFilePath);
 			
 			if(rbFilePath != ""){
 				$(".preview").attr("src", rbFilePath);
@@ -440,7 +437,6 @@
 			}
 			
 			$('#preview-de').click(function(){
-				console.log('삭제 버튼 클릭');
 				$(".preview").attr("src", " ");
 				$(".preview").css("display", "none");
 				$(".preview").attr("alt", "");

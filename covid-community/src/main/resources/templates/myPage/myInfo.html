@@ -275,8 +275,6 @@
 			let userAddr = "[[${loginDTO.userAddr}]]"
 			userAddr = userAddr.split("/"); 
 			
-			// console.log('userInfo : ', userInfo);
-			
 			$('#address_kakao').val(userAddr[0]);
 			$('#address_kakao_detail').val(userAddr[1]);
 			
@@ -284,7 +282,6 @@
 			let userBirth =	"[[${loginDTO.userBirth}]]"
 			
 			userBirth = userBirth.split("/");
-			console.log('userBirth : ', userBirth);
 			
 			// 생년월일 select 세팅 시작
 			let nowDate = new Date();
@@ -394,8 +391,6 @@
 	           		userAddr
 				}
 				
-				console.log('userInfo : ', userInfo);
-				
 				$.ajax({
 		            type : 'PUT',
 		            url : "../myPage/api/myInfo",
@@ -403,7 +398,6 @@
 		            dataType : "json",
 		            contentType: "application/json; charset=UTF-8",
 		            success : function(data) {
-		            	console.log('data : ', data);
 		            	if(data == 1){
 		            		alert('회원정보가 수정 되었습니다.');
 		            		$("#user_pw").val("");
