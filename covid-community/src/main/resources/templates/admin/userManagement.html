@@ -181,7 +181,6 @@
 								    <tr>
 								      <th scope="col"></th>
 								      <th scope="col">이메일</th>
-								      <th scope="col">비밀번호</th>
 								      <th scope="col">닉네임</th>
 								      <th scope="col">생년월일</th>
 								      <th scope="col">주소</th>
@@ -226,6 +225,86 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+
+	<!-- 정보 수정 모달 -->
+	<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="updateModalLabel">회원정보 수정</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      
+	      	  <div>
+	      	  	<input type="hidden" id="updateId">
+	      	  </div>
+	          <div class="form-group row">
+			    <label for="updateEmail" class="col-sm-2 col-form-label">이메일</label>
+			    <div class="col-sm-10">
+			      <input type="email" class="form-control" id="updateEmail" disabled="disabled">
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <label for="updatePw" class="col-sm-2 col-form-label">비밀번호</label>
+			    <div class="col-sm-10">
+			      <input type="password" class="form-control" id="updatePw">
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <label for="updateNickName" class="col-sm-2 col-form-label">닉네임</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="updateNickName">
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <label for="updateBirth" class="col-sm-2 col-form-label" style="width: 200px">생년월일</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="updateBirth">
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <label for="updateAddr" class="col-sm-2 col-form-label">주소</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="updateAddr">
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <label for="updateRole" class="col-sm-2 col-form-label">권한</label>
+			    <div class="col-sm-10">
+			      <select id="updateRole" class="form-control">
+			        <option value="ROLE_USER" selected>ROLE_USER</option>
+			        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+			      </select>
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <label for="inputPw" class="col-sm-2 col-form-label">가입일자</label>
+			    <div class="col-sm-10">
+			      <input class="form-control" id="updateRegDate" disabled="disabled">
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <label for="updateEnabled" class="col-sm-2 col-form-label">활성화 여부</label>
+			    <div class="col-sm-10">
+			      <select id="updateEnabled" class="form-control">
+			        <option value="0" selected>0</option>
+			        <option value="1">1</option>
+			      </select>
+			    </div>
+			  </div>
+			  
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" onclick="userUpdate()" class="btn btn-primary">수정</button>
+	        <button type="button" id="updateEsc" class="btn btn-secondary" data-dismiss="modal">취소</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
     <!-- 로그아웃 모달 -->
 	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">
@@ -249,7 +328,7 @@
 	<script type="text/javascript">
 	$(document).ready(function() {
 		
-		// 현재 페이지
+		/* // 현재 페이지
 		let rbNowPage = 1;
 		// 페이지당 보여줄 개수
 		let pageSize = 10;
@@ -293,43 +372,31 @@
 							cardHtml += `<tr>
 										  <td><span id="userId" value="${repData[i].uId}">${repData[i].uId}</span></td>
 										  <td>${repData[i].uEmail}</td>
-									      <td><input class="form-control" id="userPw" name="userPw" value="" style="width:150px;" /></td>
-									      <td><input class="form-control" id="userNickName" name="userNickName" value="${repData[i].uNickName}" style="width:100px;"></td>
-									      <td><input class="form-control" id="userBirth" name="userBirth" value="${repData[i].uBirth}" style="width:120px;"></td>
-									      <td><input class="form-control" id="userAddr" name="userAddr" value="${repData[i].uAddr}"></td>
 									      <td>
-										      <select id="userRole" class="form-control" name="userRole" style="width:150px;">`
-										      	if("ROLE_USER" == repData[i].uRole){
-			      			cardHtml +=				`<option value="ROLE_USER" selected>ROLE_USER</option>
-												    <option value="ROLE_ADMIN">ROLE_ADMIN</option>`
-										      	} else {
-				      		cardHtml += 		  	`<option value="ROLE_USER">ROLE_USER</option>
-											      	<option value="ROLE_ADMIN" selected>ROLE_ADMIN</option>`
-										      	}
-      						cardHtml += 	 `</select>
+									      	<span id="userNickName" value="${repData[i].uNickName}">${repData[i].uNickName}</span>
 									      </td>
+									      <td>
+									      	<span id="userBirth" value="${repData[i].uBirth}">${repData[i].uBirth}</span>
+									      </td>
+									      <td>
+									      	<span id="userAddr" value="${repData[i].uAddr}">${repData[i].uAddr}</span>
+									      </td>
+									      <td>
+									      	<span id="userRole" value="${repData[i].uRole}">${repData[i].uRole}</span>
+									      </td>
+									      
 									      <td>${regDate}</td>
-									      <td class="text-center" id="uEnabled">
-									      	<select class="form-control" id="userEnabled" name="userEnabled">`
-									      	
-									      		if(0 == repData[i].uEnabled){
-							cardHtml +=			    `<option value="0" selected>0</option>
-										      		<option value="1">1</option>`
-									      		} else {
-							cardHtml +=		   		`<option value="0">0</option>
-										      		<option value="1" selected>1</option>`
-									      		}
-									      		
-							cardHtml +=		`</select>
+									      
+									      <td>
+									      	<span id="uEnabled" value="${repData[i].uEnabled}">${repData[i].uEnabled}</span>
 									      </td>
-									      <td><button class="btn-sm btn-dark" id="subBtn" onclick="userUpdate()")>수정</button></td>
+									      
+									      <td><button class="btn-sm btn-dark" onClick="userUpdateBtn('${repData[i].uId}')" data-toggle="modal" data-target="#updateModal">수정</button></td>
 									    </tr>`
 						}
 						
 					}
 					$('#cardBody').html(cardHtml);
-
-					
 					
 					// 페이지 네이션 그리기
 					drawPagination(data.totalCnt, 0);
@@ -341,9 +408,6 @@
 	            }
 			});
 		} 
-		
-		
-		
 		
 		function drawPagination(totalCnt, num){
 			// 페이징처리 그리기
@@ -422,19 +486,179 @@
             	rbNowPage = 1;
 				userList();
             }
-        });
+        }); */
 		
 	});
 	
+	// 현재 페이지
+	let rbNowPage = 1;
+	// 페이지당 보여줄 개수
+	let pageSize = 10;
+	// 한 화면에 보여줄 페이지 번호의 개수 (페이지 블록)
+	let pageBlock = 5;
+	// 게시글 전체 개수
+	let totalCnt = 0;
+	
+	// 게시글 리스트 가져오는 메소드
+	function userList(){
+		
+		// 페이지별 시작 행
+		let startRow = (rbNowPage-1)*pageSize;
+		// 게시글 목록 초기화
+		let cardHtml = "";
+		// select 값
+		let selectVal = $('#selectVal').val();
+		// input 값
+		let inputVal = $('#inputVal').val();
+		
+		let reqInfo = {
+			startRow,
+			selectVal,
+			inputVal
+		};
+		
+		$.ajax({
+			type : 'GET',
+			url : '../admin/api/userList',
+			data : reqInfo,
+			dataType :'json',
+			contentType: "application/json; charset=UTF-8",
+			success : function(data) {
+				let repData = data.list;
+				
+				if(data.list.length > 0){
+					for(let i in repData){
+						
+						let regDate = repData[i].uRegDate.substring(0,10);
+						
+						cardHtml += `<tr>
+									  <td><span id="userId" value="${repData[i].uId}">${repData[i].uId}</span></td>
+									  <td>${repData[i].uEmail}</td>
+								      <td>
+								      	<span id="userNickName" value="${repData[i].uNickName}">${repData[i].uNickName}</span>
+								      </td>
+								      <td>
+								      	<span id="userBirth" value="${repData[i].uBirth}">${repData[i].uBirth}</span>
+								      </td>
+								      <td>
+								      	<span id="userAddr" value="${repData[i].uAddr}">${repData[i].uAddr}</span>
+								      </td>
+								      <td>
+								      	<span id="userRole" value="${repData[i].uRole}">${repData[i].uRole}</span>
+								      </td>
+								      
+								      <td>${regDate}</td>
+								      
+								      <td>
+								      	<span id="uEnabled" value="${repData[i].uEnabled}">${repData[i].uEnabled}</span>
+								      </td>
+								      
+								      <td><button class="btn-sm btn-dark" onClick="userUpdateBtn('${repData[i].uId}')" data-toggle="modal" data-target="#updateModal">수정</button></td>
+								    </tr>`
+					}
+					
+				}
+				$('#cardBody').html(cardHtml);
+				
+				// 페이지 네이션 그리기
+				drawPagination(data.totalCnt, 0);
+				totalCnt = data.totalCnt;
+				
+            },
+            error : function(error) {
+            	console.log("error :: ", error);
+            }
+		});
+	} 
+	
+	function drawPagination(totalCnt, num){
+		// 페이징처리 그리기
+		let pageNum = "";
+		
+		// 전체 페이지 수
+		let pageCount = parseInt(totalCnt/pageSize+(totalCnt % pageSize == 0? 0:1));
+		
+		// 페이징처리에 보여질 페이지 넘버
+		let block_num = parseInt((rbNowPage - 1) / pageBlock) + num;
+		
+		// 페이지 블록의 시작페이지 번호
+		// let startPage = ((rbNowPage-1)/pageBlock) * pageBlock +1;
+		let startPage = (pageBlock * block_num) + 1
+		// 페이지 블록의 끝 페이지 번호
+		// let endPage = startPage+pageBlock-1;
+		let endPage = startPage + (pageBlock - 1)
+		
+		if(endPage > pageCount){
+			endPage = pageCount;
+		}
+		if(startPage > pageBlock){
+			pageNum += `<li class="page-item" style="cursor: pointer;">
+					        <span class="page-link" aria-hidden="true" name="pre">&laquo;</span>
+					    </li>`
+		}
+		for(let i = startPage; i <= endPage; i++){
+			if(rbNowPage == i){
+				pageNum += `<li class="page-item active" style="cursor: pointer;"><span class="page-link" name="num">${i}</span></li>`
+			} else {
+				pageNum += `<li class="page-item" style="cursor: pointer;"><span class="page-link" name="num">${i}</span></li>`	
+			}
+			
+		}
+		
+		if(endPage < pageCount){
+		    pageNum += `<li class="page-item" style="cursor: pointer;">
+					        <span class="page-link" aria-hidden="true" name="next">&raquo;</span>
+					    </li>`
+		}
+		
+		$('#pageNum').html(pageNum);
+		
+		// 페이지 네이션 넘버 클릭 시
+		$(".pagination li span[name='num']").click(function(){
+			rbNowPage = $(this).text();
+			userList();
+		});
+		// 페이지 네이션 다음 클릭 시
+		$(".pagination li span[name='next']").click(function(){
+			rbNowPage = startPage + pageBlock;
+			drawPagination(totalCnt, 0);
+			userList();
+		});
+		// 페이지 네이션 이전 클릭 시
+		$(".pagination li span[name='pre']").click(function(){
+			drawPagination(totalCnt, -1);
+			rbNowPage = startPage - pageBlock;
+			userList();
+		});
+		
+	}
+	
+	// 페이지 접근시 게시글 가져오기
+	userList();
+	
+	// 검색 버튼 클릭 시
+	$('#searchButton').click(function(){
+		rbNowPage = 1;
+		userList();
+	});
+	
+	// 검색창 엔터 클릭 시
+	$("#inputVal").keydown(function(key) {
+        if (key.keyCode == 13) {
+        	rbNowPage = 1;
+			userList();
+        }
+    });
+	
 	function userUpdate(){
 		
-		let userId = $('#userId').text();
-		let userPw = $('#userPw').val();
-		let userNickName = $('#userNickName').val();
-		let userBirth = $('#userBirth').val();
-		let userAddr = $('#userAddr').val();
-		let userRole = $('#userRole').val();	
-		let userEnabled = $('#userEnabled').val();
+		let userId = $('#updateId').val();
+		let userPw = $('#updatePw').val();
+		let userNickName = $('#updateNickName').val();
+		let userBirth = $('#updateBirth').val();
+		let userAddr = $('#updateAddr').val();
+		let userRole = $('#updateRole').val();	
+		let userEnabled = $('#updateEnabled').val();
 		
 		let userInfo = {
 				userId,
@@ -455,6 +679,8 @@
 			success : function(data) {
 				if(data == 1){
 					alert('회원정보 수정 완료');
+					$('#updateEsc').click();
+					userList();
 				} else {
 					alert('회원정보 수정 실패');
 				}
@@ -464,8 +690,29 @@
             	console.log("error :: ", error);
             }
 		});
-		
-		
+	}
+	
+	// 수정 버튼 클릭 시
+	function userUpdateBtn(uId){
+		$.ajax({
+			type : 'GET',
+			url : '../admin/api/userInfo/'+uId,
+			contentType: "application/json; charset=UTF-8",
+			success : function(data) {
+				$('#updateId').val(data.uId);
+				$('#updateEmail').val(data.uEmail);
+				$('#updateNickName').val(data.uNickName);
+				$('#updateBirth').val(data.uBirth);
+				$('#updateAddr').val(data.uAddr);
+				$('#updateRole').val(data.uRole);
+				$('#updateRegDate').val(data.uRegDate.replace("T", " "));
+				$('#updateEnabled').val(data.uEnabled);
+				
+            },
+            error : function(error) {
+            	console.log("error :: ", error);
+            }
+		});
 	}
 	
 	</script>

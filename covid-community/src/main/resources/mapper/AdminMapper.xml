@@ -42,6 +42,25 @@
 			user_info
 	</select>
 	
+	<!-- 유저 정보 -->
+	<select id="userInfo" resultType="hashmap">
+		SELECT
+			u_id 		AS uId,
+			u_email 	AS uEmail,
+			u_social 	AS uSocial,
+			u_pw 		AS uPw,
+			u_nickname 	AS uNickName,
+			u_birth 	AS uBirth,
+			u_addr 		AS uAddr,
+			u_role 		AS uRole,
+			u_regDate 	AS uRegDate,
+			u_enabled 	AS uEnabled
+		FROM
+			user_info ui
+		WHERE
+			u_id = #{uId}
+	</select>
+	
 	<!-- 관리자페이지 - 유저정보 수정 -->
 	<update id="userUpdate">
 		UPDATE
@@ -111,13 +130,48 @@
 			review_board
 	</select>
 	
+	<!-- 관리자페이지 - 게시글정보 -->
+	<select id="boardInfo" resultType="hashmap">
+		SELECT
+			rb_id 				AS rbId,
+			rb_title 			AS rbTitle,
+			rb_content 			AS rbContent,
+			rb_view_cnt 		AS rbViewCnt,
+			rb_register_date 	AS rbRegisterDate,
+			rb_update_date  	AS rbUpdateDate,
+			rb_writer 			AS rbWriter,
+			rb_notice_yn 		AS rbNoticeYn,
+			rb_delete_yn 		AS rbDeleteYn,
+			rb_vaccine_kind 	AS rbVaccineKind,
+			rb_file_name		AS rbFileName,
+			IFNULL(rb_file_path, '')	AS rbFilePath,
+			u_nickname			AS uNickName,
+			(SELECT
+				count(*)
+			FROM
+				review_like
+			WHERE
+				rl_board = rbId)		AS rbLikeCnt,
+			(SELECT
+				count(*)
+			FROM
+				review_comment
+			WHERE
+				rc_board = rbId AND rc_delete_yn = 'N')		AS rbCmtCnt
+		FROM
+			review_board rb
+		JOIN
+			user_info ui ON rb.rb_writer = ui.u_id
+		WHERE
+			rb_id = #{rbId}
+	</select>
+	
 	<!-- 관리자페이지 - 게시글정보 수정  -->
 	<update id="boardUpdate">
 		UPDATE
 			review_board
 	   SET
 	   		rb_vaccine_kind= #{rbVaccineKind},
-	   		rb_notice_yn = #{rbNoticeYn},
 	   		rb_delete_yn = #{rbDeleteYn}
 		WHERE
 			rb_id = #{rbId}

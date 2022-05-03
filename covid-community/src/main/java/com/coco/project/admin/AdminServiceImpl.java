@@ -31,6 +31,17 @@ public class AdminServiceImpl implements AdminService{
 		return resultMap;
 	}
 	
+	@Override
+	public Map<String, Object> userInfo(String uId) throws Exception {
+		
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		resultMap = adminMapper.userInfo(uId);
+		
+		return resultMap;
+	}
+	
+	
 	// 관리자 페이지 - 유저정보 수정
 	@Override
 	public int userUpdate(RegisterDTO registerDTO) throws Exception {
@@ -43,7 +54,7 @@ public class AdminServiceImpl implements AdminService{
 		return userUpdate; 
 	}
 	
-	// 관리자 페이지 - 게시글 정보
+	// 관리자 페이지 - 게시글 리스트
 	@Override
 	public Map<String,Object> boardList(Map<String, Object> reqInfo) throws Exception {
 		
@@ -51,6 +62,17 @@ public class AdminServiceImpl implements AdminService{
 		
 		resultMap.put("list", adminMapper.boardList(reqInfo));
 		resultMap.put("totalCnt", adminMapper.boardListCnt(reqInfo));
+		
+		return resultMap;
+	}
+	
+	// 관리자 페이지 - 게시글 정보
+	@Override
+	public Map<String, Object> boardInfo(String rbId) throws Exception {
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		resultMap = adminMapper.boardInfo(rbId);
 		
 		return resultMap;
 	}
